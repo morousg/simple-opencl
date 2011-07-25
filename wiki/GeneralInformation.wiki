@@ -1,0 +1,13 @@
+#summary General information and comments.
+
+= Introduction =
+
+This wiki is under construction. For some days it will be only used as a place to post basic information about the code or the project.
+
+= Details =
+
+By now I'm only providing source code. This release is a copy paste from the las version I've used. It's possible that there is something wrong in the code even I have almost changed nothing from the working version.
+
+In few days I'll adapt some testing code to the standalone library configuration in order to test it.
+
+Next steps will be filling the wiki, and improving and adding more features.
