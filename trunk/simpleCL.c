@@ -17,7 +17,7 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.02_27_09_2011 
+   SimpleOpenCL Version 0.03_28_09_2011 
 
 */
 
@@ -850,6 +850,46 @@ void sclRead( clHard hardware, size_t size, cl_mem buffer, void *hostPointer ) {
 		printf( "\nclRead Error\n" );
 		sclPrintErrorFlags( err );
        	}
+}
+
+cl_int sclFinish( clHard hardware ){
+
+	cl_int err;
+
+	err = clFinish( hardware.queue );
+	if ( err != CL_SUCCESS ) {
+		printf( "\nError clFinish\n" );
+		sclPrintErrorFlags( err );
+	}
+
+	return err;
+
+}
+
+cl_ulong sclGetEventTime( clHard hardware, cl_event event ){
+
+	cl_ulong elapsedTime, startTime, endTime;
+
+	sclFinish( hardware );
+
+	clGetEventProfilingInfo( event, CL_PROFILING_COMMAND_START, sizeof(cl_ulong), &startTime, NULL);
+	clGetEventProfilingInfo( event, CL_PROFILING_COMMAND_END, sizeof(cl_ulong), &endTime, NULL);
+
+	elapsedTime = endTime-startTime;
+
+	return elapsedTime;
+}
+
+void sclSetKernelArg( clSoft software, int argnum, size_t typeSize, void *argument ){
+
+	cl_int err;
+
+	err = clSetKernelArg( software.kernel, argnum, typeSize, argument );
+	if ( err != CL_SUCCESS ) {	
+		printf( "\nError clSetKernelArg number %d\n", argnum );
+		sclPrintErrorFlags( err );
+	}
+
 }
 
 #ifdef __cplusplus

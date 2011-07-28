@@ -17,7 +17,7 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 ####################################################################### 
 
-SimpleOpenCL Version 0.02_27_09_2011 ( version format v1.vv2_DD_MM_YYYY )
+SimpleOpenCL Version 0.03_28_09_2011 ( version format v1.vv2_DD_MM_YYYY )
 
 - v1 Incremented with increased functionality up to a certain goal or amount of changes (new functions)
 - vv2 Incremented with improvements in actual version functionality (no new functions, but changes on 	functions headers and/or code).
@@ -47,6 +47,6 @@ Next version #################################
 
 Goals for version 1.0:
 
-- Function names must be unified under a certain criteria. Something like sclFunctionName.
-- All hardware selection functions must use the getAllHardware function first if a list of hardware is 	not passed as an argument or it has NULL value, and then return the desired hardware following the function criteria expressed in its own name.
+- Encapsulate all functions that return error, in a way that automatically, the OpenCL error flag is printed if there is such an error. The goal is to eliminate error handling code, and give debugging information at the same time in a simple way.
+- All hardware selection functions must use the sclGetAllHardware function first if a list of hardware is not passed as an argument or it has NULL value, and then return the desired hardware following the function criteria expressed in its own name.
 - There should be a function that allows to set the arguments of a kernel and enqueue execution in a single line. Cristian's proposed solution is to use a printf style function. That can be a bit bulky, but very useful. Any other proposal is welcome.
