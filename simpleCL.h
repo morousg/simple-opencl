@@ -17,7 +17,7 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.02_27_09_2011 
+   SimpleOpenCL Version 0.03_28_09_2011 
 
 */
 #include <sys/stat.h>
@@ -94,6 +94,24 @@ void 			sclPrintDeviceNamePlatforms( clHard* hardList, int found );
 
 cl_event 		sclLaunchKernelWEvent( cl_command_queue queue, cl_kernel kernel, size_t *global_work_size, size_t *local_work_size);
 void 			sclLaunchKernel( cl_command_queue queue, cl_kernel kernel, size_t *global_work_size, size_t *local_work_size);
+
+/* ######################################################## */
+
+/* ####### Event queries ################################## */
+
+cl_ulong 		sclGetEventTime( clHard hardware, cl_event event );
+
+/* ######################################################## */
+
+/* ####### Queue management ############################### */
+
+cl_int			sclFinish( clHard hardware );
+
+/* ######################################################## */
+
+/* ####### Kernel argument setting ######################## */
+
+void 			sclSetKernelArg( clSoft software, int argnum, size_t typeSize, void *argument );
 
 /* ######################################################## */
 
