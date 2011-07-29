@@ -17,7 +17,7 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 ####################################################################### 
 
-SimpleOpenCL Version 0.03_28_09_2011 ( version format v1.vv2_DD_MM_YYYY )
+SimpleOpenCL Version 0.04_29_09_2011 ( version format v1.vv2_DD_MM_YYYY )
 
 - v1 Incremented with increased functionality up to a certain goal or amount of changes (new functions)
 - vv2 Incremented with improvements in actual version functionality (no new functions, but changes on 	functions headers and/or code).
@@ -33,7 +33,7 @@ We are not aiming to provide a CUDA-like interface for OpenCL, but there will be
 
 Version description #########################
 
-Actual version 0.01:
+Actual version 0.04:
 
 - Non finished but working version. A first finished version is scheduled for version 1.0
 - It provides two structs to simplify the handling of OpenCL objects. They are conceptually grouped in hardware and software.
@@ -41,7 +41,8 @@ Actual version 0.01:
 - It also provides a function that creates a list of devices using the "clHard" struct for each device, and creates a context for that devices. The context will be the same for same type and same memory capacity devices. If any of those differ, then different contexts will be created for each device.
 - Other functions select the desired devices from the list.
 - In order to get information of OpenCL errors, there is a function that prints the OpenCL error flags returned by the OpenCL functions.
-- Functions to load Device source code, compile it etc are present. 
+- Functions to load Device source code, compile it etc are present.
+- Functions to enqueue or directly execute kernels, etc... 
 
 Next version #################################
 

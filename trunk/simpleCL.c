@@ -17,7 +17,7 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.03_28_09_2011 
+   SimpleOpenCL Version 0.04_29_09_2011 
 
 */
 
@@ -29,12 +29,12 @@ extern "C" {
 
 void sclPrintErrorFlags( cl_int flag ){
     
-        switch (flag){
-    
+	switch (flag){
+
 		case CL_DEVICE_NOT_FOUND:
 			printf("\nCL_DEVICE_NOT_FOUND\n");
 			break;
-      		case CL_DEVICE_NOT_AVAILABLE:
+		case CL_DEVICE_NOT_AVAILABLE:
 			printf("\nCL_DEVICE_NOT_AVAILABLE\n");
 			break;
 		case CL_COMPILER_NOT_AVAILABLE:
@@ -52,142 +52,142 @@ void sclPrintErrorFlags( cl_int flag ){
 		case CL_IMAGE_FORMAT_NOT_SUPPORTED:
 			printf("\nCL_IMAGE_FORMAT_NOT_SUPPORTED\n");
 			break;
-                case CL_INVALID_COMMAND_QUEUE:
-                        printf("\nCL_INVALID_COMMAND_QUEUE\n");
-                        break;
-                case CL_INVALID_CONTEXT:
-                        printf("\nCL_INVALID_CONTEXT\n");
-                        break;
-                case CL_INVALID_MEM_OBJECT:
-                        printf("\nCL_INVALID_MEM_OBJECT\n");
-                        break;
-                case CL_INVALID_VALUE:
-                        printf("\nCL_INVALID_VALUE\n");
-                        break;
-                case CL_INVALID_EVENT_WAIT_LIST:
-                        printf("\nCL_INVALID_EVENT_WAIT_LIST\n");
-                        break;
-                case CL_MEM_OBJECT_ALLOCATION_FAILURE:
-                        printf("\nCL_MEM_OBJECT_ALLOCATION_FAILURE\n");
-                        break;
-                case CL_OUT_OF_HOST_MEMORY:
-                        printf("\nCL_OUT_OF_HOST_MEMORY\n");
-                        break;
-		                
-                case CL_INVALID_PROGRAM_EXECUTABLE:
-                        printf("\nCL_INVALID_PROGRAM_EXECUTABLE\n");
-                        break;
-                case CL_INVALID_KERNEL:
-                        printf("\nCL_INVALID_KERNEL\n");
-                        break;
-                case CL_INVALID_KERNEL_ARGS:
-                        printf("\nCL_INVALID_KERNEL_ARGS\n");
-                        break;
-                case CL_INVALID_WORK_DIMENSION:
-                        printf("\nCL_INVALID_WORK_DIMENSION\n");
-                        break;
+		case CL_INVALID_COMMAND_QUEUE:
+			printf("\nCL_INVALID_COMMAND_QUEUE\n");
+			break;
+		case CL_INVALID_CONTEXT:
+			printf("\nCL_INVALID_CONTEXT\n");
+			break;
+		case CL_INVALID_MEM_OBJECT:
+			printf("\nCL_INVALID_MEM_OBJECT\n");
+			break;
+		case CL_INVALID_VALUE:
+			printf("\nCL_INVALID_VALUE\n");
+			break;
+		case CL_INVALID_EVENT_WAIT_LIST:
+			printf("\nCL_INVALID_EVENT_WAIT_LIST\n");
+			break;
+		case CL_MEM_OBJECT_ALLOCATION_FAILURE:
+			printf("\nCL_MEM_OBJECT_ALLOCATION_FAILURE\n");
+			break;
+		case CL_OUT_OF_HOST_MEMORY:
+			printf("\nCL_OUT_OF_HOST_MEMORY\n");
+			break;
+
+		case CL_INVALID_PROGRAM_EXECUTABLE:
+			printf("\nCL_INVALID_PROGRAM_EXECUTABLE\n");
+			break;
+		case CL_INVALID_KERNEL:
+			printf("\nCL_INVALID_KERNEL\n");
+			break;
+		case CL_INVALID_KERNEL_ARGS:
+			printf("\nCL_INVALID_KERNEL_ARGS\n");
+			break;
+		case CL_INVALID_WORK_DIMENSION:
+			printf("\nCL_INVALID_WORK_DIMENSION\n");
+			break;
 #ifndef __APPLE__ 
-                case CL_INVALID_GLOBAL_WORK_SIZE:
-                        printf("\nCL_INVALID_GLOBAL_WORK_SIZE\n");
-                        break;
+		case CL_INVALID_GLOBAL_WORK_SIZE:
+			printf("\nCL_INVALID_GLOBAL_WORK_SIZE\n");
+			break;
 #endif
 		case CL_INVALID_WORK_GROUP_SIZE:
-                        printf("\nCL_INVALID_WORK_GROUP_SIZE\n");
-                        break;
-                case CL_INVALID_WORK_ITEM_SIZE:
+			printf("\nCL_INVALID_WORK_GROUP_SIZE\n");
+			break;
+		case CL_INVALID_WORK_ITEM_SIZE:
 			printf("\nCL_INVALID_WORK_ITEM_SIZE\n");
-                        break;
-                case CL_INVALID_GLOBAL_OFFSET:
-                        printf("\nCL_INVALID_GLOBAL_OFFSET\n");
-                        break;
-                case CL_OUT_OF_RESOURCES:
-                        printf("\nCL_OUT_OF_RESOURCES\n");
-                        break;
-		
-                case CL_INVALID_PROGRAM:
-                        printf("\nCL_INVALID_PROGRAM\n");
-                        break;
-                case CL_INVALID_KERNEL_NAME:
-                        printf("\nCL_INVALID_KERNEL_NAME\n");
-                        break;
-                case CL_INVALID_KERNEL_DEFINITION:
-                        printf("\nCL_INVALID_KERNEL_DEFINITION\n");
-                        break;
+			break;
+		case CL_INVALID_GLOBAL_OFFSET:
+			printf("\nCL_INVALID_GLOBAL_OFFSET\n");
+			break;
+		case CL_OUT_OF_RESOURCES:
+			printf("\nCL_OUT_OF_RESOURCES\n");
+			break;
+
+		case CL_INVALID_PROGRAM:
+			printf("\nCL_INVALID_PROGRAM\n");
+			break;
+		case CL_INVALID_KERNEL_NAME:
+			printf("\nCL_INVALID_KERNEL_NAME\n");
+			break;
+		case CL_INVALID_KERNEL_DEFINITION:
+			printf("\nCL_INVALID_KERNEL_DEFINITION\n");
+			break;
 		case CL_INVALID_BUFFER_SIZE:
 			printf("\nCL_INVALID_BUFFER_SIZE\n");
 			break;
-	        case CL_BUILD_PROGRAM_FAILURE:
-	       		printf("\nCL_BUILD_PROGRAM_FAILURE\n");
-	       		break;
-	        case CL_INVALID_ARG_INDEX:
-	       		printf("\nCL_INVALID_ARG_INDEX\n");
-	       		break;
-	        case CL_INVALID_ARG_VALUE:
-	       		printf("\nCL_INVALID_ARG_VALUE\n");
-	       		break;
+		case CL_BUILD_PROGRAM_FAILURE:
+			printf("\nCL_BUILD_PROGRAM_FAILURE\n");
+			break;
+		case CL_INVALID_ARG_INDEX:
+			printf("\nCL_INVALID_ARG_INDEX\n");
+			break;
+		case CL_INVALID_ARG_VALUE:
+			printf("\nCL_INVALID_ARG_VALUE\n");
+			break;
 		case CL_MAP_FAILURE:
-	       		printf("\nCL_MAP_FAILURE\n");
-	       		break;
+			printf("\nCL_MAP_FAILURE\n");
+			break;
 		case CL_MISALIGNED_SUB_BUFFER_OFFSET:
-	       		printf("\nCL_MISALIGNED_SUB_BUFFER_OFFSET\n");
-	       		break;
+			printf("\nCL_MISALIGNED_SUB_BUFFER_OFFSET\n");
+			break;
 		case CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST:
-	       		printf("\nCL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST\n");
-	       		break;
+			printf("\nCL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST\n");
+			break;
 		case CL_INVALID_DEVICE_TYPE:
-	       		printf("\nCL_INVALID_DEVICE_TYPE\n");
-	       		break;
+			printf("\nCL_INVALID_DEVICE_TYPE\n");
+			break;
 		case CL_INVALID_PLATFORM:
-	       		printf("\nCL_INVALID_PLATFORM\n");
-	       		break;
+			printf("\nCL_INVALID_PLATFORM\n");
+			break;
 		case CL_INVALID_DEVICE:
-	       		printf("\nCL_INVALID_DEVICE\n");
-	       		break; 
+			printf("\nCL_INVALID_DEVICE\n");
+			break; 
 		case CL_INVALID_QUEUE_PROPERTIES:
-	       		printf("\nCL_INVALID_QUEUE_PROPERTIES\n");
-	       		break; 
+			printf("\nCL_INVALID_QUEUE_PROPERTIES\n");
+			break; 
 		case CL_INVALID_HOST_PTR:
-	       		printf("\nCL_INVALID_HOST_PTR\n");
-	       		break;
+			printf("\nCL_INVALID_HOST_PTR\n");
+			break;
 		case CL_INVALID_IMAGE_FORMAT_DESCRIPTOR:
-	       		printf("\nCL_INVALID_IMAGE_FORMAT_DESCRIPTOR\n");
-	       		break;
+			printf("\nCL_INVALID_IMAGE_FORMAT_DESCRIPTOR\n");
+			break;
 		case CL_INVALID_IMAGE_SIZE:
-	       		printf("\nCL_INVALID_IMAGE_SIZE\n");
-	       		break;
+			printf("\nCL_INVALID_IMAGE_SIZE\n");
+			break;
 		case CL_INVALID_SAMPLER:
-	       		printf("\nCL_INVALID_SAMPLER\n");
-	       		break;
+			printf("\nCL_INVALID_SAMPLER\n");
+			break;
 		case CL_INVALID_BINARY:
-	       		printf("\nCL_INVALID_BINARY\n");
-	       		break;
+			printf("\nCL_INVALID_BINARY\n");
+			break;
 		case CL_INVALID_BUILD_OPTIONS:
-	       		printf("\nCL_INVALID_BUILD_OPTIONS\n");
-	       		break;
+			printf("\nCL_INVALID_BUILD_OPTIONS\n");
+			break;
 		case CL_INVALID_ARG_SIZE:
 			printf("\nCL_INVALID_ARG_SIZE\n");
-	       		break;
+			break;
 		case CL_INVALID_EVENT:
 			printf("\nCL_INVALID_EVENT\n");
-	       		break;
+			break;
 		case CL_INVALID_OPERATION:
 			printf("\nCL_INVALID_OPERATION\n");
-	       		break;
+			break;
 		case CL_INVALID_GL_OBJECT:
 			printf("\nCL_INVALID_GL_OBJECT\n");
-	       		break;
+			break;
 		case CL_INVALID_MIP_LEVEL:
 			printf("\nCL_INVALID_MIP_LEVEL\n");
-	       		break;
+			break;
 		case CL_INVALID_PROPERTY:
 			printf("\nCL_INVALID_PROPERTY\n");
-	       		break;
-	        default:
-	            	printf("\nUnknown error code: %d\n",flag);    
-		}
+			break;
+		default:
+			printf("\nUnknown error code: %d\n",flag);    
+	}
 }
 
-char * _sclLoadProgramSource( const char *filename )
+char* _sclLoadProgramSource( const char *filename )
 { 
 	struct stat statbuf;
 	FILE *fh; 
@@ -236,24 +236,52 @@ void _sclBuildProgram( cl_program program, cl_device_id devices, const char* pNa
 	}
 }
 
-cl_kernel _sclCreateKernel( cl_program classif_program, char* kernel_name ) {
+cl_kernel _sclCreateKernel( clSoft software ) {
 	cl_kernel kernel;
 	cl_int err;
 
-	kernel = clCreateKernel( classif_program, kernel_name, &err );
+	kernel = clCreateKernel( software.program, software.kernelName, &err );
 	if ( err != CL_SUCCESS ) {
-		printf( "Error on createKernel " );
+		printf( "Error on createKernel %s ", software.kernelName );
 		sclPrintErrorFlags( err );
 	}
 
 	return kernel;
 }
 
-cl_event sclLaunchKernelWEvent( cl_command_queue queue, cl_kernel kernel, size_t *global_work_size, size_t *local_work_size) {
+cl_event sclLaunchKernelWEvent( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size) {
 	cl_int err;
 	cl_event myEvent;	
 
-	err = clEnqueueNDRangeKernel( queue, kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, &myEvent );
+	err = clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, &myEvent );
+	if ( err != CL_SUCCESS ) {
+		printf( "\nError on launchKernel %s", software.kernelName );
+		sclPrintErrorFlags(err); }
+
+	sclFinish( hardware );
+
+	return myEvent;
+		
+}
+
+void sclLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size) {
+	cl_int err;
+
+	err = clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, NULL );
+	if ( err != CL_SUCCESS ) {
+		printf( "\nError on launchKernel " );
+		sclPrintErrorFlags( err );
+	}
+
+	sclFinish( hardware );
+
+}
+
+cl_event sclEnqueueKernelWEvent( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size) {
+	cl_int err;
+	cl_event myEvent;	
+
+	err = clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, &myEvent );
 	if ( err != CL_SUCCESS ) {
 		printf( "\nError on launchKernel " );
 		sclPrintErrorFlags(err); }
@@ -262,10 +290,10 @@ cl_event sclLaunchKernelWEvent( cl_command_queue queue, cl_kernel kernel, size_t
 		
 }
 
-void sclLaunchKernel( cl_command_queue queue, cl_kernel kernel, size_t *global_work_size, size_t *local_work_size) {
+void sclEnqueueKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size) {
 	cl_int err;
 
-	err = clEnqueueNDRangeKernel( queue, kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, NULL );
+	err = clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, NULL );
 	if ( err != CL_SUCCESS ) {
 		printf( "\nError on launchKernel " );
 		sclPrintErrorFlags( err );
@@ -500,7 +528,7 @@ int sclGetAllHardware( clHard** hardList ) {
 		printf("\nNo OpenCL plantforms found.\n");
 	}
 	else {
-		for ( i = 0; i < nPlatforms; ++i ) {
+		for ( i = 0; i < (int)nPlatforms; ++i ) {
 			err = clGetDeviceIDs( platforms[i], CL_DEVICE_TYPE_ALL, 16, devices, &nDevices );
 			if ( nDevices == 0 ) {
 				printf("\nNo OpenCL enabled device found.");
@@ -510,7 +538,7 @@ int sclGetAllHardware( clHard** hardList ) {
 				}
 			}
 			else {
-				for ( j = 0; j < nDevices; ++j ) {
+				for ( j = 0; j < (int)nDevices; ++j ) {
 
 					(*hardList)[ found ].platform	    = platforms[ i ];
 					(*hardList)[ found ].device 	    = devices[ j ];
@@ -769,6 +797,8 @@ clHard sclGetCPUHardware( int nDevice, int* found ) {
 clSoft sclGetCLSoftware( char* path, char* name, clHard hardware ){
 	clSoft software;
 	
+	sprintf( software.kernelName, "%s", name);
+	
 	/* Load program source
 	 ########################################################### */
 	char *source = _sclLoadProgramSource( path );
@@ -786,7 +816,7 @@ clSoft sclGetCLSoftware( char* path, char* name, clHard hardware ){
    	
    	/* Create the kernel object
 	 ########################################################################## */
-	software.kernel = _sclCreateKernel( software.program, name );
+	software.kernel = _sclCreateKernel( software );
 	/* ########################################################################## */
 
 	return software;
