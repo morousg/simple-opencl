@@ -17,7 +17,7 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.03_28_09_2011 
+   SimpleOpenCL Version 0.04_29_09_2011 
 
 */
 #include <sys/stat.h>
@@ -51,7 +51,8 @@ typedef struct {
 typedef clHard* ptclHard;
 typedef struct {
 	cl_program program;
-	cl_kernel kernel;	
+	cl_kernel kernel;
+	char kernelName[98];	
 }clSoft;
 #define _OCLUTILS_STRUCTS
 #endif
@@ -92,8 +93,10 @@ void 			sclPrintDeviceNamePlatforms( clHard* hardList, int found );
 
 /* ####### Device execution ############################### */
 
-cl_event 		sclLaunchKernelWEvent( cl_command_queue queue, cl_kernel kernel, size_t *global_work_size, size_t *local_work_size);
-void 			sclLaunchKernel( cl_command_queue queue, cl_kernel kernel, size_t *global_work_size, size_t *local_work_size);
+cl_event 		sclLaunchKernelWEvent( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size );
+void 			sclLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size );
+cl_event		sclEnqueueKernelWEvent( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size );
+void 			sclEnqueueKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size );
 
 /* ######################################################## */
 
@@ -112,6 +115,7 @@ cl_int			sclFinish( clHard hardware );
 /* ####### Kernel argument setting ######################## */
 
 void 			sclSetKernelArg( clSoft software, int argnum, size_t typeSize, void *argument );
+/*void			sclSetKernelArgs( clSoft software, char *types, void *arg, ... );*/
 
 /* ######################################################## */
 
@@ -128,7 +132,7 @@ int 			sclGetFastestDevice( clHard* hardList, int found );
 /* ####### cl software management ######################### */
 
 void 			_sclBuildProgram( cl_program program, cl_device_id devices, const char* pName );
-cl_kernel 		_sclCreateKernel( cl_program classif_program, char* kernel_name );
+cl_kernel 		_sclCreateKernel( clSoft software );
 cl_program 		_sclCreateProgram( char* program_source, cl_context context );
 char* 			_sclLoadProgramSource( const char *filename );
 
