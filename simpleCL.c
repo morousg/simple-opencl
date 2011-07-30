@@ -17,7 +17,7 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.04_29_09_2011 
+   SimpleOpenCL Version 0.05_30_09_2011 
 
 */
 
@@ -209,20 +209,25 @@ char* _sclLoadProgramSource( const char *filename )
  
 cl_program _sclCreateProgram( char* program_source, cl_context context )
 {
+	cl_program program;
+#ifdef DEBUG
 	cl_int err;
 	
-	cl_program program;
 	program = clCreateProgramWithSource( context, 1, (const char**)&program_source, NULL, &err );
 	if ( err!=CL_SUCCESS ) {
 		printf( "Error on createProgram" );
 		sclPrintErrorFlags( err );
 	}
+#else
+	program = clCreateProgramWithSource( context, 1, (const char**)&program_source, NULL, NULL );
+#endif
 	
 	return program;
 }
 
 void _sclBuildProgram( cl_program program, cl_device_id devices, const char* pName )
 {
+#ifdef DEBUG
 	cl_int err;
 	char build_c[4096];
 	
@@ -234,10 +239,15 @@ void _sclBuildProgram( cl_program program, cl_device_id devices, const char* pNa
 		clGetProgramBuildInfo( program, devices, CL_PROGRAM_BUILD_LOG, 4096, build_c, NULL );
 		printf( "Build Log for %s_program:\n%s\n", pName, build_c );
 	}
+#else
+	clBuildProgram( program, 0, NULL, NULL, NULL, NULL );
+#endif
+
 }
 
 cl_kernel _sclCreateKernel( clSoft software ) {
 	cl_kernel kernel;
+#ifdef DEBUG
 	cl_int err;
 
 	kernel = clCreateKernel( software.program, software.kernelName, &err );
@@ -245,60 +255,44 @@ cl_kernel _sclCreateKernel( clSoft software ) {
 		printf( "Error on createKernel %s ", software.kernelName );
 		sclPrintErrorFlags( err );
 	}
+#else
+	kernel = clCreateKernel( software.program, software.kernelName, NULL );
+#endif
 
 	return kernel;
 }
 
-cl_event sclLaunchKernelWEvent( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size) {
-	cl_int err;
+cl_event sclLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size) {
 	cl_event myEvent;	
+#ifdef DEBUG
+	cl_int err;
 
 	err = clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, &myEvent );
 	if ( err != CL_SUCCESS ) {
 		printf( "\nError on launchKernel %s", software.kernelName );
 		sclPrintErrorFlags(err); }
-
+#else
+	clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, NULL );
+#endif
 	sclFinish( hardware );
-
 	return myEvent;
-		
 }
 
-void sclLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size) {
-	cl_int err;
-
-	err = clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, NULL );
-	if ( err != CL_SUCCESS ) {
-		printf( "\nError on launchKernel " );
-		sclPrintErrorFlags( err );
-	}
-
-	sclFinish( hardware );
-
-}
-
-cl_event sclEnqueueKernelWEvent( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size) {
-	cl_int err;
+cl_event sclEnqueueKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size) {
 	cl_event myEvent;	
+#ifdef DEBUG
+	cl_int err;
 
 	err = clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, &myEvent );
 	if ( err != CL_SUCCESS ) {
-		printf( "\nError on launchKernel " );
+		printf( "\nError on launchKernel %s", software.kernelName );
 		sclPrintErrorFlags(err); }
+#else
+	clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, NULL );
+#endif
 
 	return myEvent;
 		
-}
-
-void sclEnqueueKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size) {
-	cl_int err;
-
-	err = clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, NULL );
-	if ( err != CL_SUCCESS ) {
-		printf( "\nError on launchKernel " );
-		sclPrintErrorFlags( err );
-	}
-
 }
 
 void sclReleaseClSoft( clSoft soft ) {
@@ -383,6 +377,7 @@ void sclPrintHardwareStatus( clHard hardware ) {
 void _sclCreateQueues( clHard* hardList, int found ) {
 
 	int i;
+#ifdef DEBUG
 	cl_int err;
 
 	for ( i = 0; i < found; ++i ) {
@@ -392,6 +387,13 @@ void _sclCreateQueues( clHard* hardList, int found ) {
 			fprintf( stdout, "\nError creating command queue %d", i );
 		}
 	}
+#else
+	for ( i = 0; i < found; ++i ) {
+		hardList[i].queue = 
+		clCreateCommandQueue( hardList[i].context, hardList[i].device, NULL, NULL );
+	}
+#endif
+
 }
 
 void _sclSmartCreateContexts( clHard* hardList, int found ) {
@@ -400,7 +402,9 @@ void _sclSmartCreateContexts( clHard* hardList, int found ) {
 	cl_context context;
 	char var_queries1[1024];
 	char var_queries2[1024];
+#ifdef DEBUG
 	cl_int err;
+#endif
 	ptclHard groups[10][20];
 	int i, j, groupSet = 0;
 	int groupSizes[10];
@@ -442,12 +446,14 @@ void _sclSmartCreateContexts( clHard* hardList, int found ) {
 		for ( j = 0; j < groupSizes[i]; ++j ) {
 			deviceList[j] = groups[i][j]->device;	
 		}
-
+#ifdef DEBUG
 		context = clCreateContext( 0, groupSizes[i], deviceList, NULL, NULL, &err );
 		if ( err != CL_SUCCESS ) {
 			fprintf( stdout, "\nError creating context on device %d", i );
 		}
-
+#else
+		context = clCreateContext( 0, groupSizes[i], deviceList, NULL, NULL, NULL );
+#endif
 		for ( j = 0; j < groupSizes[i]; ++j ) {
 			groups[i][j]->context = context;
 		}
@@ -824,22 +830,28 @@ clSoft sclGetCLSoftware( char* path, char* name, clHard hardware ){
 }
 
 cl_mem sclMalloc( clHard hardware, cl_int mode, size_t size ){
+	cl_mem buffer;
+#ifdef DEBUG
 	cl_int err;
 	
-	cl_mem buffer = clCreateBuffer( hardware.context, mode, size, NULL, &err );
+	buffer = clCreateBuffer( hardware.context, mode, size, NULL, &err );
 	if ( err != CL_SUCCESS ) {
 		printf( "\nclMalloc Error\n" );
 		sclPrintErrorFlags( err );
 	}
+#else
+	buffer = clCreateBuffer( hardware.context, mode, size, NULL, NULL );
+#endif
 		
 	return buffer;
 }	
 
 cl_mem sclMallocWrite( clHard hardware, cl_int mode, size_t size, void* hostPointer ){
+	cl_mem buffer;
+#ifdef DEBUG
+	cl_int err;    
 
-	cl_int err;
-    
-        cl_mem buffer = clCreateBuffer( hardware.context, mode, size, NULL, &err );
+        buffer = clCreateBuffer( hardware.context, mode, size, NULL, &err );
         if ( err != CL_SUCCESS ) { 
 		printf( "\nclMallocWrite Error on clCreateBuffer\n" );
 		sclPrintErrorFlags( err );
@@ -850,12 +862,15 @@ cl_mem sclMallocWrite( clHard hardware, cl_int mode, size_t size, void* hostPoin
 		printf( "\nclMallocWrite Error on clEnqueueWriteBuffer\n" );
 		sclPrintErrorFlags( err );
 	}   
-
+#else
+        buffer = clCreateBuffer( hardware.context, mode, size, NULL, NULL );
+	clEnqueueWriteBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
+#endif
 	return buffer;
 }
 
 void sclWrite( clHard hardware, size_t size, cl_mem buffer, void* hostPointer ) {
-
+#ifdef DEBUG
 	cl_int err;
 
 	err = clEnqueueWriteBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
@@ -863,27 +878,27 @@ void sclWrite( clHard hardware, size_t size, cl_mem buffer, void* hostPointer ) 
 		printf( "\nclWrite Error\n" );
 		sclPrintErrorFlags( err );
 	}   
-
+#else
+	clEnqueueWriteBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
+#endif
 }
 
 void sclRead( clHard hardware, size_t size, cl_mem buffer, void *hostPointer ) {
+#ifdef DEBUG
 	cl_int err;
-
-	err = clRetainCommandQueue( hardware.queue );
-	if ( err != CL_SUCCESS ) {
-		printf( "\nclRetainCommandQueue Error\n" );
-		sclPrintErrorFlags( err );
-       	}
 
 	err = clEnqueueReadBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
 	if ( err != CL_SUCCESS ) {
 		printf( "\nclRead Error\n" );
 		sclPrintErrorFlags( err );
        	}
+#else
+	clEnqueueReadBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
+#endif
 }
 
 cl_int sclFinish( clHard hardware ){
-
+#ifdef DEBUG
 	cl_int err;
 
 	err = clFinish( hardware.queue );
@@ -891,6 +906,9 @@ cl_int sclFinish( clHard hardware ){
 		printf( "\nError clFinish\n" );
 		sclPrintErrorFlags( err );
 	}
+#else
+	clFinish( hardware.queue );
+#endif
 
 	return err;
 
@@ -911,7 +929,7 @@ cl_ulong sclGetEventTime( clHard hardware, cl_event event ){
 }
 
 void sclSetKernelArg( clSoft software, int argnum, size_t typeSize, void *argument ){
-
+#ifdef DEBUG
 	cl_int err;
 
 	err = clSetKernelArg( software.kernel, argnum, typeSize, argument );
@@ -919,6 +937,9 @@ void sclSetKernelArg( clSoft software, int argnum, size_t typeSize, void *argume
 		printf( "\nError clSetKernelArg number %d\n", argnum );
 		sclPrintErrorFlags( err );
 	}
+#else
+	clSetKernelArg( software.kernel, argnum, typeSize, argument );
+#endif
 
 }
 
