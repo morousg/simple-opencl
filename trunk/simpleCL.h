@@ -17,7 +17,7 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.04_29_09_2011 
+   SimpleOpenCL Version 0.05_30_09_2011 
 
 */
 #include <sys/stat.h>
@@ -33,6 +33,7 @@
 
 #define WORKGROUP_X 32
 #define WORKGROUP_Y 2
+#define DEBUG
 
 #ifdef __cplusplus
 extern "C" {
@@ -93,10 +94,14 @@ void 			sclPrintDeviceNamePlatforms( clHard* hardList, int found );
 
 /* ####### Device execution ############################### */
 
-cl_event 		sclLaunchKernelWEvent( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size );
-void 			sclLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size );
-cl_event		sclEnqueueKernelWEvent( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size );
-void 			sclEnqueueKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size );
+cl_event 		sclLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size );
+cl_event		sclEnqueueKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size );
+/*  
+cl_event		sclCallKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size, 
+						const char* types, ... );
+cl_event		sclAsynCallKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size, 
+						const char* types, ... );
+*/
 
 /* ######################################################## */
 
