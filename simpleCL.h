@@ -17,13 +17,14 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.05_30_09_2011 
+   SimpleOpenCL Version 0.06_01_10_2011 
 
 */
 #include <sys/stat.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
 #ifdef __APPLE__
 #include <OpenCL/opencl.h>
@@ -97,10 +98,10 @@ void 			sclPrintDeviceNamePlatforms( clHard* hardList, int found );
 cl_event 		sclLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size );
 cl_event		sclEnqueueKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size );
 /*  
-cl_event		sclCallKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size, 
-						const char* types, ... );
-cl_event		sclAsynCallKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size, 
-						const char* types, ... );
+cl_event		sclSetAndLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size, 
+						const char* size&type, ... );
+cl_event		sclSetAndEnqueueKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size, 
+						const char* size&type, ... );
 */
 
 /* ######################################################## */
@@ -120,7 +121,7 @@ cl_int			sclFinish( clHard hardware );
 /* ####### Kernel argument setting ######################## */
 
 void 			sclSetKernelArg( clSoft software, int argnum, size_t typeSize, void *argument );
-/*void			sclSetKernelArgs( clSoft software, char *types, void *arg, ... );*/
+void			sclSetKernelArgs( clSoft software, const char *sizesValues, ... );
 
 /* ######################################################## */
 

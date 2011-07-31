@@ -17,7 +17,7 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.05_30_09_2011 
+   SimpleOpenCL Version 0.06_01_10_2011 
 
 */
 
@@ -940,6 +940,51 @@ void sclSetKernelArg( clSoft software, int argnum, size_t typeSize, void *argume
 #else
 	clSetKernelArg( software.kernel, argnum, typeSize, argument );
 #endif
+
+}
+
+void sclSetKernelArgs( clSoft software, const char *sizesValues, ... ){
+	size_t actual_size;
+	void* argument;
+	int argCount = 0;
+
+	const char *p;
+	va_list argp;
+	int i;
+	char *s;
+	char fmtbuf[256];
+
+	va_start( argp, sizesValues );
+
+	for( p = sizesValues; *p != '\0'; p++ ) {
+		if ( *p == '%' ) {
+			switch( *++p ) {
+				case 's':
+					actual_size = va_arg( argp, size_t );
+					argument = va_arg( argp, void* );
+					sclSetKernelArg( software, argCount, actual_size, argument );
+					argCount++;			
+					break;
+
+				case 'v':
+					argument = va_arg( argp, void* );
+					sclSetKernelArg( software, argCount, sizeof(cl_mem) , argument );
+					argCount++;			
+					break;
+
+				case 'n':
+					actual_size = va_arg( argp, size_t );
+					sclSetKernelArg( software, argCount, actual_size, NULL );
+					argCount++;			
+					break;
+				default:
+					break;
+
+			}
+		}
+	}
+
+	va_end(argp);
 
 }
 
