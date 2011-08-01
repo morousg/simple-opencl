@@ -17,7 +17,7 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.06_01_10_2011 
+   SimpleOpenCL Version 0.07_01_10_2011 
 
 */
 
@@ -326,6 +326,17 @@ void sclRetainAllHardware ( clHard* hardList, int found ) {
 		sclRetainClHard( hardList[i] );
 	}
  
+}
+
+void sclReleaseMemObject( cl_mem object ) {
+	cl_int err;
+
+	err = clReleaseMemObject( object );
+	if ( err != CL_SUCCESS ) {
+		printf( "\nError on sclReleaseMemObject" );
+		sclPrintErrorFlags(err); 
+	}	
+
 }
 
 void sclPrintDeviceNamePlatforms( clHard* hardList, int found ) {
@@ -849,19 +860,19 @@ cl_mem sclMalloc( clHard hardware, cl_int mode, size_t size ){
 cl_mem sclMallocWrite( clHard hardware, cl_int mode, size_t size, void* hostPointer ){
 	cl_mem buffer;
 #ifdef DEBUG
-	cl_int err;    
-
+	cl_int err;
+	
         buffer = clCreateBuffer( hardware.context, mode, size, NULL, &err );
         if ( err != CL_SUCCESS ) { 
 		printf( "\nclMallocWrite Error on clCreateBuffer\n" );
 		sclPrintErrorFlags( err );
 	}
-
 	err = clEnqueueWriteBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
 	if ( err != CL_SUCCESS ) { 
 		printf( "\nclMallocWrite Error on clEnqueueWriteBuffer\n" );
 		sclPrintErrorFlags( err );
-	}   
+	}
+
 #else
         buffer = clCreateBuffer( hardware.context, mode, size, NULL, NULL );
 	clEnqueueWriteBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
@@ -943,37 +954,44 @@ void sclSetKernelArg( clSoft software, int argnum, size_t typeSize, void *argume
 
 }
 
-void sclSetKernelArgs( clSoft software, const char *sizesValues, ... ){
-	size_t actual_size;
-	void* argument;
-	int argCount = 0;
-
-	const char *p;
-	va_list argp;
+void _sclWriteArgOnAFile( int argnum, void* arg, size_t size, const char* diff ) {
 	int i;
-	char *s;
-	char fmtbuf[256];
+	FILE *out;
+	char filename[150];
 
-	va_start( argp, sizesValues );
+	sprintf( filename, "../data/arg%d%s", argnum, diff );
 
+	out = fopen( filename, "w+");
+
+	fwrite( arg, 1, size, out );
+
+	fclose(out);
+}
+
+void inline _sclVSetKernelArgs( clSoft software, const char *sizesValues, va_list argList ) {
+	const char *p;
+	int argCount = 0;
+	void* argument;
+	size_t actual_size;
+	
 	for( p = sizesValues; *p != '\0'; p++ ) {
 		if ( *p == '%' ) {
 			switch( *++p ) {
-				case 's':
-					actual_size = va_arg( argp, size_t );
-					argument = va_arg( argp, void* );
+				case 'a':
+					actual_size = va_arg( argList, size_t );
+					argument = va_arg( argList, void* );
 					sclSetKernelArg( software, argCount, actual_size, argument );
 					argCount++;			
 					break;
 
 				case 'v':
-					argument = va_arg( argp, void* );
+					argument = va_arg( argList, void* );
 					sclSetKernelArg( software, argCount, sizeof(cl_mem) , argument );
 					argCount++;			
 					break;
 
-				case 'n':
-					actual_size = va_arg( argp, size_t );
+				case 'N':
+					actual_size = va_arg( argList, size_t );
 					sclSetKernelArg( software, argCount, actual_size, NULL );
 					argCount++;			
 					break;
@@ -983,9 +1001,151 @@ void sclSetKernelArgs( clSoft software, const char *sizesValues, ... ){
 			}
 		}
 	}
+}
 
-	va_end(argp);
+void sclSetKernelArgs( clSoft software, const char *sizesValues, ... ){
+	va_list argList;
 
+	va_start( argList, sizesValues );
+
+	_sclVSetKernelArgs( software, sizesValues, argList );	
+
+	va_end( argList );
+
+}
+
+cl_event sclSetAndLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size,
+				const char *sizesValues, ... ) {
+	va_list argList;
+	cl_event event;
+
+	va_start( argList, sizesValues );
+	
+	_sclVSetKernelArgs( software, sizesValues, argList );	
+	
+	va_end( argList );
+
+	event = sclLaunchKernel( hardware, software, global_work_size, local_work_size );
+
+	return event;
+
+}
+
+cl_event sclSetAndEnqueueKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size,
+				 const char *sizesValues, ... ) {
+	va_list argList;
+	cl_event event;
+
+	va_start( argList, sizesValues );
+	
+	_sclVSetKernelArgs( software, sizesValues, argList );	
+	
+	va_end( argList );
+
+	event = sclEnqueueKernel( hardware, software, global_work_size, local_work_size );
+
+	return event;
+	
+
+}
+
+cl_event sclManageArgsLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size,
+				    const char* sizesValues, ... ) {
+	va_list argList;
+	cl_event event;
+	const char *p;
+	int argCount = 0, outArgCount = 0, inArgCount = 0, i;
+	void* argument;
+	size_t actual_size;
+	cl_mem outBuffs[30];
+	cl_mem inBuffs[30];
+	size_t sizesOut[30];
+	typedef unsigned char* puchar;
+	puchar outArgs[30];
+
+	va_start( argList, sizesValues );
+
+	for( p = sizesValues; *p != '\0'; p++ ) {
+		if ( *p == '%' ) {
+			switch( *++p ) {
+				case 'a': /* Single value non pointer argument */
+					actual_size = va_arg( argList, size_t );
+					argument = va_arg( argList, void* );
+					sclSetKernelArg( software, argCount, actual_size, argument );
+					argCount++;			
+					break;
+
+				case 'v': /* Buffer or image object void* argument */
+					argument = va_arg( argList, void* );
+					sclSetKernelArg( software, argCount, sizeof(cl_mem) , argument );
+					argCount++;			
+					break;
+
+				case 'N': /* Local memory object using NULL argument */
+					actual_size = va_arg( argList, size_t );
+					sclSetKernelArg( software, argCount, actual_size, NULL );
+					argCount++;
+					break;
+				case 'w': /* */
+					sizesOut[ outArgCount ] = va_arg( argList, size_t );
+					outArgs[ outArgCount ] = (unsigned char*)va_arg( argList, void* );
+					outBuffs[ outArgCount ] = sclMalloc( hardware, CL_MEM_WRITE_ONLY,
+									     sizesOut[ outArgCount ] );
+					sclSetKernelArg( software, argCount, sizeof(cl_mem), &outBuffs[ outArgCount ] );
+					argCount++;
+					outArgCount++;
+					break;
+				case 'r': /* */
+					actual_size = va_arg( argList, size_t );
+					argument = va_arg( argList, void* );
+					inBuffs[ inArgCount ] = sclMallocWrite( hardware, CL_MEM_READ_ONLY, actual_size,
+										  argument );
+					sclSetKernelArg( software, argCount, sizeof(cl_mem), &inBuffs[ inArgCount ] );
+					inArgCount++;
+					argCount++;
+					break;
+				case 'R': /* */
+					sizesOut[ outArgCount ] = va_arg( argList, size_t );
+					outArgs[ outArgCount ] = (unsigned char*)va_arg( argList, void* );
+					outBuffs[ outArgCount ] = sclMallocWrite( hardware, CL_MEM_READ_WRITE, 
+										  sizesOut[ outArgCount ],
+										  outArgs[ outArgCount ] );
+					sclSetKernelArg( software, argCount, sizeof(cl_mem), &outBuffs[ outArgCount ] );
+					argCount++;
+					outArgCount++;
+					break;
+				case 'g':
+					actual_size = va_arg( argList, size_t );
+					inBuffs[ inArgCount ] = sclMalloc( hardware, CL_MEM_READ_WRITE, actual_size );
+					sclSetKernelArg( software, argCount, sizeof(cl_mem), &inBuffs[ inArgCount ] );
+					inArgCount++;
+					argCount++;
+					break;
+				default:
+					break;
+			}
+		}
+	}
+	
+	va_end( argList );
+
+	event = sclLaunchKernel( hardware, software, global_work_size, local_work_size );
+	
+	for ( i = 0; i < outArgCount; i++ ) {
+		sclRead( hardware, sizesOut[i], outBuffs[i], outArgs[i] );		
+	}
+
+	sclFinish( hardware );
+	
+	for ( i = 0; i < outArgCount; i++ ) {
+		sclReleaseMemObject( outBuffs[i] );		
+	}
+
+	for ( i = 0; i < inArgCount; i++ ) {
+		sclReleaseMemObject( inBuffs[i] );
+	}
+
+	return event;
 }
 
 #ifdef __cplusplus
