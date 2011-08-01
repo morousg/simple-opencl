@@ -17,7 +17,7 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.06_01_10_2011 
+   SimpleOpenCL Version 0.07_01_10_2011 
 
 */
 #include <sys/stat.h>
@@ -32,7 +32,7 @@
 #include <CL/cl.h>
 #endif
 
-#define WORKGROUP_X 32
+#define WORKGROUP_X 64
 #define WORKGROUP_Y 2
 #define DEBUG
 
@@ -82,6 +82,7 @@ void 			sclReleaseClHard( clHard hard );
 void 			sclRetainClHard( clHard hardware );
 void 			sclReleaseAllHardware( clHard* hardList, int found );
 void 			sclRetainAllHardware( clHard* hardList, int found );
+void			sclReleaseMemObject( cl_mem object );
 
 /* ######################################################## */
 
@@ -97,12 +98,12 @@ void 			sclPrintDeviceNamePlatforms( clHard* hardList, int found );
 
 cl_event 		sclLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size );
 cl_event		sclEnqueueKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size );
-/*  
-cl_event		sclSetAndLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size, 
-						const char* size&type, ... );
-cl_event		sclSetAndEnqueueKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size, 
-						const char* size&type, ... );
-*/
+cl_event		sclSetArgsLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size, 
+						const char* sizesValues, ... );
+cl_event		sclSetArgsEnqueueKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size, 
+						 const char* sizesValues, ... );
+cl_event		sclManageArgsLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size,
+						   const char* sizesValues, ... );
 
 /* ######################################################## */
 
@@ -135,6 +136,13 @@ int 			sclGetFastestDevice( clHard* hardList, int found );
 /* ######################################################## */
 
 /* INTERNAL FUNCITONS */
+
+/* ####### debug ########################################## */
+
+void _sclWriteArgOnAFile( int argnum, void* arg, size_t size, const char* diff );
+
+/* ######################################################## */
+
 /* ####### cl software management ######################### */
 
 void 			_sclBuildProgram( cl_program program, cl_device_id devices, const char* pName );
