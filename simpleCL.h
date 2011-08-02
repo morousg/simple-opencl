@@ -17,9 +17,14 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.07_01_10_2011 
+   SimpleOpenCL Version 0.07_02_10_2011 
 
 */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <sys/stat.h>
 #include <stdio.h>
 #include <string.h>
@@ -36,10 +41,6 @@
 #define WORKGROUP_Y 2
 #define DEBUG
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #ifndef _OCLUTILS_STRUCTS
 typedef struct {
 	cl_platform_id platform;
@@ -47,7 +48,7 @@ typedef struct {
 	cl_device_id device;
 	cl_command_queue queue;
 	int nComputeUnits;
-	unsigned long long int maxPointerSize;
+	unsigned long int maxPointerSize;
 	int deviceType; /* deviceType 0 = GPU | deviceType 1 = CPU | deviceType 2 = other */
 }clHard;
 typedef clHard* ptclHard;
@@ -155,7 +156,7 @@ char* 			_sclLoadProgramSource( const char *filename );
 /* ####### hardware management ############################ */
 
 int 			_sclGetMaxComputeUnits( cl_device_id device );
-unsigned long long int 	_sclGetMaxMemAllocSize( cl_device_id device );
+unsigned long int 	_sclGetMaxMemAllocSize( cl_device_id device );
 int 			_sclGetDeviceType( cl_device_id device );
 void 			_sclSmartCreateContexts( clHard* hardList, int found );
 void 			_sclCreateQueues( clHard* hardList, int found );
