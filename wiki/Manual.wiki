@@ -4,12 +4,14 @@ This section will describe the functionalities and the expected use of each func
 
 = Details =
 
-*{{{cl_event sclManageArgsLaunchKernel( clHard hardware, 
+{{{
+cl_event sclManageArgsLaunchKernel( clHard hardware, 
                                                            clSoft software, 
                                                            size_t *global_work_size, 
                                                            size_t *local_work_size,
                                                            const char* sizesValues, 
-                                                           ... );}}}*
+                                                           ... );
+}}}
 
 This must be the most weird function of all in the library. The functionality of this function is to execute a kernel taking the host pointers, automatically creating the device buffers, copying the data to be copied to the device, launch the kernel, wait for it to finish, read the results to be read and wait until they are completely read. All that by calling a single function. Further versions will implement concurrent read/write and execution, and multi-device support.
 
