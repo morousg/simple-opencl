@@ -58,12 +58,12 @@ The characters that can be used, and its meanings are shown in the following lis
 
 *%v* => Set a cl_mem argument. The function will only read a void * argument and use sizeof(cl_mem) as it's size. It is intended for OpenCL buffer objects or image objects already initialized. This buffers must be managed outside this function.
 
-*%N* => <pre>Set a __local memory argument. the function will only read a size_t argument and set it as a NULL argument. This will indicate the API that it is a _local argument with the read size.</pre>
+*%N* => Set a __local memory argument. the function will only read a size_t argument and set it as a NULL argument. This will indicate the API that it is a _local argument with the read size.
 
-*%w* => <pre>Set a host pointer argument to be written by the device. The function will read a "size_t size" and a "void* arg" argument. A cl_mem buffer will be created with "size_t size" size in write only mode. When the execution of the kernel is done, it will copy the contents of the buffer to the host pointer "void* arg".</pre>
+*%w* => Set a host pointer argument to be written by the device. The function will read a "size_t size" and a "void* arg" argument. A cl_mem buffer will be created with "size_t size" size in write only mode. When the execution of the kernel is done, it will copy the contents of the buffer to the host pointer "void* arg".
 
-*%r* => <pre>Set a host pointer argument to be read by the device. The function will read a "size_t size" and a "void* arg" argument. A cl_mem buffer will be created with "size_t size" size in read only mode. The contents of the host pointer "arg" will be copied to the buffer before kernel execution.</pre>
+*%r* => Set a host pointer argument to be read by the device. The function will read a "size_t size" and a "void* arg" argument. A cl_mem buffer will be created with "size_t size" size in read only mode. The contents of the host pointer "arg" will be copied to the buffer before kernel execution.
 
-*%R* => <pre>Set a host pointer argument to be read and written by the device. The same as r and w, but the buffer will be set to read/write mode. So the contents of "arg" will be copied to the buffer before kernel execution and after that, the contents of the buffer will be copied back to the "arg" pointer.</pre>
+*%R* => Set a host pointer argument to be read and written by the device. The same as r and w, but the buffer will be set to read/write mode. So the contents of "arg" will be copied to the buffer before kernel execution and after that, the contents of the buffer will be copied back to the "arg" pointer.
 
-*%g* => <pre>Set a device __global pointer to be read and written only by the device. The function will read only a "size_t size" argument. A cl_mem buffer of size "size_t size" will be created in read/write mode and set as a kernel argument. There will not be any data copy between the host and the device.</pre>
+*%g* => Set a device __global pointer to be read and written only by the device. The function will read only a "size_t size" argument. A cl_mem buffer of size "size_t size" will be created in read/write mode and set as a kernel argument. There will not be any data copy between the host and the device.
