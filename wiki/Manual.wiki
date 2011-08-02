@@ -69,3 +69,5 @@ The characters that can be used, and its meanings are shown in the following lis
 *%R* => Set a host pointer argument to be read and written by the device. The same as r and w, but the buffer will be set to read/write mode. So the contents of "arg" will be copied to the buffer before kernel execution and after that, the contents of the buffer will be copied back to the "arg" pointer.
 
 *%g* => Set a device __global pointer to be read and written only by the device. The function will read only a "size_t size" argument. A cl_mem buffer of size "size_t size" will be created in read/write mode and set as a kernel argument. There will not be any data copy between the host and the device.
+
+The event object returned is the kernel execution event. I use it to query the execution time of the kernel. Feel free to change the function code and return any other event.
