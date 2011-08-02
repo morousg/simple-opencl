@@ -2,7 +2,7 @@
 
 This section will describe the functionalities and the expected use of each function in the library.
 
-= Details =
+= sclManageArgsLaunchKernel =
 
 {{{
 cl_event sclManageArgsLaunchKernel( clHard hardware, 
