@@ -17,15 +17,16 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.07_01_10_2011 
+   SimpleOpenCL Version 0.07_02_10_2011 
 
 */
 
-#include "simpleCL.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include "simpleCL.h"
 
 void sclPrintErrorFlags( cl_int flag ){
     
@@ -481,13 +482,13 @@ int _sclGetMaxComputeUnits( cl_device_id device ) {
 
 }
 
-unsigned long long int _sclGetMaxMemAllocSize( cl_device_id device ){
+unsigned long int _sclGetMaxMemAllocSize( cl_device_id device ){
 
 	cl_ulong mem;
 
  	clGetDeviceInfo( device, CL_DEVICE_MAX_MEM_ALLOC_SIZE, 8, (void *)&mem, NULL );
 
-	return (unsigned long long int)mem;	
+	return (unsigned long int)mem;	
 
 }
 
@@ -813,13 +814,12 @@ clHard sclGetCPUHardware( int nDevice, int* found ) {
 
 clSoft sclGetCLSoftware( char* path, char* name, clHard hardware ){
 	clSoft software;
-	
-	sprintf( software.kernelName, "%s", name);
-	
 	/* Load program source
 	 ########################################################### */
 	char *source = _sclLoadProgramSource( path );
 	/* ########################################################### */
+	
+	sprintf( software.kernelName, "%s", name);
 	
 	/* Create program objects from source
 	 ########################################################### */
@@ -955,7 +955,6 @@ void sclSetKernelArg( clSoft software, int argnum, size_t typeSize, void *argume
 }
 
 void _sclWriteArgOnAFile( int argnum, void* arg, size_t size, const char* diff ) {
-	int i;
 	FILE *out;
 	char filename[150];
 
@@ -968,7 +967,7 @@ void _sclWriteArgOnAFile( int argnum, void* arg, size_t size, const char* diff )
 	fclose(out);
 }
 
-void inline _sclVSetKernelArgs( clSoft software, const char *sizesValues, va_list argList ) {
+inline void _sclVSetKernelArgs( clSoft software, const char *sizesValues, va_list argList ) {
 	const char *p;
 	int argCount = 0;
 	void* argument;
