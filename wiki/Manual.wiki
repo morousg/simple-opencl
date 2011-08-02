@@ -1,3 +1,5 @@
+#summary Description and use instructions for the library functions.
+
 = Introduction =
 
 This section will describe the functionalities and the expected use of each function in the library.
