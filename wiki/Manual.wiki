@@ -52,7 +52,7 @@ clSoft software is a struct generated with scl functions that contains all the n
 
 global_work_size and local_work_size are two pointers that contain the work item dimensions as required by clEnqueueNDRangeKernel function. See OpenCL 1.0 or 1.1 specification available on Khronos website.
 
-const char ptr sizesValues contains the information of what are the arguments to be read next, and what to do with them. For that purpose you should write an string containing % followed by a character that describes what is to be read y what to do. For each argument you shoud write an argument, though, if the size of the argument is needed, the function will read two arguments with a single %.
+const char ptr sizesValues contains the information of what are the arguments to be read next, and what to do with them. For that purpose you should write a string containing % followed by a character that describes what is to be read and what to do. For each argument you shoud write a % + character, though, if the size of the argument is needed, the function will read two arguments with a single %.
 
 The characters that can be used, and its meanings are shown in the following list:
 
