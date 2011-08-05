@@ -1,8 +1,8 @@
-#summary Description and use instructions for the library functions. v0.07
+#summary Description and library use instructions. v0.07
 
 = Introduction =
 
-This section will describe the behaviour and the expected use of each function in the library.
+This section will describe the behaviour and the expected use of each function in the library. (This section is under construction).
 
 = sclManageArgsLaunchKernel =
 
