@@ -1,13 +1,15 @@
 #summary General information and comments.
 
-= Introduction =
+= What is SimpleOpenCL =
 
-This wiki is under construction. For some days it will be only used as a place to post basic information about the code or the project.
+SimpleOpenCL is a library written in ANSI C, that aims to offer alternative functions to the default ones in OpenCL, that are more simple, and encapsulate some functionalities in order to reduce the code needed to write the most common OpenCL Host codes.
 
-= Details =
+As such, it doesn't need any special compiler. It only needs a properly installed OpenCL implementation and OpenCL compatible devices. The compilers being used for development and use of the library are gcc and g++.
 
-By now I'm only providing source code. This release is a copy paste from the las version I've used. It's possible that there is something wrong in the code even I have almost changed nothing from the working version.
+In fact, it doesn't need any installation either since it doesn't rely on any extra kernel functionality. You can add the .c and .h files to your source and include directories, and add them to your makefile commands.
 
-In few days I'll adapt some testing code to the standalone library configuration in order to test it.
+= What isn't SimpleOpenCL =
 
-Next steps will be filling the wiki, and improving and adding more features.
+This project doesn't aim to replace native OpenCL host code usage, neither to be used on complex production software. There are some complex tasks that can only be performed using native OpenCL. You can mix SimpleOpenCL and native OpenCL code at your convenience. Maybe in the future it becomes more complete, with more complex data transfer management, and more production ready but it is not the main goal. The main goal is to reduce code on most common host code tasks in a simple way.
+
+It also isn't a CUDA like library for OpenCL. It is written with ANSI C and OpenCL working in mind, and functions are created with the single goal of code reduction, regardless of the similarity or dissimilarity with CUDA of the resulting functions.
