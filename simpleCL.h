@@ -17,7 +17,7 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.07_02_10_2011 
+   SimpleOpenCL Version 0.08_08_10_2011 
 
 */
 
@@ -50,6 +50,7 @@ typedef struct {
 	int nComputeUnits;
 	unsigned long int maxPointerSize;
 	int deviceType; /* deviceType 0 = GPU | deviceType 1 = CPU | deviceType 2 = other */
+	int devNum;
 }clHard;
 typedef clHard* ptclHard;
 typedef struct {
@@ -132,7 +133,7 @@ void			sclSetKernelArgs( clSoft software, const char *sizesValues, ... );
 clHard 			sclGetGPUHardware( int nDevice, int* found );
 clHard 			sclGetCPUHardware( int nDevice, int* found );
 int 			sclGetAllHardware( clHard** hardList);
-int 			sclGetFastestDevice( clHard* hardList, int found );
+clHard 			sclGetFastestDevice( clHard* hardList, int found );
 
 /* ######################################################## */
 
