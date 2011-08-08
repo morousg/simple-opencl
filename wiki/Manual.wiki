@@ -32,7 +32,7 @@ typedef struct {
 }sclHard;
 }}}
 
-To know more about platform, context, device and queue objects take a look at the OpenCL 1.1 especification at [http://www.khronos.org/opencl/ Khronos web page].
+To know more about platform, context, device and queue objects take a look at the OpenCL 1.1 specification at [http://www.khronos.org/opencl/ Khronos web page].
 
 The variables nComputeUnits, deviceType and maxPointerSize are used to avoid further query's about the number of device compute units and the device type. 
 
@@ -54,13 +54,25 @@ typedef struct{
 }sclSoft;
 }}}
 
-To know more about program and kernel objects take a look at the OpenCL 1.1 especification at [http://www.khronos.org/opencl/ Khronos web page].
+To know more about program and kernel objects take a look at the OpenCL 1.1 specification at [http://www.khronos.org/opencl/ Khronos web page].
 
 The variable kernelName is used to store the name of the kernel to make possible showing it to identify from which kernel are we getting debugging information if an error occurs.
 
 = User functions =
 
+This are the functions that a user of SimpleOpenCL might use. They can internally call library functions that are not intended to be used outside the library, but can be used as such.
+
 == Device memory allocation ==
+
+This functions create buffers and manipulate them, using less arguments than OpenCL native functions, and printing the error name if an error occurs.
+
+=== sclMalloc ===
+
+=== sclMallocWrite ===
+
+=== sclWrite ===
+
+=== sclRead ===
 
 == Getting clSoft structs ==
 
