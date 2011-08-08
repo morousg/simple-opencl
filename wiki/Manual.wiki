@@ -1,6 +1,6 @@
 #summary Description and library use instructions. v0.07
 
-= Manual =
+= Manual = (under construction)
 
 <wiki:toc max_depth="2" />
 
