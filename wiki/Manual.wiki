@@ -1,10 +1,14 @@
 #summary Description and library use instructions. v0.07
 
+<wiki:toc max_depth="1" />
+
 = Introduction =
 
 This section will describe the behaviour and the expected use of each function in the library. (This section is under construction).
 
-= sclManageArgsLaunchKernel =
+= User functions =
+
+=== sclManageArgsLaunchKernel ===
 
 {{{
 cl_event sclManageArgsLaunchKernel( clHard hardware, 
@@ -71,3 +75,5 @@ The characters that can be used, and its meanings are shown in the following lis
 *%g* => Set a device __global pointer to be read and written only by the device. The function will read only a "size_t size" argument. A cl_mem buffer of size "size_t size" will be created in read/write mode and set as a kernel argument. There will not be any data copy between the host and the device.
 
 The event object returned is the kernel execution event. I use it to query the execution time of the kernel. Feel free to change the function code and return any other event.
+
+= Library functions =
