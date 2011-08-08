@@ -17,7 +17,7 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.07_02_10_2011 
+   SimpleOpenCL Version 0.08_08_10_2011 
 
 */
 
@@ -350,7 +350,8 @@ void sclPrintDeviceNamePlatforms( clHard* hardList, int found ) {
 		clGetPlatformInfo( hardList[i].platform, CL_PLATFORM_NAME, sizeof(cl_char)*1024, platformName, NULL );	
 		clGetPlatformInfo( hardList[i].platform, CL_PLATFORM_VENDOR, sizeof(cl_char)*1024, platformVendor, NULL );
 		clGetDeviceInfo( hardList[i].device, CL_DEVICE_NAME, sizeof(cl_char)*1024, deviceName, NULL );
-		fprintf( stdout, "\n Device %d \n Platform name: %s \n Vendor: %s \n Device name: %s", i, platformName, platformVendor, deviceName );	
+		fprintf( stdout, "\n Device %d \n Platform name: %s \n Vendor: %s \n Device name: %s", 
+				hardList[i].devNum, platformName, platformVendor, deviceName );	
 	}
 
 }
@@ -510,7 +511,7 @@ int _sclGetDeviceType( cl_device_id device ) {
 
 }
 
-int sclGetFastestDevice( clHard* hardList, int found ) {
+clHard sclGetFastestDevice( clHard* hardList, int found ) {
 	int i, maxCpUnits = 0, device = 0;
 
 	for ( i = 0; i < found ; ++i ) {
@@ -521,7 +522,7 @@ int sclGetFastestDevice( clHard* hardList, int found ) {
 		}
 	}
 
-	return device;
+	return hardList[ device ];
 }
 
 int sclGetAllHardware( clHard** hardList ) {
@@ -557,12 +558,13 @@ int sclGetAllHardware( clHard** hardList ) {
 			}
 			else {
 				for ( j = 0; j < (int)nDevices; ++j ) {
-
+					
 					(*hardList)[ found ].platform	    = platforms[ i ];
 					(*hardList)[ found ].device 	    = devices[ j ];
 					(*hardList)[ found ].nComputeUnits  = _sclGetMaxComputeUnits( (*hardList)[ found ].device );
 					(*hardList)[ found ].maxPointerSize = _sclGetMaxMemAllocSize( (*hardList)[ found ].device );				
 					(*hardList)[ found ].deviceType	    = _sclGetDeviceType( (*hardList)[ found ].device );
+					(*hardList)[ found ].devNum	    = found;
 					found++;
 				}
 			}
@@ -570,8 +572,9 @@ int sclGetAllHardware( clHard** hardList ) {
 		_sclSmartCreateContexts( *hardList, found );
 		_sclCreateQueues( *hardList, found );
 	}
-
-	sclPrintDeviceNamePlatforms( *hardList, found );
+#ifdef DEBUG
+	/*sclPrintDeviceNamePlatforms( *hardList, found );*/
+#endif
 	sclRetainAllHardware( *hardList, found );
 
 	return found;
