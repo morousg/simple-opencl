@@ -34,7 +34,7 @@ typedef struct {
 
 To know more about platform, context, device and queue objects take a look at the OpenCL 1.1 specification at [http://www.khronos.org/opencl/ Khronos web page].
 
-The variables nComputeUnits, deviceType and maxPointerSize are used to avoid further query's about the number of device compute units and the device type. 
+The variables nComputeUnits, deviceType and maxPointerSize are used to avoid further query's about the number of device compute units, the device type and the maximum pointer size for this device. 
 
 Variables nComputeUnits and deviceType are used by the SimpleOpenCL function *sclGetFastestDevice* to decide wich is provably the fastests device for executing NDRange kernels.
 
