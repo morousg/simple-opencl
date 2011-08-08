@@ -8,7 +8,32 @@
 
 This section will describe the behaviour and the expected use of each function in the library, and introduce the two main data types: sclHard and sclSoft.
 
-= 
+= SimpleOpenCL types =
+
+In order to ease the use of OpenCL objects, SimpleOpenCL groups them in two structs: sclSoft and sclHard.
+
+They are conceptually intuitive. sclHard groups all the objects related to OpenCL devices (hardware), and sclSoft groups all the objects related with device code (OpenCL C).
+
+== sclHard ==
+
+This are the eight components of sclHard:
+
+{{{
+typedef struct {
+   cl_platform_id platform;
+   cl_context context;
+   cl_device_id device;
+   cl_command_queue queue;
+   int nComputeUnits;
+   unsigned long int maxPointerSize;
+   int deviceType;
+   int devNum;
+}sclHard;
+}}}
+
+To know more about platform, context, device and queue objects take a look at the OpenCL 1.1 especification at [http://www.khronos.org/opencl/ Khronos web page].
+
+
 
 = User functions =
 
