@@ -36,7 +36,7 @@ To know more about platform, context, device and queue objects take a look at th
 
 The variables nComputeUnits, deviceType and maxPointerSize are used to avoid further query's about the number of device compute units, the device type and the maximum pointer size for this device. 
 
-Variables nComputeUnits and deviceType are used by the SimpleOpenCL function *sclGetFastestDevice* to decide wich is provably the fastests device for executing NDRange kernels.
+Variables nComputeUnits and deviceType are used by the SimpleOpenCL function *sclGetFastestDevice* to decide wich is provably the fastest device for executing NDRange kernels.
 
 The variable maxPointerSize is used by the SimpleOpenCL function *_sclSmartCreateContexts* in order to decide, among other variables, whether two or more devices will share the same context or not.
 
@@ -67,6 +67,14 @@ This are the functions that a user of SimpleOpenCL might use. They can internall
 This functions create buffers and manipulate them, using less arguments than OpenCL native functions, and printing the error name if an error occurs.
 
 === sclMalloc ===
+
+{{{
+cl_mem sclMalloc( sclHard hardware, cl_int mode, size_t size );
+}}}
+
+This function returns a buffer object. "cl_mem" is a native OpenCL data type, and is the type of the buffer object returned.
+
+It takes as arguments the device in which the buffer will be created (clHard hardware), the OpenCL buffer mode flag (CL_MEM_READ_ONLY | CL_MEM_WRITE_ONLY | CL_MEM_READ_WRITE), and the byte size of the buffer.
 
 === sclMallocWrite ===
 
