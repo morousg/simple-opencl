@@ -1,12 +1,20 @@
 #summary Description and library use instructions. v0.07
 
-<wiki:toc max_depth="1" />
+= Manual =
+
+<wiki:toc max_depth="2" />
 
 = Introduction =
 
-This section will describe the behaviour and the expected use of each function in the library. (This section is under construction).
+This section will describe the behaviour and the expected use of each function in the library, and introduce the two main data types: sclHard and sclSoft.
+
+= 
 
 = User functions =
+
+== Device memory allocation ==
+
+== Getting clSoft structs ==
 
 === sclManageArgsLaunchKernel ===
 
