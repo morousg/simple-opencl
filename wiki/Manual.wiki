@@ -78,13 +78,43 @@ It takes as arguments the device in which the buffer will be created (clHard har
 
 === sclMallocWrite ===
 
+{{{
+cl_mem sclMallocWrite( sclHard hardware, cl_int mode, size_t size, void* hostPointer );
+}}}
+
 === sclWrite ===
+
+{{{
+void sclWrite( sclHard hardware, size_t size, cl_mem buffer, void* hostPointer );
+}}}
 
 === sclRead ===
 
+{{{
+void sclRead( sclHard hardware, size_t size, cl_mem buffer, void *hostPointer );
+}}}
+
 == Getting clSoft structs ==
 
+=== sclGetCLSoftware ===
+
+{{{
+sclSoft sclGetCLSoftware( char* path, char* name, sclHard hardware );
+}}}
+
 == Release and retain OpenCL objects ==
+
+=== sclReleaseClSoft ===
+
+{{{
+void sclReleaseClSoft( sclSoft soft );
+}}}
+
+=== sclReleaseClHard ===
+
+{{{
+void sclReleaseClHard( sclHard hard );
+}}}
 
 == Debug functions ==
 
