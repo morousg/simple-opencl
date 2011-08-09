@@ -84,6 +84,12 @@ It takes as arguments the device in which the buffer will be created (clHard har
 
 == Getting clSoft structs ==
 
+== Release and retain OpenCL objects ==
+
+== Debug functions ==
+
+== Device execution ==
+
 === sclManageArgsLaunchKernel ===
 
 {{{
@@ -152,4 +158,18 @@ The characters that can be used, and its meanings are shown in the following lis
 
 The event object returned is the kernel execution event. I use it to query the execution time of the kernel. Feel free to change the function code and return any other event.
 
+== Event queries ==
+
+== Queue management ==
+
+== Kernel argument setting ==
+
+== Hardware initialization and selection ==
+
 = Library functions =
+
+== Debug ==
+
+== sclSoft creation ==
+
+== sclHard creation ==
