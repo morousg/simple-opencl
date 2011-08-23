@@ -2,11 +2,9 @@
 
 = What is SimpleOpenCL =
 
-SimpleOpenCL is a library written in ANSI C, that aims to offer alternative functions to the default ones in OpenCL, that are more simple, and encapsulate some functionalities in order to reduce the code needed to write the most common OpenCL Host codes.
+SimpleOpenCL is a library written in ANSI C that aims to offer alternative functions to the default ones in OpenCL that are more simple. It encapsulates some functionalities in a single function call in order to reduce the code needed to write the most common OpenCL Host codes.
 
-As such, it doesn't need any special compiler. It only needs a properly installed OpenCL implementation and OpenCL compatible devices. The compilers being used for development and use of the library are gcc and g++.
-
-In fact, it doesn't need any installation either since it doesn't rely on any extra kernel functionality. You can add the .c and .h files to your source and include directories, and add them to your makefile commands.
+As such it doesn't need any special compiler. It only needs a properly installed OpenCL implementation and OpenCL compatible devices. The compilers being used for development and use of the library are gcc and g++.
 
 = What isn't SimpleOpenCL =
 
