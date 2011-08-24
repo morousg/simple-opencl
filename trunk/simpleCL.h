@@ -17,7 +17,7 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.08_08_10_2011 
+   SimpleOpenCL Version 0.09_24_08_2011 
 
 */
 
@@ -51,39 +51,39 @@ typedef struct {
 	unsigned long int maxPointerSize;
 	int deviceType; /* deviceType 0 = GPU | deviceType 1 = CPU | deviceType 2 = other */
 	int devNum;
-}clHard;
-typedef clHard* ptclHard;
+}sclHard;
+typedef sclHard* ptsclHard;
 typedef struct {
 	cl_program program;
 	cl_kernel kernel;
 	char kernelName[98];	
-}clSoft;
+}sclSoft;
 #define _OCLUTILS_STRUCTS
 #endif
 
 /* USER FUNCTIONS */
 /* ####### Device memory allocation read and write  ####### */
 
-cl_mem 			sclMalloc( clHard hardware, cl_int mode, size_t size );
-cl_mem 			sclMallocWrite( clHard hardware, cl_int mode, size_t size, void* hostPointer );
-void 			sclWrite( clHard hardware, size_t size, cl_mem buffer, void* hostPointer );
-void			sclRead( clHard hardware, size_t size, cl_mem buffer, void *hostPointer );
+cl_mem 			sclMalloc( sclHard hardware, cl_int mode, size_t size );
+cl_mem 			sclMallocWrite( sclHard hardware, cl_int mode, size_t size, void* hostPointer );
+void 			sclWrite( sclHard hardware, size_t size, cl_mem buffer, void* hostPointer );
+void			sclRead( sclHard hardware, size_t size, cl_mem buffer, void *hostPointer );
 
 /* ######################################################## */
 
-/* ####### inicialization of clSoft structs  ############## */
+/* ####### inicialization of sclSoft structs  ############## */
 
-clSoft 			sclGetCLSoftware( char* path, char* name, clHard hardware );
+sclSoft 		sclGetCLSoftware( char* path, char* name, sclHard hardware );
 
 /* ######################################################## */
 
 /* ####### Release and retain OpenCL objects ############## */
 
-void 			sclReleaseClSoft( clSoft soft );
-void 			sclReleaseClHard( clHard hard );
-void 			sclRetainClHard( clHard hardware );
-void 			sclReleaseAllHardware( clHard* hardList, int found );
-void 			sclRetainAllHardware( clHard* hardList, int found );
+void 			sclReleaseClSoft( sclSoft soft );
+void 			sclReleaseClHard( sclHard hard );
+void 			sclRetainClHard( sclHard hardware );
+void 			sclReleaseAllHardware( sclHard* hardList, int found );
+void 			sclRetainAllHardware( sclHard* hardList, int found );
 void			sclReleaseMemObject( cl_mem object );
 
 /* ######################################################## */
@@ -91,49 +91,49 @@ void			sclReleaseMemObject( cl_mem object );
 /* ####### Debug functions ################################ */
 
 void 			sclPrintErrorFlags( cl_int flag );
-void 			sclPrintHardwareStatus( clHard hardware );
-void 			sclPrintDeviceNamePlatforms( clHard* hardList, int found );
+void 			sclPrintHardwareStatus( sclHard hardware );
+void 			sclPrintDeviceNamePlatforms( sclHard* hardList, int found );
 
 /* ######################################################## */
 
 /* ####### Device execution ############################### */
 
-cl_event 		sclLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size );
-cl_event		sclEnqueueKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size );
-cl_event		sclSetArgsLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size, 
+cl_event 		sclLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size );
+cl_event		sclEnqueueKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size );
+cl_event		sclSetArgsLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size, 
 						const char* sizesValues, ... );
-cl_event		sclSetArgsEnqueueKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size, 
+cl_event		sclSetArgsEnqueueKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size, 
 						 const char* sizesValues, ... );
-cl_event		sclManageArgsLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size,
+cl_event		sclManageArgsLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size,
 						   const char* sizesValues, ... );
 
 /* ######################################################## */
 
 /* ####### Event queries ################################## */
 
-cl_ulong 		sclGetEventTime( clHard hardware, cl_event event );
+cl_ulong 		sclGetEventTime( sclHard hardware, cl_event event );
 
 /* ######################################################## */
 
 /* ####### Queue management ############################### */
 
-cl_int			sclFinish( clHard hardware );
+cl_int			sclFinish( sclHard hardware );
 
 /* ######################################################## */
 
 /* ####### Kernel argument setting ######################## */
 
-void 			sclSetKernelArg( clSoft software, int argnum, size_t typeSize, void *argument );
-void			sclSetKernelArgs( clSoft software, const char *sizesValues, ... );
+void 			sclSetKernelArg( sclSoft software, int argnum, size_t typeSize, void *argument );
+void			sclSetKernelArgs( sclSoft software, const char *sizesValues, ... );
 
 /* ######################################################## */
 
 /* ####### Hardware init and selection #################### */
 
-clHard 			sclGetGPUHardware( int nDevice, int* found );
-clHard 			sclGetCPUHardware( int nDevice, int* found );
-int 			sclGetAllHardware( clHard** hardList);
-clHard 			sclGetFastestDevice( clHard* hardList, int found );
+sclHard 		sclGetGPUHardware( int nDevice, int* found );
+sclHard 		sclGetCPUHardware( int nDevice, int* found );
+int 			sclGetAllHardware( sclHard** hardList);
+sclHard 		sclGetFastestDevice( sclHard* hardList, int found );
 
 /* ######################################################## */
 
@@ -141,14 +141,14 @@ clHard 			sclGetFastestDevice( clHard* hardList, int found );
 
 /* ####### debug ########################################## */
 
-void _sclWriteArgOnAFile( int argnum, void* arg, size_t size, const char* diff );
+void 			_sclWriteArgOnAFile( int argnum, void* arg, size_t size, const char* diff );
 
 /* ######################################################## */
 
 /* ####### cl software management ######################### */
 
 void 			_sclBuildProgram( cl_program program, cl_device_id devices, const char* pName );
-cl_kernel 		_sclCreateKernel( clSoft software );
+cl_kernel 		_sclCreateKernel( sclSoft software );
 cl_program 		_sclCreateProgram( char* program_source, cl_context context );
 char* 			_sclLoadProgramSource( const char *filename );
 
@@ -159,8 +159,8 @@ char* 			_sclLoadProgramSource( const char *filename );
 int 			_sclGetMaxComputeUnits( cl_device_id device );
 unsigned long int 	_sclGetMaxMemAllocSize( cl_device_id device );
 int 			_sclGetDeviceType( cl_device_id device );
-void 			_sclSmartCreateContexts( clHard* hardList, int found );
-void 			_sclCreateQueues( clHard* hardList, int found );
+void 			_sclSmartCreateContexts( sclHard* hardList, int found );
+void 			_sclCreateQueues( sclHard* hardList, int found );
 
 /* ######################################################## */
 

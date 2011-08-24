@@ -17,7 +17,7 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.08_08_10_2011 
+   SimpleOpenCL Version 0.09_24_08_2011 
 
 */
 
@@ -246,7 +246,7 @@ void _sclBuildProgram( cl_program program, cl_device_id devices, const char* pNa
 
 }
 
-cl_kernel _sclCreateKernel( clSoft software ) {
+cl_kernel _sclCreateKernel( sclSoft software ) {
 	cl_kernel kernel;
 #ifdef DEBUG
 	cl_int err;
@@ -263,7 +263,7 @@ cl_kernel _sclCreateKernel( clSoft software ) {
 	return kernel;
 }
 
-cl_event sclLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size) {
+cl_event sclLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size) {
 	cl_event myEvent;	
 #ifdef DEBUG
 	cl_int err;
@@ -279,7 +279,7 @@ cl_event sclLaunchKernel( clHard hardware, clSoft software, size_t *global_work_
 	return myEvent;
 }
 
-cl_event sclEnqueueKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size) {
+cl_event sclEnqueueKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size) {
 	cl_event myEvent;	
 #ifdef DEBUG
 	cl_int err;
@@ -296,22 +296,22 @@ cl_event sclEnqueueKernel( clHard hardware, clSoft software, size_t *global_work
 		
 }
 
-void sclReleaseClSoft( clSoft soft ) {
+void sclReleaseClSoft( sclSoft soft ) {
 	clReleaseKernel( soft.kernel );
 	clReleaseProgram( soft.program );
 }
 
-void sclReleaseClHard( clHard hardware ){
+void sclReleaseClHard( sclHard hardware ){
 	clReleaseCommandQueue( hardware.queue );
 	clReleaseContext( hardware.context );
 }
 
-void sclRetainClHard( clHard hardware ) {
+void sclRetainClHard( sclHard hardware ) {
 	clRetainCommandQueue( hardware.queue );
 	clRetainContext( hardware.context );
 }
 
-void sclReleaseAllHardware ( clHard* hardList, int found ) {
+void sclReleaseAllHardware ( sclHard* hardList, int found ) {
 	int i;	
 
 	for ( i = 0; i < found; ++i ) {
@@ -320,7 +320,7 @@ void sclReleaseAllHardware ( clHard* hardList, int found ) {
  
 }
 
-void sclRetainAllHardware ( clHard* hardList, int found ) {
+void sclRetainAllHardware ( sclHard* hardList, int found ) {
 	int i;	
 
 	for ( i = 0; i < found; ++i ) {
@@ -340,7 +340,7 @@ void sclReleaseMemObject( cl_mem object ) {
 
 }
 
-void sclPrintDeviceNamePlatforms( clHard* hardList, int found ) {
+void sclPrintDeviceNamePlatforms( sclHard* hardList, int found ) {
 	int i;
 	cl_char deviceName[1024];
 	cl_char platformVendor[1024];
@@ -356,7 +356,7 @@ void sclPrintDeviceNamePlatforms( clHard* hardList, int found ) {
 
 }
 
-void sclPrintHardwareStatus( clHard hardware ) {
+void sclPrintHardwareStatus( sclHard hardware ) {
 
 	cl_int err;
 	char platform[100];
@@ -387,7 +387,7 @@ void sclPrintHardwareStatus( clHard hardware ) {
 
 }
 
-void _sclCreateQueues( clHard* hardList, int found ) {
+void _sclCreateQueues( sclHard* hardList, int found ) {
 
 	int i;
 #ifdef DEBUG
@@ -409,7 +409,7 @@ void _sclCreateQueues( clHard* hardList, int found ) {
 
 }
 
-void _sclSmartCreateContexts( clHard* hardList, int found ) {
+void _sclSmartCreateContexts( sclHard* hardList, int found ) {
 
 	cl_device_id deviceList[16];
 	cl_context context;
@@ -418,7 +418,7 @@ void _sclSmartCreateContexts( clHard* hardList, int found ) {
 #ifdef DEBUG
 	cl_int err;
 #endif
-	ptclHard groups[10][20];
+	ptsclHard groups[10][20];
 	int i, j, groupSet = 0;
 	int groupSizes[10];
 	int nGroups = 0;
@@ -511,7 +511,7 @@ int _sclGetDeviceType( cl_device_id device ) {
 
 }
 
-clHard sclGetFastestDevice( clHard* hardList, int found ) {
+sclHard sclGetFastestDevice( sclHard* hardList, int found ) {
 	int i, maxCpUnits = 0, device = 0;
 
 	for ( i = 0; i < found ; ++i ) {
@@ -525,7 +525,7 @@ clHard sclGetFastestDevice( clHard* hardList, int found ) {
 	return hardList[ device ];
 }
 
-int sclGetAllHardware( clHard** hardList ) {
+int sclGetAllHardware( sclHard** hardList ) {
 
 	int i, j, found=0; 
 	cl_uint nPlatforms=0, nDevices=0;
@@ -539,7 +539,7 @@ int sclGetAllHardware( clHard** hardList ) {
 	GPUplatforms = (cl_platform_id *)malloc( sizeof(cl_platform_id) * 8 );
 	platformName = (char *)malloc( sizeof(char) * 30 );
 	devices = (cl_device_id *)malloc( sizeof(cl_device_id) * 16 );
-	*hardList = (clHard*)malloc( 16*sizeof(clHard) );
+	*hardList = (sclHard*)malloc( 16*sizeof(sclHard) );
 
 	err = clGetPlatformIDs( 8, platforms, &nPlatforms );
 	
@@ -581,12 +581,12 @@ int sclGetAllHardware( clHard** hardList ) {
 
 }
 
-clHard sclGetGPUHardware( int nDevice, int* found ) {
+sclHard sclGetGPUHardware( int nDevice, int* found ) {
 
 	int i, nTotalDevs=0;
 	int nGPUplatforms=0;
 	cl_platform_id *GPUplatforms;
-	clHard hardware;
+	sclHard hardware;
 	cl_int err;
 	cl_uint nPlatforms, nDevices=0;
 	cl_platform_id *platforms;
@@ -698,12 +698,12 @@ clHard sclGetGPUHardware( int nDevice, int* found ) {
 	return hardware;
 }
 
-clHard sclGetCPUHardware( int nDevice, int* found ) {
+sclHard sclGetCPUHardware( int nDevice, int* found ) {
 
 	int i,nTotalDevs=0;
 	int nCPUplatforms=0;
 	cl_platform_id *CPUplatforms;
-	clHard hardware;
+	sclHard hardware;
 	cl_int err;
 	cl_uint nPlatforms, nDevices=0;
 	cl_platform_id *platforms;
@@ -815,8 +815,8 @@ clHard sclGetCPUHardware( int nDevice, int* found ) {
 	return hardware;
 }
 
-clSoft sclGetCLSoftware( char* path, char* name, clHard hardware ){
-	clSoft software;
+sclSoft sclGetCLSoftware( char* path, char* name, sclHard hardware ){
+	sclSoft software;
 	/* Load program source
 	 ########################################################### */
 	char *source = _sclLoadProgramSource( path );
@@ -843,7 +843,7 @@ clSoft sclGetCLSoftware( char* path, char* name, clHard hardware ){
 	
 }
 
-cl_mem sclMalloc( clHard hardware, cl_int mode, size_t size ){
+cl_mem sclMalloc( sclHard hardware, cl_int mode, size_t size ){
 	cl_mem buffer;
 #ifdef DEBUG
 	cl_int err;
@@ -860,7 +860,7 @@ cl_mem sclMalloc( clHard hardware, cl_int mode, size_t size ){
 	return buffer;
 }	
 
-cl_mem sclMallocWrite( clHard hardware, cl_int mode, size_t size, void* hostPointer ){
+cl_mem sclMallocWrite( sclHard hardware, cl_int mode, size_t size, void* hostPointer ){
 	cl_mem buffer;
 #ifdef DEBUG
 	cl_int err;
@@ -883,7 +883,7 @@ cl_mem sclMallocWrite( clHard hardware, cl_int mode, size_t size, void* hostPoin
 	return buffer;
 }
 
-void sclWrite( clHard hardware, size_t size, cl_mem buffer, void* hostPointer ) {
+void sclWrite( sclHard hardware, size_t size, cl_mem buffer, void* hostPointer ) {
 #ifdef DEBUG
 	cl_int err;
 
@@ -897,7 +897,7 @@ void sclWrite( clHard hardware, size_t size, cl_mem buffer, void* hostPointer ) 
 #endif
 }
 
-void sclRead( clHard hardware, size_t size, cl_mem buffer, void *hostPointer ) {
+void sclRead( sclHard hardware, size_t size, cl_mem buffer, void *hostPointer ) {
 #ifdef DEBUG
 	cl_int err;
 
@@ -911,7 +911,7 @@ void sclRead( clHard hardware, size_t size, cl_mem buffer, void *hostPointer ) {
 #endif
 }
 
-cl_int sclFinish( clHard hardware ){
+cl_int sclFinish( sclHard hardware ){
 #ifdef DEBUG
 	cl_int err;
 
@@ -928,7 +928,7 @@ cl_int sclFinish( clHard hardware ){
 
 }
 
-cl_ulong sclGetEventTime( clHard hardware, cl_event event ){
+cl_ulong sclGetEventTime( sclHard hardware, cl_event event ){
 
 	cl_ulong elapsedTime, startTime, endTime;
 
@@ -942,7 +942,7 @@ cl_ulong sclGetEventTime( clHard hardware, cl_event event ){
 	return elapsedTime;
 }
 
-void sclSetKernelArg( clSoft software, int argnum, size_t typeSize, void *argument ){
+void sclSetKernelArg( sclSoft software, int argnum, size_t typeSize, void *argument ){
 #ifdef DEBUG
 	cl_int err;
 
@@ -970,7 +970,7 @@ void _sclWriteArgOnAFile( int argnum, void* arg, size_t size, const char* diff )
 	fclose(out);
 }
 
-inline void _sclVSetKernelArgs( clSoft software, const char *sizesValues, va_list argList ) {
+inline void _sclVSetKernelArgs( sclSoft software, const char *sizesValues, va_list argList ) {
 	const char *p;
 	int argCount = 0;
 	void* argument;
@@ -1005,7 +1005,7 @@ inline void _sclVSetKernelArgs( clSoft software, const char *sizesValues, va_lis
 	}
 }
 
-void sclSetKernelArgs( clSoft software, const char *sizesValues, ... ){
+void sclSetKernelArgs( sclSoft software, const char *sizesValues, ... ){
 	va_list argList;
 
 	va_start( argList, sizesValues );
@@ -1016,7 +1016,7 @@ void sclSetKernelArgs( clSoft software, const char *sizesValues, ... ){
 
 }
 
-cl_event sclSetAndLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size,
+cl_event sclSetAndLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size,
 				const char *sizesValues, ... ) {
 	va_list argList;
 	cl_event event;
@@ -1033,7 +1033,7 @@ cl_event sclSetAndLaunchKernel( clHard hardware, clSoft software, size_t *global
 
 }
 
-cl_event sclSetAndEnqueueKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size,
+cl_event sclSetAndEnqueueKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size,
 				 const char *sizesValues, ... ) {
 	va_list argList;
 	cl_event event;
@@ -1051,7 +1051,7 @@ cl_event sclSetAndEnqueueKernel( clHard hardware, clSoft software, size_t *globa
 
 }
 
-cl_event sclManageArgsLaunchKernel( clHard hardware, clSoft software, size_t *global_work_size, size_t *local_work_size,
+cl_event sclManageArgsLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size,
 				    const char* sizesValues, ... ) {
 	va_list argList;
 	cl_event event;
