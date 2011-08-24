@@ -17,7 +17,7 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 ####################################################################### 
 
-SimpleOpenCL Version 0.08_08_10_2011 ( version format v1.vv2_DD_MM_YYYY )
+SimpleOpenCL Version 0.09_24_08_2011 ( version format v1.vv2_DD_MM_YYYY )
 
 - v1 Incremented with increased functionality up to a certain goal or amount of changes (new functions)
 - vv2 Incremented with improvements in actual version functionality (no new functions, but changes on 	functions headers and/or code).
