@@ -1,4 +1,4 @@
-#summary Description and library use instructions. v0.07
+#summary Description and library use instructions. v0.08
 
 = Manual = 
 (under construction)
