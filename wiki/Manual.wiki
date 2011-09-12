@@ -131,7 +131,7 @@ cl_event sclManageArgsLaunchKernel( clHard hardware,
                                    ... );
 }}}
 
-This must be the most weird function of all in the library. The functionality of this function is to execute a kernel taking the host pointers, automatically creating the device buffers, copying the data to be copied to the device, launch the kernel, wait for it to finish, read the results to be read and wait until they are completely read. Then, the host pointers to be updated with GPU results are updated. All that by calling a single function. Further versions will implement concurrent read/write and execution, and multi-device support.
+This must be the most weird function of all in the library. The functionality of this function is to execute a kernel taking the host pointers, automatically creating the device buffers, copying the data to be copied to the device, launch the kernel, wait for it to finish, read the results to be read and wait until they are completely read. Then, the host pointers to be updated with device results are updated. All that by calling a single function. Further versions will implement concurrent read/write and execution, and multi-device support.
 
 To allow the function to know what has to be done with every argument in the variable argument field "...", sizesValues argument is passed with that information encoded in a printf style manner.
 
