@@ -9,6 +9,14 @@
 
 This section will describe the behaviour and the expected use of each function in the library, and introduce the two main data types: sclHard and sclSoft.
 
+The functions are divided into three levels:
+
+First level functions are the goal of this library, but can hide some API control that a developer might sometimes need, in order to write more sofisticated and optimized OpenCL Host code.
+
+Second level functions provide a first interface that already reduces the amount of Host code, but give more control over the OpenCL API.
+
+Third level functions are made to internally be used by second level functions. They can be used alone, if the user finds it usefull but their only goal is to provide services to second level funcions. So we don't recomend to use them alone. If you find a third level function usefull, take a look at where is it used in second level funcions because provably, you'll find the second level function still more usefull.
+
 = SimpleOpenCL types =
 
 In order to ease the use of OpenCL objects, SimpleOpenCL groups them in two structs: sclSoft and sclHard.
@@ -58,43 +66,11 @@ To know more about program and kernel objects take a look at the OpenCL 1.1 spec
 
 The variable kernelName is used to store the name of the kernel to make possible showing it to identify from which kernel are we getting debugging information if an error occurs.
 
-= User functions =
+= First level user functions (the easiest) =
 
-This are the functions that a user of SimpleOpenCL might use. They can internally call library functions that are not intended to be used outside the library, but can be used as such.
+This are the simpler functions to be used by someone who doesn't want to deal with OpenCL Host concepts. There is still some work to do to hide even more concepts like sclSoft and sclHard if possible. The goal for this level is to match the ideal of having a function to call an OpenCL kernel and asking the user only about the NDRange dimensions, OpenCL C memory hierarchy mapping and data flow (from Host to Device and from Device to Host).
 
-== Device memory allocation ==
-
-This functions create buffers and manipulate them, using less arguments than OpenCL native functions, and printing the error name if an error occurs.
-
-=== sclMalloc ===
-
-{{{
-cl_mem sclMalloc( sclHard hardware, cl_int mode, size_t size );
-}}}
-
-This function returns a buffer object. "cl_mem" is a native OpenCL data type, and is the type of the buffer object returned.
-
-It takes as arguments the device in which the buffer will be created (clHard hardware), the OpenCL buffer mode flag (CL_MEM_READ_ONLY | CL_MEM_WRITE_ONLY | CL_MEM_READ_WRITE), and the byte size of the buffer.
-
-=== sclMallocWrite ===
-
-{{{
-cl_mem sclMallocWrite( sclHard hardware, cl_int mode, size_t size, void* hostPointer );
-}}}
-
-=== sclWrite ===
-
-{{{
-void sclWrite( sclHard hardware, size_t size, cl_mem buffer, void* hostPointer );
-}}}
-
-=== sclRead ===
-
-{{{
-void sclRead( sclHard hardware, size_t size, cl_mem buffer, void *hostPointer );
-}}}
-
-== Getting clSoft structs ==
+== Getting sclSoft structs ==
 
 === sclGetCLSoftware ===
 
@@ -102,23 +78,17 @@ void sclRead( sclHard hardware, size_t size, cl_mem buffer, void *hostPointer );
 sclSoft sclGetCLSoftware( char* path, char* name, sclHard hardware );
 }}}
 
-== Release and retain OpenCL objects ==
+This is the function to obtain an sclSoft struct, for a NDRange kernel.
 
-=== sclReleaseClSoft ===
+== Getting sclHard structs ==
 
-{{{
-void sclReleaseClSoft( sclSoft soft );
-}}}
-
-=== sclReleaseClHard ===
+=== sclGetAllHardware ===
 
 {{{
-void sclReleaseClHard( sclHard hard );
+int sclGetAllHardware( sclHard** hardList );
 }}}
 
-== Debug functions ==
-
-== Device execution ==
+== Executing an OpenCL C kernel ==
 
 === sclManageArgsLaunchKernel ===
 
@@ -187,6 +157,73 @@ The characters that can be used, and its meanings are shown in the following lis
 *%g* => Set a device __global pointer to be read and written only by the device. The function will read only a "size_t size" argument. A cl_mem buffer of size "size_t size" will be created in read/write mode and set as a kernel argument. There will not be any data copy between the host and the device.
 
 The event object returned is the kernel execution event. I use it to query the execution time of the kernel. Feel free to change the function code and return any other event.
+
+= Second level user functions ( gives more control but requires more code ) =
+
+This functions can be used by a user but are also used internally by first level SimpelOpenCL functions. They represent a compromise between ease of code and OpenCL API control.
+
+== Device memory allocation ==
+
+This functions create buffers and manipulate them, using less arguments than OpenCL native functions, and printing the error name if an error occurs.
+
+=== sclMalloc ===
+
+{{{
+cl_mem sclMalloc( sclHard hardware, cl_int mode, size_t size );
+}}}
+
+This function returns a buffer object. "cl_mem" is a native OpenCL data type, and is the type of the buffer object returned.
+
+It takes as arguments the sclHard hardware (really cl_context) in which the buffer will be created, the OpenCL buffer mode flag (CL_MEM_READ_ONLY | CL_MEM_WRITE_ONLY | CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR | CL_MEM_ALLOC_HOST_PTR | CL_MEM_COPY_HOST_PTR ), and the byte size of the buffer.
+
+=== sclMallocWrite ===
+
+{{{
+cl_mem sclMallocWrite( sclHard hardware, cl_int mode, size_t size, void* hostPointer );
+}}}
+
+This function returns a buffer object. "cl_mem" is a native OpenCL data type, and is the type of the buffer object returned.
+
+It takes as arguments the sclHard hardware (really cl_context) in which the buffer will be created, the OpenCL buffer mode flag (CL_MEM_READ_ONLY | CL_MEM_WRITE_ONLY | CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR | CL_MEM_ALLOC_HOST_PTR | CL_MEM_COPY_HOST_PTR ), and the byte size of the buffer.
+
+In addition to creating a buffer it copies the contents of "hostPointer" to the buffer.
+
+=== sclWrite ===
+
+{{{
+void sclWrite( sclHard hardware, size_t size, cl_mem buffer, void* hostPointer );
+}}}
+
+This function copies the contents of "hostPointer" pointer into "buffer" OpenCL buffer. 
+
+This can be interpreted as copying a Host pointer into a Device memory, but in fact it's more like assigning a Host pointer to a Buffer that is tied to a Context. Then this buffer will be used by any device inside the same context.  
+
+=== sclRead ===
+
+{{{
+void sclRead( sclHard hardware, size_t size, cl_mem buffer, void *hostPointer );
+}}}
+
+This function reads the contents of "buffer" and copy them into "hostPointer". 
+
+== Release and retain OpenCL objects ==
+
+=== sclReleaseClSoft ===
+
+{{{
+void sclReleaseClSoft( sclSoft soft );
+}}}
+
+=== sclReleaseClHard ===
+
+{{{
+void sclReleaseClHard( sclHard hard );
+}}}
+
+== Debug functions ==
+
+== Device execution ==
+
 
 == Event queries ==
 
