@@ -13,10 +13,10 @@
 #    GNU General Public License for more details.
 #
 #   You should have received a copy of the GNU General Public License
-#   along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+#   along with SimpleOpenCL. If not, see <http://www.gnu.org/licenses/>.
 #
 ####################################################################### 
-#   SimpleOpenCL Version 0.07_02_10_2011 
+#   SimpleOpenCL Version 0.09_01_10_2011 
 
 HOME    = $(PWD)
 CC      = gcc
