@@ -230,7 +230,7 @@ void sclReleaseClHard( sclHard hard );
 
 == Kernel argument setting ==
 
-= Library functions =
+= Third level functions =
 
 == Debug ==
 
