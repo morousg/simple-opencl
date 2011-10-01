@@ -224,14 +224,11 @@ void sclReleaseClHard( sclHard hard );
 
 == Device execution ==
 
-
 == Event queries ==
 
 == Queue management ==
 
 == Kernel argument setting ==
-
-== Hardware initialization and selection ==
 
 = Library functions =
 
