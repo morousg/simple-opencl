@@ -13,14 +13,14 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+along with SimpleOpenCL.  If not, see <http://www.gnu.org/licenses/>.
 
 ####################################################################### 
 
-SimpleOpenCL Version 0.09_24_08_2011 ( version format v1.vv2_DD_MM_YYYY )
+SimpleOpenCL Version 0.09_01_10_2011 ( version format v1.vv2_DD_MM_YYYY )
 
 - v1 Incremented with increased functionality up to a certain goal or amount of changes (new functions)
-- vv2 Incremented with improvements in actual version functionality (no new functions, but changes on 	functions headers and/or code).
+- vv2 Incremented with bug corrections and functionality additions.
 - date Set at the date of bug correction or any v1 or vv2 level modification.
 
 Motivation and description ##################
@@ -33,7 +33,7 @@ We are not aiming to provide a CUDA-like interface for OpenCL, but there will be
 
 Version description #########################
 
-Actual version 0.04:
+Actual version 0.08:
 
 - Non finished but working version. A first finished version is scheduled for version 1.0
 - It provides two structs to simplify the handling of OpenCL objects. They are conceptually grouped in hardware and software.
@@ -42,12 +42,15 @@ Actual version 0.04:
 - Other functions select the desired devices from the list.
 - In order to get information of OpenCL errors, there is a function that prints the OpenCL error flags returned by the OpenCL functions.
 - Functions to load Device source code, compile it etc are present.
-- Functions to enqueue or directly execute kernels, etc... 
+- Functions to enqueue or execute kernels, etc...
+- A main 1.0 version goal is already implemented as "sclManageArgsLaunchKernel". It can with only host pointers, sclHard and sclSoft variables NDRange dimensions and a string containing the info of what to do with the pointers etc, execute the kernel and update the results on the host pointers. All in a single function call.   
 
 Next version #################################
 
 Goals for version 1.0:
 
-- Encapsulate all functions that return error, in a way that automatically, the OpenCL error flag is printed if there is such an error. The goal is to eliminate error handling code, and give debugging information at the same time in a simple way.
-- All hardware selection functions must use the sclGetAllHardware function first if a list of hardware is not passed as an argument or it has NULL value, and then return the desired hardware following the function criteria expressed in its own name.
-- There should be a function that allows to set the arguments of a kernel and enqueue execution in a single line. Cristian's proposed solution is to use a printf style function. That can be a bit bulky, but very useful. Any other proposal is welcome.
+- All hardware selection functions must use the sclGetAllHardware function first if a list of hardware is not passed as an argument and it has NULL value. Then, the functions must return the desired hardware following the function criteria expressed in its own name.
+- The sclManageArgsLaunchKernel can/must be improved in the following ways:
+	
+1 Optional: a version that hides sclHard and sclSoft so the user only cares about which host pointers will be read and written from the device in OpenCL C code and which to use exclusively on the device. Nothing else. Think of when to initialize hardware? Possibly needing a global variable pointing to the sclHard and sclSoft objects to avoid repeating the software/hardware initialization process on each kernel execution.
+2 Mandatory: the function must have the ability to schedule work across all the devices available. So maybe the function will need more info from the user to know which data can be partitioned, and which can not. The possibility of internally using something similar to GMAC would be wonderfull. Pagination of the pointers in my opinion is the most efficient automatic method to do that work, but repeating a work already done would be frustrating.
