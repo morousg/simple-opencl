@@ -66,7 +66,7 @@ To know more about program and kernel objects take a look at the OpenCL 1.1 spec
 
 The variable kernelName is used to store the name of the kernel to make possible showing it to identify from which kernel are we getting debugging information if an error occurs.
 
-= First level user functions (the easiest) =
+= First level user functions ( the easiest ) =
 
 This are the simpler functions to be used by someone who doesn't want to deal with OpenCL Host concepts. There is still some work to do to hide even more concepts like sclSoft and sclHard if possible. The goal for this level is to match the ideal of having a function to call an OpenCL kernel and asking the user only about the NDRange dimensions, OpenCL C memory hierarchy mapping and data flow (from Host to Device and from Device to Host).
 
@@ -88,6 +88,16 @@ This is the function to obtain an sclSoft struct, for a NDRange kernel.
 int sclGetAllHardware( sclHard** hardList );
 }}}
 
+This function returns the number of devices found, and stores them into a list of sclHard structs.
+
+=== sclGetFastestDevice ===
+
+{{{
+sclHard sclGetFastestDevice( sclHard* hardList, int found );
+}}}
+
+This function returns the fastest device considering the number of compute units, independently of the device type. The decision criteria is very simple, but works pretty well. For instance, a 2 compute unit GPU will usually be slower than a 4 compute unit CPU, and a 6 compute unit GPU should be faster than a 4 compute unit CPU, although the decision criteria should be refined and more broadly tested.
+ 
 == Executing an OpenCL C kernel ==
 
 === sclManageArgsLaunchKernel ===
