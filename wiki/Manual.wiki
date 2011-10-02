@@ -103,8 +103,8 @@ This function returns the fastest device considering the number of compute units
 === sclManageArgsLaunchKernel ===
 
 {{{
-cl_event sclManageArgsLaunchKernel( clHard hardware, 
-                                   clSoft software, 
+cl_event sclManageArgsLaunchKernel( sclHard hardware, 
+                                   sclSoft software, 
                                    size_t *global_work_size, 
                                    size_t *local_work_size,
                                    const char* sizesValues, 
