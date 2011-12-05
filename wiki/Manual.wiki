@@ -142,11 +142,11 @@ After calling that function, the variable output will be updated with the result
 
 In the example i've put the variable names along with the %x indicators. This is not necessary, since the function only reads one character after the %.
 
-clHard hardware is a struct generated with scl functions that contains all the necessary information of the hardware for it to be executed.
+clHard hardware is a struct generated with scl functions that contains all the necessary information of the hardware for it to be used.
 
 clSoft software is a struct generated with scl functions that contains all the necessary information of the OpenCL kernel for it to be executed.
 
-global_work_size and local_work_size are two pointers that contain the work item dimensions as required by clEnqueueNDRangeKernel function. See OpenCL 1.0 or 1.1 specification available on Khronos website.
+global_work_size and local_work_size are two pointers that contain the work item dimensions as required by clEnqueueNDRangeKernel function. See OpenCL 1.0 or 1.1 specification available on Khronos [http://www.khronos.org/opencl/ website].
 
 const char ptr sizesValues contains the information of what are the arguments to be read next, and what to do with them. For that purpose you should write a string containing % followed by a character that describes what is to be read and what to do. For each argument you shoud write a % + character, though, if the size of the argument is needed, the function will read two arguments with a single %.
 
