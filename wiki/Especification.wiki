@@ -1,6 +1,6 @@
 #summary Library description and use instructions. v0.09
 
-= Especification = 
+= Especification Summary = 
 (under construction)
 
 <wiki:toc max_depth="2" />
