@@ -18,9 +18,74 @@ The functionality it offers is:
  # To execute the selected code in the selected device.
 
 = Selecting the device =
+SimpleOpenCL provides some functions in order to select the desired hardware. The user can choose any of those, depending on what he wants. All the functions use the "sclHard" SimpleOpenCL type, to represent a hardware device. Please refer to SimpleOpenCL Specification to know more about SimpleOpenCL types.
 
+== sclGetAllHardware ==
+This SimpleOpenCL function, returns a list with all the OpenCL compatible hardware on the system. 
+{{{
+int sclGetAllHardware( sclHard** hardList );
+}}}
+
+It returns the number of hardware devices found as an integer, and gets an sclHard double pointer as a parameter, that will be filled with all the devices found.
+
+== sclGetFastestDevice ==
+
+This function returns the fastest device considering the number of compute units, independently of the device type.
+
+{{{
+sclHard sclGetFastestDevice( sclHard* hardList, int found );
+}}}  
+
+== sclGetGPUHardware ==
+
+This function allows the programmer to select GPU hardware. The nDevice parameter allows to specify exactly which device if there are more than one. 
+{{{
+sclHard                 sclGetGPUHardware( int nDevice, int* found );
+}}}
+== sclGetCPUHardware ==
+This function allows the programmer to select CPU hardware. The nDevice parameter allows to specify exactly which device if there are more than one. 
+{{{
+sclHard                 sclGetCPUHardware( int nDevice, int* found );
+}}}
 = Selecting the code =
+SimpleOpenCL also provides a function that allows to load a .cl file with one or more kernels, compile it at runtime, and if there was a compiling error on the .cl file, the compiling error messages will be printed on the command line (stdout).
+
+{{{
+sclSoft sclGetCLSoftware( char* path, char* name, sclHard hardware );
+}}}
+
+This function is sclGetCLSoftware, and takes the path of the source file to be loaded, the name of the kernel function to be called when executing the code, and the hardware that will execute it. It is necessary to specify the hardware, in order to let the OpenCL C compiler to know which binary (assembler) code it has to produce. The assembler code is completely hardware dependent. 
+
+The function returns an sclSoft variable that reprents the compiled OpenCL kernel code. Please refer to SimpleOpenCL specification to know more about sclSoft and SimpleOpenCL types.
 
 = Executing the code on the device =
+Once we have selected the hardware and the software, we just have to execute it.
 
- 
+The function sclManageArgsLaunchKernel takes the hardware and software as arguments, the NDRange kernel dimensions (global_work_size and local_work_size), a string that will contain the information about the parameters sent to the OpenCL Kernel, and a variable number of {{{void*}}} parameters. This {{{void*}}} parameters will be the parameter variables sent to the OpenCL kernel.
+
+{{{
+cl_event sclManageArgsLaunchKernel( sclHard hardware, 
+                                   sclSoft software, 
+                                   size_t *global_work_size, 
+                                   size_t *local_work_size,
+                                   const char* sizesValues, 
+                                   ... );
+}}}
+
+In order to do all the OpenCL hard work left at this stage of the code, SimpleOpenCL needs you to indicate three main things:
+ # The size of each parameter variable.
+ # What to do with this variable ( is it the input data for the kernel? or the output, or just a variable to be exclusively used by the hardware? )
+ # In which memory layer should the variable be allocated? (Refer to OpenCL memory hierarchy to know more about memory layers in OpenCL C kernels).
+
+To this end, SimpleOpenCL provides a short way to indicate this, with a printf-like codification. The programmer, should write a string as the "sizesValues" parameter. In this string, the information is written after a "%" like in the C printf standard function. A table of characters and its meaning is shown below.
+
+|| *Character* || *Number of parameters* || *Action to be performed by SimpleOpenCL* || *Example* ||
+|| *%a* || 2 (size_t size,{{{void*}}} variable)|| When SimpleOpenCL finds %a, it reads a size_t argument, and a {{{void*}}} argument in this order. It is intended for non pointer arguments like int, float etc. size_t size is the variable size in bytes and {{{void* variable}}} is the pointer to the variable. || {{{ int myValue=4; sclManageArgsLaunchKernel( hardware, software, global_size, local_size, " myValue%a ", sizeof(int), (void*)&myValue); }}} ||
+|| *%v* || 1 ({{{void*}}} variable) || When SimpleOpenCL finds %v, it reads a single {{{void*}}} variable, and considers it to be  || ||
+|| *%N* || || || ||
+|| *%w* || || || ||
+|| *%r* || || || ||
+|| *%R* || || || ||
+|| *%g* || || || ||
+
+= Short example = 
