@@ -15,9 +15,9 @@ It also isn't a CUDA like library for OpenCL. It is written with ANSI C and Open
 = Can I use SimpleOpenCL for easy OpenCL Kernel unitary tests? =
 
 Yes. SimpleOpenCL is mainly intended for testing OpenCL kernels, with far less work than with plain OpenCL, and without the need of knowing anything about OpenCL objects (devices, contexts, buffers etc).
-SimpleOpenCL is divided in tree levels. The first level, or Unitary test level, is what we are describing here.
+SimpleOpenCL is divided in tree levels. The first level, or Unitary Test Level (UTL), is what we are describing here.
 
-= What can I do with SimpleOpenCL First Level or Unitary Test Level? =
+= What can I do with SimpleOpenCL First Level or Unitary Test Level (UTL)? =
 
 Every thing. You end up calling an OpenCL kernel with a single C function call. You can set the device you want to test, or let SimpleOpenCL to automatically find the fastest device in your system. You also can test NDRange kernel dimensions for tuning the performance of your kernel. Also, you get the kernel call event in order to ask the OpenCL runtime for the execution time of the Kernel, with a simple SimpleOpenCL call.   
 
