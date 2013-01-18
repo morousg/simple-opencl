@@ -1,4 +1,4 @@
-#summary Description and library use instructions. v0.09
+#summary Library description and use instructions. v0.09
 
 = Especification = 
 (under construction)
