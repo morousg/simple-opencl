@@ -81,7 +81,6 @@ To this end, SimpleOpenCL provides a short way to indicate this, with a printf-l
 
 || *Character* || *Number of parameters* || *Action to be performed by SimpleOpenCL* || *Example* ||
 || *%a* || 2 (size_t size,{{{void*}}} variable)|| When SimpleOpenCL finds %a, it reads a size_t argument, and a {{{void*}}} argument in this order. It is intended for non pointer arguments like int, float etc. size_t size is the variable size in bytes and {{{void* variable}}} is the pointer to the variable. || {{{ int myValue=4; sclManageArgsLaunchKernel( hardware, software, global_size, local_size, " myValue%a ", sizeof(int), (void*)&myValue); }}} ||
-|| *%v* || 1 ({{{void*}}} variable) || When SimpleOpenCL finds %v, it reads a single {{{void*}}} variable, and considers it to be  || ||
 || *%N* || || || ||
 || *%w* || || || ||
 || *%r* || || || ||
