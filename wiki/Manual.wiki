@@ -1,0 +1,8 @@
+#summary Library description and use instructions. v0.09
+
+= Especification = 
+(under construction)
+
+<wiki:toc max_depth="2" />
+
+= Introduction =
