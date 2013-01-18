@@ -1,8 +1,26 @@
 #summary Library description and use instructions. v0.09
 
-= Especification = 
+= Manual summary = 
 (under construction)
 
 <wiki:toc max_depth="2" />
 
 = Introduction =
+
+This section shows how to use SimpleOpenCL. We only show First level functions in this section, that are the main goal of the project.
+
+SimpleOpenCL eliminates the need of knowing about OpenCL objects. The only thing a programmer needs to know in order to use SimpleOpenCL is C, two SimpleOpenCL types, and few functions.
+
+The functionality it offers is:
+
+ # To select in which device you want to run your code.
+ # To initialize the code you want to execute (OpenCL Kernels).
+ # To execute the selected code in the selected device.
+
+= Selecting the device =
+
+= Selecting the code =
+
+= Executing the code on the device =
+
+ 
