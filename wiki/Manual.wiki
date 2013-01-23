@@ -80,9 +80,9 @@ In order to do all the OpenCL hard work left at this stage of the code, SimpleOp
 To this end, SimpleOpenCL provides a short way to indicate this, with a printf-like codification. The programmer, should write a string as the "sizesValues" parameter. In this string, the information is written after a "%" like in the C printf standard function. A table of characters and its meaning is shown below.
 
 || *Character* || *Number of parameters* || *Action to be performed by SimpleOpenCL* || *Example* ||
-|| *%a* || 2 (size_t size,{{{void*}}} variable)|| When SimpleOpenCL finds %a, it reads a size_t argument, and a {{{void*}}} argument in this order. It is intended for non pointer arguments like int, float etc. size_t size is the variable size in bytes and {{{void* variable}}} is the pointer to the variable. || {{{ int myValue=4; sclManageArgsLaunchKernel( hardware, software, global_size, local_size, " myValue%a ", sizeof(int), (void*)&myValue);}}} ||
+|| *%a* || 2 (size_t varSize,{{{void*}}} var)|| When SimpleOpenCL finds %a, it reads a size_t argument, and a {{{void*}}} argument in this order. It is intended for non pointer arguments like int, float etc. size_t size is the variable size in bytes and {{{void*}}} var is the pointer to the variable. || {{{ int myValue=4; sclManageArgsLaunchKernel( hardware, software, global_size, local_size, " myValue%a ", sizeof(int), (void*)&myValue);}}} ||
 || *%N* || 1 (size_t varSize)|| When SimpleOpenCL finds %N, it sets a local memory pointer with size "varSize" || {{{ size_t varSize=128; sclManageArgsLaunchKernel( hardware, software, global_size, local_size, " localVar%N ", varSize); }}} ||
-|| *%w* || || || ||
+|| *%w* || 2 (size_t varSize, {{{void*}}} var) || When SimpleOpenCL finds %w, it sets a global memory pointer with size "varSize". When the execution of the kernel is done, it automatically copies the results from the hardware to the variable "var". || ||
 || *%r* || || || ||
 || *%R* || || || ||
 || *%g* || || || ||
