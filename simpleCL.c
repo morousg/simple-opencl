@@ -17,7 +17,7 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.09_01_10_2011 
+   SimpleOpenCL Version 0.010_27_02_2013 
 
 */
 
@@ -525,12 +525,15 @@ sclHard sclGetFastestDevice( sclHard* hardList, int found ) {
 	return hardList[ device ];
 }
 
-int sclGetAllHardware( sclHard** hardList ) {
+sclHard* sclGetAllHardware( int* found ) {
 
-	int i, j, found=0; 
+	int i, j; 
 	cl_uint nPlatforms=0, nDevices=0;
 	char* platformName;
+	sclHard* hardList;
 	
+	*found=0;
+
 	cl_platform_id *GPUplatforms, *platforms;
 	cl_int err;
 	cl_device_id *devices;
@@ -539,7 +542,7 @@ int sclGetAllHardware( sclHard** hardList ) {
 	GPUplatforms = (cl_platform_id *)malloc( sizeof(cl_platform_id) * 8 );
 	platformName = (char *)malloc( sizeof(char) * 30 );
 	devices = (cl_device_id *)malloc( sizeof(cl_device_id) * 16 );
-	*hardList = (sclHard*)malloc( 16*sizeof(sclHard) );
+	hardList = (sclHard*)malloc( 16*sizeof(sclHard) );
 
 	err = clGetPlatformIDs( 8, platforms, &nPlatforms );
 	
@@ -559,25 +562,25 @@ int sclGetAllHardware( sclHard** hardList ) {
 			else {
 				for ( j = 0; j < (int)nDevices; ++j ) {
 					
-					(*hardList)[ found ].platform	    = platforms[ i ];
-					(*hardList)[ found ].device 	    = devices[ j ];
-					(*hardList)[ found ].nComputeUnits  = _sclGetMaxComputeUnits( (*hardList)[ found ].device );
-					(*hardList)[ found ].maxPointerSize = _sclGetMaxMemAllocSize( (*hardList)[ found ].device );				
-					(*hardList)[ found ].deviceType	    = _sclGetDeviceType( (*hardList)[ found ].device );
-					(*hardList)[ found ].devNum	    = found;
-					found++;
+					hardList[ *found ].platform       = platforms[ i ];
+					hardList[ *found ].device         = devices[ j ];
+					hardList[ *found ].nComputeUnits  = _sclGetMaxComputeUnits( (*hardList)[ found ].device );
+					hardList[ *found ].maxPointerSize = _sclGetMaxMemAllocSize( (*hardList)[ found ].device );				
+					hardList[ *found ].deviceType     = _sclGetDeviceType( (*hardList)[ found ].device );
+					hardList[ *found ].devNum         = found;
+					*found++;
 				}
 			}
 		}
-		_sclSmartCreateContexts( *hardList, found );
-		_sclCreateQueues( *hardList, found );
+		_sclSmartCreateContexts( hardList, *found );
+		_sclCreateQueues( hardList, *found );
 	}
 #ifdef DEBUG
 	/*sclPrintDeviceNamePlatforms( *hardList, found );*/
 #endif
-	sclRetainAllHardware( *hardList, found );
+	sclRetainAllHardware( hardList, *found );
 
-	return found;
+	return hardList;
 
 }
 
@@ -1016,7 +1019,7 @@ void sclSetKernelArgs( sclSoft software, const char *sizesValues, ... ){
 
 }
 
-cl_event sclSetAndLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size,
+cl_event sclSetArgsLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size,
 				const char *sizesValues, ... ) {
 	va_list argList;
 	cl_event event;
@@ -1033,7 +1036,7 @@ cl_event sclSetAndLaunchKernel( sclHard hardware, sclSoft software, size_t *glob
 
 }
 
-cl_event sclSetAndEnqueueKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size,
+cl_event sclSetArgsEnqueueKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size,
 				 const char *sizesValues, ... ) {
 	va_list argList;
 	cl_event event;
