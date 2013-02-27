@@ -21,7 +21,6 @@
 
 */
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -545,11 +544,11 @@ sclHard* sclGetAllHardware( int* found ) {
 	hardList = (sclHard*)malloc( 16*sizeof(sclHard) );
 
 	err = clGetPlatformIDs( 8, platforms, &nPlatforms );
-	
 	if ( nPlatforms == 0 ) {
 		printf("\nNo OpenCL plantforms found.\n");
 	}
 	else {
+		
 		for ( i = 0; i < (int)nPlatforms; ++i ) {
 			err = clGetDeviceIDs( platforms[i], CL_DEVICE_TYPE_ALL, 16, devices, &nDevices );
 			if ( nDevices == 0 ) {
@@ -568,7 +567,7 @@ sclHard* sclGetAllHardware( int* found ) {
 					hardList[ *found ].maxPointerSize = _sclGetMaxMemAllocSize( hardList[ *found ].device );				
 					hardList[ *found ].deviceType     = _sclGetDeviceType( hardList[ *found ].device );
 					hardList[ *found ].devNum         = *found;
-					*found++;
+					(*found)++;
 				}
 			}
 		}
@@ -576,10 +575,10 @@ sclHard* sclGetAllHardware( int* found ) {
 		_sclCreateQueues( hardList, *found );
 	}
 #ifdef DEBUG
-	/*sclPrintDeviceNamePlatforms( *hardList, found );*/
+	sclPrintDeviceNamePlatforms( hardList, *found );
 #endif
 	sclRetainAllHardware( hardList, *found );
-
+	
 	return hardList;
 
 }
