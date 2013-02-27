@@ -564,9 +564,9 @@ sclHard* sclGetAllHardware( int* found ) {
 					
 					hardList[ *found ].platform       = platforms[ i ];
 					hardList[ *found ].device         = devices[ j ];
-					hardList[ *found ].nComputeUnits  = _sclGetMaxComputeUnits( (*hardList)[ *found ].device );
-					hardList[ *found ].maxPointerSize = _sclGetMaxMemAllocSize( (*hardList)[ *found ].device );				
-					hardList[ *found ].deviceType     = _sclGetDeviceType( (*hardList)[ *found ].device );
+					hardList[ *found ].nComputeUnits  = _sclGetMaxComputeUnits( hardList[ *found ].device );
+					hardList[ *found ].maxPointerSize = _sclGetMaxMemAllocSize( hardList[ *found ].device );				
+					hardList[ *found ].deviceType     = _sclGetDeviceType( hardList[ *found ].device );
 					hardList[ *found ].devNum         = *found;
 					*found++;
 				}
