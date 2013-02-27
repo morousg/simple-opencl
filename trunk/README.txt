@@ -17,7 +17,7 @@ along with SimpleOpenCL.  If not, see <http://www.gnu.org/licenses/>.
 
 ####################################################################### 
 
-SimpleOpenCL Version 0.09_01_10_2011 ( version format v1.vv2_DD_MM_YYYY )
+SimpleOpenCL Version 0.010_27_02_2013 
 
 - v1 Incremented with increased functionality up to a certain goal or amount of changes (new functions)
 - vv2 Incremented with bug corrections and functionality additions.
