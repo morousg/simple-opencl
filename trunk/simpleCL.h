@@ -17,7 +17,7 @@
 
    ####################################################################### 
 
-   SimpleOpenCL Version 0.09_01_10_2011 
+   SimpleOpenCL Version 0.010_27_02_2013 
 
 */
 
@@ -132,7 +132,7 @@ void			sclSetKernelArgs( sclSoft software, const char *sizesValues, ... );
 
 sclHard 		sclGetGPUHardware( int nDevice, int* found );
 sclHard 		sclGetCPUHardware( int nDevice, int* found );
-int 			sclGetAllHardware( sclHard** hardList);
+sclHard*		sclGetAllHardware( int* found );
 sclHard 		sclGetFastestDevice( sclHard* hardList, int found );
 
 /* ######################################################## */
