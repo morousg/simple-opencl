@@ -23,7 +23,7 @@ SimpleOpenCL Version 0.09_01_10_2011 ( version format v1.vv2_DD_MM_YYYY )
 - vv2 Incremented with bug corrections and functionality additions.
 - date Set at the date of bug correction or any v1 or vv2 level modification.
 
-Motivation and description ##################
+Motivation and description ###################
 
 SimpleOpenCL is a library written in ANSI C and born in the needs of scientific research test development. It has been originated while developing different OpenCL codes for Linux and Apple test machines, with single device performance and portability goals in mind. The main goal of SimpleOpenCL has been reducing the code needed to run the experiments on the GPU, but also supports managing CPU devices. As this is an open source project, we welcome any contribution, from code correction and functionality suggestions/contributions to documentation or even contribution system proposals.
 
