@@ -90,6 +90,14 @@ int sclGetAllHardware( sclHard** hardList );
 
 This function returns the number of devices found, and stores them into a list of sclHard structs.
 
+*UPDATE:* this function has changed since version 0.010_27_02_2013
+
+This is the new function:
+
+{{{
+sclHard* sclGetAllHardware( int* found );
+}}}
+
 === sclGetFastestDevice ===
 
 {{{
