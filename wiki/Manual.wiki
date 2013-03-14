@@ -28,6 +28,14 @@ int sclGetAllHardware( sclHard** hardList );
 
 It returns the number of hardware devices found as an integer, and gets an sclHard double pointer as a parameter, that will be filled with all the devices found.
 
+*UPDATE:* this function has changed since version 0.010_27_02_2013
+
+This is the new function:
+
+{{{
+sclHard* sclGetAllHardware( int* found );
+}}}
+
 == sclGetFastestDevice ==
 
 This function returns the fastest device considering the number of compute units, independently of the device type.
