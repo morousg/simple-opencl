@@ -180,7 +180,7 @@ Compiling this code with gcc on a Mac, looks like this:
 gcc -O3 main.c simpleCL.c -o myapp -framework OpenCL
 }}}
 
-And finally, this is the output on an Apple Macbook Air, with a Core i7 3667U CPU. This CPU has a OpenCL compatible GPU, but the GPU driver for OpenCL is not yet available, so the code is executed on the CPU part.
+And finally, this is the output on an Apple Macbook Air, with a Core i7 3667U CPU. This CPU has an OpenCL compatible GPU, but the GPU driver for OpenCL is not yet available, so the code is executed on the CPU part.
 
 {{{
 Group 1 with 1 devices
