@@ -80,7 +80,7 @@ cl_event sclManageArgsLaunchKernel( sclHard hardware,
                                    ... );
 }}}
 
-In order to do all the OpenCL hard work left at this stage of the code, SimpleOpenCL function needs you to indicate three main things:
+In order to automatically do all the OpenCL hard work left at this stage of the code, this SimpleOpenCL function needs you to indicate three main things:
  # The size of each parameter variable.
  # What to do with this variable ( is it the input data for the kernel? or the output, or just a variable to be exclusively used by the hardware? )
  # In which memory layer should the variable be allocated? (Refer to OpenCL memory hierarchy to know more about memory layers in OpenCL C kernels).
