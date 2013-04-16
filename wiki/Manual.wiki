@@ -171,3 +171,11 @@ __kernel void example2( __global float *vector,
         vector[global_x] = vector[global_x] * *valueLocal;
 }
 }}}
+
+Thi code is executed super fast even on the CPU. Note that NDRange kernels, when executed on the CPU are not simulated, but compiled and optimized for the target CPU. So performance must be very decent.
+
+Compiling this code with gcc on a Mac, looks like this:
+
+{{{
+gcc -O3 main.c simpleCL.c -o myapp -framework OpenCL
+}}}
