@@ -96,3 +96,56 @@ To this end, SimpleOpenCL provides a short way to indicate this, with a printf-l
 || *%g* || 1 (size_t varSize) || When SimpleOpenCL finds %g it sets a global memory pointer with size "varSize" in read write mode. Tis pointer will not be read or written from the main program. || ||
 
 = Short example = 
+
+In this example, we show a SimpleOpenCL program that generates a vector of 134217728 float values that start at 0 and end at 134217728-1, on the Host, a float variable with the value "3". Later it sends this values to the first device found on the system and executes a kernel where each WorkItem multiplies the value of the vector corresponding to its global index in the x dimension, by the value "3", and stores the result on the same vector position.
+
+This is the SimpleOpenCL Host code:
+
+{{{
+#include "simpleCL.h"
+
+int main( int argc, char *argv[] ){
+
+        float* vector;
+        float value;
+        int i,found;
+        /* SimpleOpenCL types declaration */
+        sclHard* hardware;
+        sclSoft software;
+
+        /* NDRange 2D size initialization*/
+        size_t global_size[2];
+        size_t local_size[2];
+        size_t dataLength=134217728;
+        size_t dataSize=sizeof(float)*dataLength;
+    
+        global_size[0]=dataLength; global_size[1]=1;
+        local_size[0]=64; local_size[1]=1;
+
+        /* Data generation */
+        vector = (float*)malloc(dataSize);
+        value = 3;
+        for (i=0; i<dataLength; i++){
+                vector[i] = (float)i;
+        }   
+
+        /* Hardware and Software initialization */
+        found=0;
+        hardware = sclGetAllHardware(&found);
+        software = sclGetCLSoftware("example2.cl","example2",hardware[0]);
+
+        /* Kernel execution */
+        sclManageArgsLaunchKernel( hardware[0], software,
+                                   global_size, local_size,
+                                   "%R %r %N",
+                                   dataSize, (void*)vector, sizeof(float), (void*)&value, sizeof(float));
+
+        /* Data is read back from the device automatically */
+        /* We print some values to check the results */
+        printf("\nExecution successful\n");
+        printf("vector[0]=%f vector[10]=%f vector[200]=%f\n",vector[0],vector[10],vector[200]);
+
+        return 0;
+    
+}
+}}}
