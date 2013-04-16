@@ -172,7 +172,7 @@ __kernel void example2( __global float *vector,
 }
 }}}
 
-Thi code is executed super fast both on the GPU and the CPU. Note that NDRange kernels, when executed on the CPU are not simulated, but compiled and optimized for the target CPU. So performance must be very decent.
+Thi code is executed super fast both on the GPU and the CPU. Note that NDRange kernels, even designed for GPU's, when executed on the CPU are not simulated but compiled and optimized for the target CPU. So performance must be very decent.
 
 Compiling this code with gcc on a Mac, looks like this:
 
