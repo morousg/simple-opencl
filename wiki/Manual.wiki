@@ -149,3 +149,25 @@ int main( int argc, char *argv[] ){
     
 }
 }}}
+
+As we can see on the code above, we have used a read/write variable (%R), a read only variable (%r) and a local memory variable (%N).
+
+Now the kernel code:
+
+{{{
+/* Kernel and kernel parameters declaration*/
+__kernel void example2( __global float *vector,
+                        __global float *value,
+                        __local float *valueLocal){
+        /* Reading the WorkItem index*/
+        int local_x = get_local_id(0);
+        int global_x = get_global_id(0);
+            
+        /* Copying the read only value to local memory for faster broadcast reads */
+        if (local_x == 0) {
+                *valueLocal=*value;
+        }   
+        /* Final multiplication, stored on the same vector */
+        vector[global_x] = vector[global_x] * *valueLocal;
+}
+}}}
