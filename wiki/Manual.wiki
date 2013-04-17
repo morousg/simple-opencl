@@ -89,77 +89,6 @@ To this end, SimpleOpenCL provides a short way to indicate this, with a printf-l
 || *%R* || 2 (size_t varSize, {{{void*}}} var) || Read write. When SimpleOpenCL finds %R it sets a global memory pointer with size "varSize". Before the execution of the kernel, the contents of "var" are copied to the hardware device selected. When the execution of the kernel is done, it automatically copies the results from the hardware to the variable "var". || {{{__global}}} ||
 || *%g* || 1 (size_t varSize) || When SimpleOpenCL finds %g it sets a global memory pointer with size "varSize" in read write mode. Tis pointer will not be read or written from the main program. || {{{__global}}} ||
 
-= Compiling the code =
-
-SimpleOpenCL code consists by now of only one C file (simpleCL.c), and it's header file (simpleCL.h). To compile your program, you have to compile your code along with simpleCL.c. It is very fast to compile since it is a quite short, but useful code.
-
-Each OpenCL implementation comes with a manual for compiling it, indicating necessary libraries and compiler flags. The question is, if you know how to compile OpenCL, you know how to compile SimpleOpenCL, since it is an OpenCL code.
-
-Compiling in Linux with AMD OpenCL 1.2 implementation:
-
-{{{
-gcc -O3 -I/opt/AMDAPP/include main.c simpleCL.c -o myapp -lOpenCL
-}}}
-
-Compiling in Ubuntu Linux 12.10 with CUDA toolkit installed through aptitude (sudo apt-get install nvidia-cuda-toolkit):
-
-{{{
-gcc -O3 main.c simpleCL.c -o myapp -lOpenCL
-}}}
-
-Compiling in OS X:
-
-{{{
-gcc -O3 main.c simpleCL.c -o myapp -framework OpenCL
-}}}
-
-Execution output for an AMD machine (in this case Device 1 is selected "{{{hardware[1]}}} on the code"):
-
-{{{
-Group 1 with 1 devices
-Group 2 with 1 devices
-Group 3 with 1 devices
- Device 0 
- Platform name: AMD Accelerated Parallel Processing 
- Vendor: Advanced Micro Devices, Inc. 
- Device name: Juniper
- Device 1 
- Platform name: AMD Accelerated Parallel Processing 
- Vendor: Advanced Micro Devices, Inc. 
- Device name: Tahiti
- Device 2 
- Platform name: AMD Accelerated Parallel Processing 
- Vendor: Advanced Micro Devices, Inc. 
- Device name: AMD Phenom(tm) II X4 955 Processor
-Execution successful
-vector[0]=0.000000 vector[10]=30.000000 vector[200]=600.000000
-}}}
-
-Execution output for an NVIDIA machine:
-
-{{{
-Group 1 with 1 devices
- Device 0 
- Platform name: NVIDIA CUDA 
- Vendor: NVIDIA Corporation 
- Device name: GeForce 8800 GTX
-Execution successful
-vector[0]=0.000000 vector[10]=30.000000 vector[200]=600.000000
-}}}
-
-Execution output for an Apple machine:
-
-{{{
-Group 1 with 1 devices
- Device 0 
- Platform name: Apple 
- Vendor: Apple 
- Device name: Intel(R) Core(TM) i7-3667U CPU @ 2.00GHz
-Execution successful
-vector[0]=0.000000 vector[10]=30.000000 vector[200]=600.000000
-}}}
-
-
 = Short example = 
 
 In this example, we show a SimpleOpenCL program that generates a vector of 134217728 float values that start at 0 and end at 134217728-1, and a float variable with the value "3" on the Host. Later it sends this values to the first device found on the system and executes a kernel where each WorkItem multiplies the value of the vector corresponding to its global index in the x dimension, by the value "3", and stores the result on the same vector position.
@@ -242,3 +171,73 @@ __kernel void example2( __global float *vector,
 }}}
 
 This code is executed super fast both on the GPU and the CPU. Note that NDRange kernels, even designed for GPU's, when executed on the CPU are not simulated but compiled and optimized for the target CPU. So performance must be very decent.
+
+= Compiling the code =
+
+SimpleOpenCL code consists by now of only one C file (simpleCL.c), and it's header file (simpleCL.h). To compile your program, you have to compile your code along with simpleCL.c. It is very fast to compile since it is a quite short, but useful code.
+
+Each OpenCL implementation comes with a manual for compiling it, indicating necessary libraries and compiler flags. The question is, if you know how to compile OpenCL, you know how to compile SimpleOpenCL, since it is an OpenCL code.
+
+Compiling in Linux with AMD OpenCL 1.2 implementation:
+
+{{{
+gcc -O3 -I/opt/AMDAPP/include main.c simpleCL.c -o myapp -lOpenCL
+}}}
+
+Compiling in Ubuntu Linux 12.10 with CUDA toolkit installed through aptitude (sudo apt-get install nvidia-cuda-toolkit):
+
+{{{
+gcc -O3 main.c simpleCL.c -o myapp -lOpenCL
+}}}
+
+Compiling in OS X:
+
+{{{
+gcc -O3 main.c simpleCL.c -o myapp -framework OpenCL
+}}}
+
+Execution output for an AMD machine (in this case Device 1 is selected "{{{hardware[1]}}} on the code"):
+
+{{{
+Group 1 with 1 devices
+Group 2 with 1 devices
+Group 3 with 1 devices
+ Device 0 
+ Platform name: AMD Accelerated Parallel Processing 
+ Vendor: Advanced Micro Devices, Inc. 
+ Device name: Juniper
+ Device 1 
+ Platform name: AMD Accelerated Parallel Processing 
+ Vendor: Advanced Micro Devices, Inc. 
+ Device name: Tahiti
+ Device 2 
+ Platform name: AMD Accelerated Parallel Processing 
+ Vendor: Advanced Micro Devices, Inc. 
+ Device name: AMD Phenom(tm) II X4 955 Processor
+Execution successful
+vector[0]=0.000000 vector[10]=30.000000 vector[200]=600.000000
+}}}
+
+Execution output for an NVIDIA machine:
+
+{{{
+Group 1 with 1 devices
+ Device 0 
+ Platform name: NVIDIA CUDA 
+ Vendor: NVIDIA Corporation 
+ Device name: GeForce 8800 GTX
+Execution successful
+vector[0]=0.000000 vector[10]=30.000000 vector[200]=600.000000
+}}}
+
+Execution output for an Apple machine:
+
+{{{
+Group 1 with 1 devices
+ Device 0 
+ Platform name: Apple 
+ Vendor: Apple 
+ Device name: Intel(R) Core(TM) i7-3667U CPU @ 2.00GHz
+Execution successful
+vector[0]=0.000000 vector[10]=30.000000 vector[200]=600.000000
+}}}
