@@ -104,7 +104,7 @@ gcc -O3 -I/opt/AMDAPP/include main.c simpleCL.c -o myapp -lOpenCL
 Compiling in Ubuntu Linux 12.10 with CUDA toolkit installed through aptitude (sudo apt-get install nvidia-cuda-toolkit):
 
 {{{
-gcc -O3 main.c simpleCL.c -o myappNV -lOpenCL
+gcc -O3 main.c simpleCL.c -o myapp -lOpenCL
 }}}
 
 Compiling in OS X:
