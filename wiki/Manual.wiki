@@ -99,7 +99,7 @@ To this end, SimpleOpenCL provides a short way to indicate this, with a printf-l
 
 SimpleOpenCL code consists by now of only one C file (simpleCL.c), and it's header file (simpleCL.h). To compile your program, you have to compile your code along with simpleCL.c. It is very fast to compile since it is a quite short, but useful code.
 
-Each OpenCL implementation comes with a manual for compiling it, indicating necessary libraries and compiler flags.
+Each OpenCL implementation comes with a manual for compiling it, indicating necessary libraries and compiler flags. The question is, if you know how to compile OpenCL, you know how to compile SimpleOpenCL, since it is an OpenCL code.
 
 = Short example = 
 
