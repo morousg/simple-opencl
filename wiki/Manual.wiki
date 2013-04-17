@@ -1,7 +1,6 @@
 #summary User manual
 
 = Manual summary = 
-(under construction)
 
 <wiki:toc max_depth="2" />
 
