@@ -200,7 +200,7 @@ Executing the code both in Linux and OS X looks like this:
 ./myapp
 }}}
 
-Execution output for an AMD machine (in this case Device 1 is selected "{{{hardware[1]}}} on the Host code"):
+Execution output for an AMD machine (in this case Device 1 is selected, "{{{hardware[1]}}}" on the Host code):
 
 {{{
 Group 1 with 1 devices
