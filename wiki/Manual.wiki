@@ -196,7 +196,7 @@ Compiling in OS X:
 gcc -O3 main.c simpleCL.c -o myapp -framework OpenCL
 }}}
 
-Execution output for an AMD machine (in this case Device 1 is selected "{{{hardware[1]}}} on the code"):
+Execution output for an AMD machine (in this case Device 1 is selected "{{{hardware[1]}}} on the Host code"):
 
 {{{
 Group 1 with 1 devices
