@@ -122,7 +122,7 @@ int main( int argc, char *argv[] ){
                 vector[i] = (float)i;
         }   
 
-        /* Hardware and Software initialization */
+        /* Hardware and Software initialization ##### HERE STARTS THE SimpleOpenCL CODE ####*/
         found=0;
         hardware = sclGetAllHardware(&found);
         software = sclGetCLSoftware("example2.cl","example2",hardware[0]);
@@ -133,7 +133,7 @@ int main( int argc, char *argv[] ){
                                    "%R %r %N",
                                    dataSize, (void*)vector, sizeof(float), (void*)&value, sizeof(float));
 
-        /* Data is read back from the device automatically */
+        /* Data is read back from the device automatically  ##### HERE ENDS THE SimpleOpenCL CODE ####*/
         /* We print some values to check the results */
         printf("\nExecution successful\n");
         printf("vector[0]=%f vector[10]=%f vector[200]=%f\n",vector[0],vector[10],vector[200]);
