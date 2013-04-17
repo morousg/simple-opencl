@@ -113,6 +113,52 @@ Compiling in OS X:
 gcc -O3 main.c simpleCL.c -o myapp -framework OpenCL
 }}}
 
+Execution output for an AMD machine:
+
+{{{
+Group 1 with 1 devices
+Group 2 with 1 devices
+Group 3 with 1 devices
+ Device 0 
+ Platform name: AMD Accelerated Parallel Processing 
+ Vendor: Advanced Micro Devices, Inc. 
+ Device name: Juniper
+ Device 1 
+ Platform name: AMD Accelerated Parallel Processing 
+ Vendor: Advanced Micro Devices, Inc. 
+ Device name: Tahiti
+ Device 2 
+ Platform name: AMD Accelerated Parallel Processing 
+ Vendor: Advanced Micro Devices, Inc. 
+ Device name: AMD Phenom(tm) II X4 955 Processor
+Execution successful
+vector[0]=0.000000 vector[10]=30.000000 vector[200]=600.000000
+}}}
+
+Execution output for an NVIDIA machine:
+
+{{{
+Group 1 with 1 devices
+ Device 0 
+ Platform name: NVIDIA CUDA 
+ Vendor: NVIDIA Corporation 
+ Device name: GeForce 8800 GTX
+Execution successful
+vector[0]=0.000000 vector[10]=30.000000 vector[200]=600.000000
+}}}
+
+Execution output for an Apple machine:
+
+{{{
+Group 1 with 1 devices
+ Device 0 
+ Platform name: Apple 
+ Vendor: Apple 
+ Device name: Intel(R) Core(TM) i7-3667U CPU @ 2.00GHz
+Execution successful
+vector[0]=0.000000 vector[10]=30.000000 vector[200]=600.000000
+}}}
+
 
 = Short example = 
 
@@ -195,22 +241,4 @@ __kernel void example2( __global float *vector,
 }
 }}}
 
-Thi code is executed super fast both on the GPU and the CPU. Note that NDRange kernels, even designed for GPU's, when executed on the CPU are not simulated but compiled and optimized for the target CPU. So performance must be very decent.
-
-Compiling this code with gcc on a Mac, looks like this:
-
-{{{
-gcc -O3 main.c simpleCL.c -o myapp -framework OpenCL
-}}}
-
-And finally, this is the output on an Apple Macbook Air, with a Core i7 3667U CPU. This CPU has an OpenCL compatible GPU, but the GPU driver for OpenCL is not yet available, so the code is executed on the CPU part.
-
-{{{
-Group 1 with 1 devices
- Device 0 
- Platform name: Apple 
- Vendor: Apple 
- Device name: Intel(R) Core(TM) i7-3667U CPU @ 2.00GHz
-Execution successful
-vector[0]=0.000000 vector[10]=30.000000 vector[200]=600.000000
-}}}
+This code is executed super fast both on the GPU and the CPU. Note that NDRange kernels, even designed for GPU's, when executed on the CPU are not simulated but compiled and optimized for the target CPU. So performance must be very decent.
