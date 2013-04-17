@@ -163,9 +163,9 @@ __kernel void example2( __global float *vector,
         }   
         /* Final multiplication, stored on the same vector */
         vector[global_x] = vector[global_x] * *valueLocal;
-        /* Barrier to avoid that some OpenCL implementation */
-        /* optimizations start reading results from the Device to the Host */
-        /* before they are completely stored in global memory. */ 
+        /* Barrier to avoid that some OpenCL implementation optimizations 
+            make the system to start reading results from the Device to the Host
+            before they are completely stored in global memory. */ 
         barrier(CLK_GLOBAL_MEM_FENCE);
 }
 }}}
