@@ -196,6 +196,11 @@ Compiling in OS X:
 gcc -O3 main.c simpleCL.c -o myapp -framework OpenCL
 }}}
 
+Executing the code both in Linux and OS X looks like this:
+{{{
+./myapp
+}}}
+
 Execution output for an AMD machine (in this case Device 1 is selected "{{{hardware[1]}}} on the Host code"):
 
 {{{
