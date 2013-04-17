@@ -23,18 +23,12 @@ SimpleOpenCL provides some functions in order to select the desired hardware. Th
 == sclGetAllHardware ==
 This SimpleOpenCL function, returns a list with all the OpenCL compatible hardware on the system. 
 {{{
-int sclGetAllHardware( sclHard** hardList );
-}}}
-
-It returns the number of hardware devices found as an integer, and gets an sclHard double pointer as a parameter, that will be filled with all the devices found.
-
-*UPDATE:* this function has changed since version 0.010_27_02_2013
-
-This is the new function:
-
-{{{
 sclHard* sclGetAllHardware( int* found );
 }}}
+
+It returns a list of hardware devices found as sclHard pointers, and gets an integer pointer as parameter to store the number of devices found.
+
+*WARNING:* this function was different before version 0.010_27_02_2013. Download the latest SimpleOpenCL version to use it as explained on this section.
 
 == sclGetFastestDevice ==
 
