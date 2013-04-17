@@ -242,4 +242,4 @@ Execution successful
 vector[0]=0.000000 vector[10]=30.000000 vector[200]=600.000000
 }}}
 
-Note that the "Group" term, refers to memory context in OpenCL. SimpleOpenCL automatically creates different or the same context for devices of different vendors, types or memory capacities, or the same vendor, type and memory capacity respectively.
+Note that the "Group" term, refers to memory context in OpenCL. SimpleOpenCL automatically creates different or the same context for devices of different vendors, types or memory capacities, or the same vendor, type and memory capacity respectively. Only devices that use the same OpenCL platform, and have the same amount of memory, will share the same OpenCL context. Refer to OpenCL documentation to know more about this.
