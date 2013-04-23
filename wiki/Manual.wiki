@@ -8,7 +8,7 @@
 
 This section shows how to use SimpleOpenCL. We only show First level functions in this section, that are the main goal of the project.
 
-SimpleOpenCL eliminates the need of knowing about OpenCL objects. *The only thing a programmer needs to know in order to use SimpleOpenCL is* C, two SimpleOpenCL types, and few functions.
+SimpleOpenCL eliminates the need of knowing about OpenCL objects. *The only thing a programmer needs to know in order to use SimpleOpenCL is C, two SimpleOpenCL types, and few functions*.
 
 The functionality it offers is:
 
