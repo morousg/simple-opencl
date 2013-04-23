@@ -10,7 +10,7 @@ This section shows how to use SimpleOpenCL. We only show First level functions i
 
 SimpleOpenCL eliminates the need of knowing about OpenCL objects. *The only thing a programmer needs to know in order to use SimpleOpenCL is C, two SimpleOpenCL types, and few functions*.
 
-The functionality it offers is:
+The functions and data types offer the following functionality:
 
  # To select in which device you want to run your code.
  # To initialize the code you want to execute (OpenCL Kernels).
