@@ -13,7 +13,7 @@ SimpleOpenCL eliminates the need of knowing about OpenCL objects. *The only thin
 The functions and data types offer the following functionality:
 
  # To select in which device you want to run your code.
- # To initialize the code you want to execute (OpenCL Kernels).
+ # To select the code you want to execute (OpenCL Kernels).
  # To execute the selected code in the selected device.
 
 = Selecting the device =
