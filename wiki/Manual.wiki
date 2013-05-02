@@ -93,9 +93,9 @@ To this end, SimpleOpenCL provides a short way to indicate this, with a printf-l
 In this example, we show a SimpleOpenCL program that does the following:
 
   # It generates a vector of 134217728 float values that start at 0 and end at 134217728-1, and a float variable with the value "3" on the Host. 
-  # Then the program initializes the OpenCL kernel code (sclSoft software) and the OpenCL hardware (sclHard *hardware). 
-  # Finally, it sends the array and the value "3" to the first device found on the system, sets a 2DRange kernel, and executes it on the first device (hardware[0]).
-  # On the OpenCL NDRange kernel, each WorkItem multiplies the value of the vector corresponding to its global index in the x dimension (get_global_id(0)), by the value "3" (float* value) and stores the result on the same vector position.
+  # Then the program initializes the OpenCL kernel code ({{{sclSoft software}}}) and the OpenCL hardware ({{{sclHard *hardware}}}). 
+  # Finally, it sends the array and the value "3" to the first device found on the system, sets a 2DRange kernel, and executes it on the first device ({{{hardware[0]}}}).
+  # On the OpenCL NDRange kernel, each WorkItem multiplies the value of the vector corresponding to its global index in the x dimension ({{{get_global_id(0)}}}), by the value "3" ({{{float* value}}}) and stores the result on the same vector position.
 
 This is the SimpleOpenCL Host code:
 
