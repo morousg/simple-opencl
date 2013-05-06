@@ -97,7 +97,7 @@ In this example, we show a SimpleOpenCL program that does the following:
   # Finally, it sends the array and the value "3" to the first device found on the system, sets a 2DRange kernel, and executes it on the first device ({{{hardware[0]}}}).
   # On the OpenCL NDRange kernel, each WorkItem multiplies the value of the vector corresponding to its global index in the x dimension ({{{vector[get_global_id(0)]}}}), by the value "3" ({{{float* value}}}) and stores the result on the same vector position ({{{vector[get_global_id(0)]}}}).
 
-This is the SimpleOpenCL Host code:
+This is the SimpleOpenCL Host code (main.c):
 
 {{{
 #include "simpleCL.h"
@@ -150,7 +150,7 @@ int main( int argc, char *argv[] ){
 
 As we can see on the code above, we have used a read/write variable (%R), a read only variable (%r) and a local memory variable (%N).
 
-Now the kernel code:
+Now the kernel code (example2.cl):
 
 {{{
 /* Kernel and kernel parameters declaration*/
