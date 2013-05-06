@@ -184,6 +184,8 @@ SimpleOpenCL code consists by now of only one C file (simpleCL.c), and it's head
 
 Each OpenCL implementation comes with a manual for compiling it, indicating necessary libraries and compiler flags. The question is, if you know how to compile OpenCL, you know how to compile SimpleOpenCL, since it is an OpenCL code.
 
+Note, that the next examples work when simpleCL.c and simpleCL.h are on the same folder as the example code main.c and example2.cl.
+
 Compiling in Linux with AMD OpenCL 1.2 implementation:
 
 {{{
