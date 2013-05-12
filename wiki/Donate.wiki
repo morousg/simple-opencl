@@ -1,7 +1,0 @@
-#summary How to help this project
-
-= Flattr this project =
-
-Flattr is a micro donation system with which you can support us. Click on the button below to support this project.
-
-<wiki:gadget border="0" url="http://stefansundin.com/stuff/flattr/google-project-hosting.xml" up_url="http://flattr.com/thing/1337215/Simple-OpenCL" width="55" height="62" up_uid="oscar.amoroshuguet"  />
