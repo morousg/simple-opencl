@@ -4,5 +4,4 @@
 
 Flattr is a micro donation system with which you can support us. Click on the button below to support this project.
 
-<wiki:gadget border="0" up_url="http://flattr.com/thing/1337215/Simple-OpenCL" />
-
+<wiki:gadget border="0" url="http://flattr.com/thing/1337215/Simple-OpenCL" up_url="http://flattr.com/thing/1337215/Simple-OpenCL" />
