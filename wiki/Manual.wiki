@@ -135,7 +135,7 @@ int main( int argc, char *argv[] ){
         /* Kernel execution */
         sclManageArgsLaunchKernel( hardware[0], software,
                                    global_size, local_size,
-                                   "%R %r %N",
+                                   "%R %a %N",
                                    dataSize, (void*)vector, sizeof(float), (void*)&value, sizeof(float));
 
         /* Data is read back from the device automatically  ##### HERE ENDS THE SimpleOpenCL CODE ####*/
@@ -155,7 +155,7 @@ Now the kernel code (example2.cl):
 {{{
 /* Kernel and kernel parameters declaration*/
 __kernel void example2( __global float *vector,
-                        __global float *value,
+                        __global float value,
                         __local float *valueLocal){
         /* Reading the WorkItem index*/
         int local_x = get_local_id(0);
