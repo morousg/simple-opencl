@@ -119,6 +119,8 @@ int main( int argc, char *argv[] ){
     
         global_size[0]=dataLength; global_size[1]=1;
         local_size[0]=64; local_size[1]=1;
+        /*local_size[0]=1 might be necessary for CPU devices on apple machines*/
+
 
         /* Data generation */
         vector = (float*)malloc(dataSize);
@@ -155,7 +157,7 @@ Now the kernel code (example2.cl):
 {{{
 /* Kernel and kernel parameters declaration*/
 __kernel void example2( __global float *vector,
-                        __global float value,
+                        float value,
                         __local float *valueLocal){
         /* Reading the WorkItem index*/
         int local_x = get_local_id(0);
@@ -163,7 +165,7 @@ __kernel void example2( __global float *vector,
             
         /* Copying the read only value to local memory for faster broadcast reads */
         if (local_x == 0) {
-                *valueLocal=*value;
+                *valueLocal=value;
         }   
         /* Final multiplication, stored on the same vector */
         vector[global_x] = vector[global_x] * *valueLocal;
