@@ -199,7 +199,12 @@ char* _sclLoadProgramSource( const char *filename )
 	
 	stat( filename, &statbuf );
 	source = (char *)malloc( statbuf.st_size + 1 );
-	fread( source, statbuf.st_size, 1, fh );
+
+	if( fread( source, statbuf.st_size, 1, fh ) != 1 ) {
+		printf("Error on loadProgramSource");
+		sclPrintErrorFlags( CL_INVALID_PROGRAM );
+	}
+
 	source[ statbuf.st_size ] = '\0';
 	
 	fclose( fh );
