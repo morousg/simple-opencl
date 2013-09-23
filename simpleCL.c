@@ -884,7 +884,7 @@ cl_mem sclMallocWrite( sclHard hardware, cl_int mode, size_t size, void* hostPoi
 	}
 
 #else
-        buffer = clCreateBuffer( hardware.context, mode, size, NULL, NULL );
+	buffer = sclMalloc( hardware, mode, size );
 	clEnqueueWriteBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
 #endif
 	return buffer;
