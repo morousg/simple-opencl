@@ -872,8 +872,8 @@ cl_mem sclMallocWrite( sclHard hardware, cl_int mode, size_t size, void* hostPoi
 #ifdef DEBUG
 	cl_int err;
 	
-        buffer = clCreateBuffer( hardware.context, mode, size, NULL, &err );
-        if ( err != CL_SUCCESS ) { 
+	buffer = clCreateBuffer( hardware.context, mode, size, NULL, &err );
+	if ( err != CL_SUCCESS ) { 
 		printf( "\nclMallocWrite Error on clCreateBuffer\n" );
 		sclPrintErrorFlags( err );
 	}
