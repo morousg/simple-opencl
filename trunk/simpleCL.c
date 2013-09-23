@@ -240,7 +240,7 @@ void _sclBuildProgram( cl_program program, cl_device_id devices, const char* pNa
    	if ( err != CL_SUCCESS ) {
 		printf( "Error on buildProgram " );
 		sclPrintErrorFlags( err ); 
-		fprintf( stdout, "\nRequestingInfo\n" );
+		printf( "\nRequestingInfo\n" );
 		clGetProgramBuildInfo( program, devices, CL_PROGRAM_BUILD_LOG, 4096, build_c, NULL );
 		printf( "Build Log for %s_program:\n%s\n", pName, build_c );
 	}
