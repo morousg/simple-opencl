@@ -194,8 +194,11 @@ char* _sclLoadProgramSource( const char *filename )
 	char *source;
 	
 	fh = fopen( filename, "r" );
-	if ( fh == 0 )
+	if ( fh == NULL ){
+		fprintf( stderr, "Error on loadProgramSource");
+		sclPrintErrorFlags( CL_INVALID_PROGRAM );
 		return 0;
+	}
 	
 	stat( filename, &statbuf );
 	source = (char *)malloc( statbuf.st_size + 1 );
