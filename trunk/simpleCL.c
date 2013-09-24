@@ -615,7 +615,7 @@ sclHard sclGetGPUHardware( int nDevice, int* found ) {
 
 
 	if ( nPlatforms == 0 ) {
-		printf("\nNo OpenCL plantforms found.\n");
+		printf("\nNo OpenCL platforms found.\n");
 		*found = 0;
 	}
 	else if ( nPlatforms == 1 ) {
@@ -732,7 +732,7 @@ sclHard sclGetCPUHardware( int nDevice, int* found ) {
 
 
 	if ( nPlatforms == 0 ) {
-		printf("\nNo OpenCL plantforms found.\n");
+		printf("\nNo OpenCL platforms found.\n");
 		*found = 0;
 	}
 	else if ( nPlatforms == 1 ) {
