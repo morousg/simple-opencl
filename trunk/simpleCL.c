@@ -268,7 +268,7 @@ cl_kernel _sclCreateKernel( sclSoft software ) {
 }
 
 cl_event sclLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size) {
-	cl_event myEvent;	
+	cl_event myEvent=NULL;	
 #ifdef DEBUG
 	cl_int err;
 
@@ -284,7 +284,7 @@ cl_event sclLaunchKernel( sclHard hardware, sclSoft software, size_t *global_wor
 }
 
 cl_event sclEnqueueKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size) {
-	cl_event myEvent;	
+	cl_event myEvent=NULL;	
 #ifdef DEBUG
 	cl_int err;
 
