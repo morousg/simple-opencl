@@ -32,158 +32,158 @@ void sclPrintErrorFlags( cl_int flag ){
 	switch (flag){
 
 		case CL_DEVICE_NOT_FOUND:
-			printf("\nCL_DEVICE_NOT_FOUND\n");
+			fprintf( stderr, "\nCL_DEVICE_NOT_FOUND\n");
 			break;
 		case CL_DEVICE_NOT_AVAILABLE:
-			printf("\nCL_DEVICE_NOT_AVAILABLE\n");
+			fprintf( stderr, "\nCL_DEVICE_NOT_AVAILABLE\n");
 			break;
 		case CL_COMPILER_NOT_AVAILABLE:
-			printf("\nCL_COMPILER_NOT_AVAILABLE\n");
+			fprintf( stderr, "\nCL_COMPILER_NOT_AVAILABLE\n");
 			break;
 		case CL_PROFILING_INFO_NOT_AVAILABLE:
-			printf("\nCL_PROFILING_INFO_NOT_AVAILABLE\n");
+			fprintf( stderr, "\nCL_PROFILING_INFO_NOT_AVAILABLE\n");
 			break;
 		case CL_MEM_COPY_OVERLAP:
-			printf("\nCL_MEM_COPY_OVERLAP\n");
+			fprintf( stderr, "\nCL_MEM_COPY_OVERLAP\n");
 			break;
 		case CL_IMAGE_FORMAT_MISMATCH:
-			printf("\nCL_IMAGE_FORMAT_MISMATCH\n");
+			fprintf( stderr, "\nCL_IMAGE_FORMAT_MISMATCH\n");
 			break;
 		case CL_IMAGE_FORMAT_NOT_SUPPORTED:
-			printf("\nCL_IMAGE_FORMAT_NOT_SUPPORTED\n");
+			fprintf( stderr, "\nCL_IMAGE_FORMAT_NOT_SUPPORTED\n");
 			break;
 		case CL_INVALID_COMMAND_QUEUE:
-			printf("\nCL_INVALID_COMMAND_QUEUE\n");
+			fprintf( stderr, "\nCL_INVALID_COMMAND_QUEUE\n");
 			break;
 		case CL_INVALID_CONTEXT:
-			printf("\nCL_INVALID_CONTEXT\n");
+			fprintf( stderr, "\nCL_INVALID_CONTEXT\n");
 			break;
 		case CL_INVALID_MEM_OBJECT:
-			printf("\nCL_INVALID_MEM_OBJECT\n");
+			fprintf( stderr, "\nCL_INVALID_MEM_OBJECT\n");
 			break;
 		case CL_INVALID_VALUE:
-			printf("\nCL_INVALID_VALUE\n");
+			fprintf( stderr, "\nCL_INVALID_VALUE\n");
 			break;
 		case CL_INVALID_EVENT_WAIT_LIST:
-			printf("\nCL_INVALID_EVENT_WAIT_LIST\n");
+			fprintf( stderr, "\nCL_INVALID_EVENT_WAIT_LIST\n");
 			break;
 		case CL_MEM_OBJECT_ALLOCATION_FAILURE:
-			printf("\nCL_MEM_OBJECT_ALLOCATION_FAILURE\n");
+			fprintf( stderr, "\nCL_MEM_OBJECT_ALLOCATION_FAILURE\n");
 			break;
 		case CL_OUT_OF_HOST_MEMORY:
-			printf("\nCL_OUT_OF_HOST_MEMORY\n");
+			fprintf( stderr, "\nCL_OUT_OF_HOST_MEMORY\n");
 			break;
 
 		case CL_INVALID_PROGRAM_EXECUTABLE:
-			printf("\nCL_INVALID_PROGRAM_EXECUTABLE\n");
+			fprintf( stderr, "\nCL_INVALID_PROGRAM_EXECUTABLE\n");
 			break;
 		case CL_INVALID_KERNEL:
-			printf("\nCL_INVALID_KERNEL\n");
+			fprintf( stderr, "\nCL_INVALID_KERNEL\n");
 			break;
 		case CL_INVALID_KERNEL_ARGS:
-			printf("\nCL_INVALID_KERNEL_ARGS\n");
+			fprintf( stderr, "\nCL_INVALID_KERNEL_ARGS\n");
 			break;
 		case CL_INVALID_WORK_DIMENSION:
-			printf("\nCL_INVALID_WORK_DIMENSION\n");
+			fprintf( stderr, "\nCL_INVALID_WORK_DIMENSION\n");
 			break;
 #ifndef __APPLE__ 
 		case CL_INVALID_GLOBAL_WORK_SIZE:
-			printf("\nCL_INVALID_GLOBAL_WORK_SIZE\n");
+			fprintf( stderr, "\nCL_INVALID_GLOBAL_WORK_SIZE\n");
 			break;
 #endif
 		case CL_INVALID_WORK_GROUP_SIZE:
-			printf("\nCL_INVALID_WORK_GROUP_SIZE\n");
+			fprintf( stderr, "\nCL_INVALID_WORK_GROUP_SIZE\n");
 			break;
 		case CL_INVALID_WORK_ITEM_SIZE:
-			printf("\nCL_INVALID_WORK_ITEM_SIZE\n");
+			fprintf( stderr, "\nCL_INVALID_WORK_ITEM_SIZE\n");
 			break;
 		case CL_INVALID_GLOBAL_OFFSET:
-			printf("\nCL_INVALID_GLOBAL_OFFSET\n");
+			fprintf( stderr, "\nCL_INVALID_GLOBAL_OFFSET\n");
 			break;
 		case CL_OUT_OF_RESOURCES:
-			printf("\nCL_OUT_OF_RESOURCES\n");
+			fprintf( stderr, "\nCL_OUT_OF_RESOURCES\n");
 			break;
 
 		case CL_INVALID_PROGRAM:
-			printf("\nCL_INVALID_PROGRAM\n");
+			fprintf( stderr, "\nCL_INVALID_PROGRAM\n");
 			break;
 		case CL_INVALID_KERNEL_NAME:
-			printf("\nCL_INVALID_KERNEL_NAME\n");
+			fprintf( stderr, "\nCL_INVALID_KERNEL_NAME\n");
 			break;
 		case CL_INVALID_KERNEL_DEFINITION:
-			printf("\nCL_INVALID_KERNEL_DEFINITION\n");
+			fprintf( stderr, "\nCL_INVALID_KERNEL_DEFINITION\n");
 			break;
 		case CL_INVALID_BUFFER_SIZE:
-			printf("\nCL_INVALID_BUFFER_SIZE\n");
+			fprintf( stderr, "\nCL_INVALID_BUFFER_SIZE\n");
 			break;
 		case CL_BUILD_PROGRAM_FAILURE:
-			printf("\nCL_BUILD_PROGRAM_FAILURE\n");
+			fprintf( stderr, "\nCL_BUILD_PROGRAM_FAILURE\n");
 			break;
 		case CL_INVALID_ARG_INDEX:
-			printf("\nCL_INVALID_ARG_INDEX\n");
+			fprintf( stderr, "\nCL_INVALID_ARG_INDEX\n");
 			break;
 		case CL_INVALID_ARG_VALUE:
-			printf("\nCL_INVALID_ARG_VALUE\n");
+			fprintf( stderr, "\nCL_INVALID_ARG_VALUE\n");
 			break;
 		case CL_MAP_FAILURE:
-			printf("\nCL_MAP_FAILURE\n");
+			fprintf( stderr, "\nCL_MAP_FAILURE\n");
 			break;
 		case CL_MISALIGNED_SUB_BUFFER_OFFSET:
-			printf("\nCL_MISALIGNED_SUB_BUFFER_OFFSET\n");
+			fprintf( stderr, "\nCL_MISALIGNED_SUB_BUFFER_OFFSET\n");
 			break;
 		case CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST:
-			printf("\nCL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST\n");
+			fprintf( stderr, "\nCL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST\n");
 			break;
 		case CL_INVALID_DEVICE_TYPE:
-			printf("\nCL_INVALID_DEVICE_TYPE\n");
+			fprintf( stderr, "\nCL_INVALID_DEVICE_TYPE\n");
 			break;
 		case CL_INVALID_PLATFORM:
-			printf("\nCL_INVALID_PLATFORM\n");
+			fprintf( stderr, "\nCL_INVALID_PLATFORM\n");
 			break;
 		case CL_INVALID_DEVICE:
-			printf("\nCL_INVALID_DEVICE\n");
+			fprintf( stderr, "\nCL_INVALID_DEVICE\n");
 			break; 
 		case CL_INVALID_QUEUE_PROPERTIES:
-			printf("\nCL_INVALID_QUEUE_PROPERTIES\n");
+			fprintf( stderr, "\nCL_INVALID_QUEUE_PROPERTIES\n");
 			break; 
 		case CL_INVALID_HOST_PTR:
-			printf("\nCL_INVALID_HOST_PTR\n");
+			fprintf( stderr, "\nCL_INVALID_HOST_PTR\n");
 			break;
 		case CL_INVALID_IMAGE_FORMAT_DESCRIPTOR:
-			printf("\nCL_INVALID_IMAGE_FORMAT_DESCRIPTOR\n");
+			fprintf( stderr, "\nCL_INVALID_IMAGE_FORMAT_DESCRIPTOR\n");
 			break;
 		case CL_INVALID_IMAGE_SIZE:
-			printf("\nCL_INVALID_IMAGE_SIZE\n");
+			fprintf( stderr, "\nCL_INVALID_IMAGE_SIZE\n");
 			break;
 		case CL_INVALID_SAMPLER:
-			printf("\nCL_INVALID_SAMPLER\n");
+			fprintf( stderr, "\nCL_INVALID_SAMPLER\n");
 			break;
 		case CL_INVALID_BINARY:
-			printf("\nCL_INVALID_BINARY\n");
+			fprintf( stderr, "\nCL_INVALID_BINARY\n");
 			break;
 		case CL_INVALID_BUILD_OPTIONS:
-			printf("\nCL_INVALID_BUILD_OPTIONS\n");
+			fprintf( stderr, "\nCL_INVALID_BUILD_OPTIONS\n");
 			break;
 		case CL_INVALID_ARG_SIZE:
-			printf("\nCL_INVALID_ARG_SIZE\n");
+			fprintf( stderr, "\nCL_INVALID_ARG_SIZE\n");
 			break;
 		case CL_INVALID_EVENT:
-			printf("\nCL_INVALID_EVENT\n");
+			fprintf( stderr, "\nCL_INVALID_EVENT\n");
 			break;
 		case CL_INVALID_OPERATION:
-			printf("\nCL_INVALID_OPERATION\n");
+			fprintf( stderr, "\nCL_INVALID_OPERATION\n");
 			break;
 		case CL_INVALID_GL_OBJECT:
-			printf("\nCL_INVALID_GL_OBJECT\n");
+			fprintf( stderr, "\nCL_INVALID_GL_OBJECT\n");
 			break;
 		case CL_INVALID_MIP_LEVEL:
-			printf("\nCL_INVALID_MIP_LEVEL\n");
+			fprintf( stderr, "\nCL_INVALID_MIP_LEVEL\n");
 			break;
 		case CL_INVALID_PROPERTY:
-			printf("\nCL_INVALID_PROPERTY\n");
+			fprintf( stderr, "\nCL_INVALID_PROPERTY\n");
 			break;
 		default:
-			printf("\nUnknown error code: %d\n",flag);    
+			fprintf( stderr, "\nUnknown error code: %d\n",flag);    
 	}
 }
 
@@ -201,7 +201,7 @@ char* _sclLoadProgramSource( const char *filename )
 	source = (char *)malloc( statbuf.st_size + 1 );
 
 	if( fread( source, statbuf.st_size, 1, fh ) != 1 ) {
-		printf("Error on loadProgramSource");
+		fprintf( stderr, "Error on loadProgramSource");
 		sclPrintErrorFlags( CL_INVALID_PROGRAM );
 	}
 
@@ -220,7 +220,7 @@ cl_program _sclCreateProgram( char* program_source, cl_context context )
 	
 	program = clCreateProgramWithSource( context, 1, (const char**)&program_source, NULL, &err );
 	if ( err!=CL_SUCCESS ) {
-		printf( "Error on createProgram" );
+		fprintf( stderr,  "Error on createProgram" );
 		sclPrintErrorFlags( err );
 	}
 #else
@@ -238,11 +238,11 @@ void _sclBuildProgram( cl_program program, cl_device_id devices, const char* pNa
 	
 	err = clBuildProgram( program, 0, NULL, NULL, NULL, NULL );
    	if ( err != CL_SUCCESS ) {
-		printf( "Error on buildProgram " );
+		fprintf( stderr,  "Error on buildProgram " );
 		sclPrintErrorFlags( err ); 
-		printf( "\nRequestingInfo\n" );
+		fprintf( stderr,  "\nRequestingInfo\n" );
 		clGetProgramBuildInfo( program, devices, CL_PROGRAM_BUILD_LOG, 4096, build_c, NULL );
-		printf( "Build Log for %s_program:\n%s\n", pName, build_c );
+		fprintf( stderr,  "Build Log for %s_program:\n%s\n", pName, build_c );
 	}
 #else
 	clBuildProgram( program, 0, NULL, NULL, NULL, NULL );
@@ -257,7 +257,7 @@ cl_kernel _sclCreateKernel( sclSoft software ) {
 
 	kernel = clCreateKernel( software.program, software.kernelName, &err );
 	if ( err != CL_SUCCESS ) {
-		printf( "Error on createKernel %s ", software.kernelName );
+		fprintf( stderr,  "Error on createKernel %s ", software.kernelName );
 		sclPrintErrorFlags( err );
 	}
 #else
@@ -274,7 +274,7 @@ cl_event sclLaunchKernel( sclHard hardware, sclSoft software, size_t *global_wor
 
 	err = clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, &myEvent );
 	if ( err != CL_SUCCESS ) {
-		printf( "\nError on launchKernel %s", software.kernelName );
+		fprintf( stderr,  "\nError on launchKernel %s", software.kernelName );
 		sclPrintErrorFlags(err); }
 #else
 	clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, NULL );
@@ -290,7 +290,7 @@ cl_event sclEnqueueKernel( sclHard hardware, sclSoft software, size_t *global_wo
 
 	err = clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, &myEvent );
 	if ( err != CL_SUCCESS ) {
-		printf( "\nError on launchKernel %s", software.kernelName );
+		fprintf( stderr,  "\nError on launchKernel %s", software.kernelName );
 		sclPrintErrorFlags(err); }
 #else
 	clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, NULL );
@@ -338,7 +338,7 @@ void sclReleaseMemObject( cl_mem object ) {
 
 	err = clReleaseMemObject( object );
 	if ( err != CL_SUCCESS ) {
-		printf( "\nError on sclReleaseMemObject" );
+		fprintf( stderr,  "\nError on sclReleaseMemObject" );
 		sclPrintErrorFlags(err); 
 	}	
 
@@ -386,7 +386,7 @@ void sclPrintHardwareStatus( sclHard hardware ) {
 		fprintf( stdout, "\nDevice object alive and device NOT available.");
 	}
 	else {
-		fprintf( stdout, "\nDevice object not alive.");
+		fprintf( stderr, "\nDevice object not alive.");
 	} 
 
 }
@@ -401,7 +401,7 @@ void _sclCreateQueues( sclHard* hardList, int found ) {
 		hardList[i].queue = clCreateCommandQueue( hardList[i].context, hardList[i].device,
 							 CL_QUEUE_PROFILING_ENABLE, &err );
 		if ( err != CL_SUCCESS ) {
-			fprintf( stdout, "\nError creating command queue %d", i );
+			fprintf( stderr, "\nError creating command queue %d", i );
 		}
 	}
 #else
@@ -466,7 +466,7 @@ void _sclSmartCreateContexts( sclHard* hardList, int found ) {
 #ifdef DEBUG
 		context = clCreateContext( 0, groupSizes[i], deviceList, NULL, NULL, &err );
 		if ( err != CL_SUCCESS ) {
-			fprintf( stdout, "\nError creating context on device %d", i );
+			fprintf( stderr, "\nError creating context on device %d", i );
 		}
 #else
 		context = clCreateContext( 0, groupSizes[i], deviceList, NULL, NULL, NULL );
@@ -550,16 +550,16 @@ sclHard* sclGetAllHardware( int* found ) {
 
 	err = clGetPlatformIDs( 8, platforms, &nPlatforms );
 	if ( nPlatforms == 0 ) {
-		printf("\nNo OpenCL platforms found.\n");
+		fprintf( stderr, "\nNo OpenCL platforms found.\n");
 	}
 	else {
 		
 		for ( i = 0; i < (int)nPlatforms; ++i ) {
 			err = clGetDeviceIDs( platforms[i], CL_DEVICE_TYPE_ALL, 16, devices, &nDevices );
 			if ( nDevices == 0 ) {
-				printf("\nNo OpenCL enabled device found.");
+				fprintf( stderr, "\nNo OpenCL enabled device found.");
 				if ( err != CL_SUCCESS ) {
-					printf( "\nError clGetDeviceIDs" );
+					fprintf( stderr,  "\nError clGetDeviceIDs" );
 					sclPrintErrorFlags( err );
 				}
 			}
@@ -610,22 +610,22 @@ sclHard sclGetGPUHardware( int nDevice, int* found ) {
 	devices = (cl_device_id *)malloc( sizeof(cl_device_id) * 8 );
 	/*Get platform info ###################################################### */
 	err = clGetPlatformIDs( 8, platforms, &nPlatforms );
-	/*printf("\n Number of platforms found: %d \n",nPlatforms);*/
+	/*fprintf( stdout, "\n Number of platforms found: %d \n",nPlatforms);*/
 	/* ###################################################### */
 
 
 	if ( nPlatforms == 0 ) {
-		printf("\nNo OpenCL platforms found.\n");
+		fprintf( stderr, "\nNo OpenCL platforms found.\n");
 		*found = 0;
 	}
 	else if ( nPlatforms == 1 ) {
 		hardware.platform = platforms[0];
 		err = clGetDeviceIDs( hardware.platform, CL_DEVICE_TYPE_GPU, 8, devices, &nDevices );
 		/*if ( err != CL_SUCCESS ) {
-			printf( "\nError clGetDeviceIDs" );
+			fprintf( stderr,  "\nError clGetDeviceIDs" );
 			sclPrintErrorFlags( err ); }*/
 		if ( nDevices == 0 ) {
-			printf("\nNo OpenCL enabled GPU found.\n");
+			fprintf( stderr, "\nNo OpenCL enabled GPU found.\n");
 			*found = 0;
 		}
 	}
@@ -633,7 +633,7 @@ sclHard sclGetGPUHardware( int nDevice, int* found ) {
 		for ( i = 0; i < (int)nPlatforms; ++i ) {
 			err = clGetDeviceIDs( platforms[i], CL_DEVICE_TYPE_GPU, 8, devices + nTotalDevs, &nDevices );
 			/*if ( err != CL_SUCCESS ) {
-				printf( "\nError clGetDeviceIDs" );
+				fprintf( stderr,  "\nError clGetDeviceIDs" );
 				sclPrintErrorFlags( err ); }*/
 			nTotalDevs += (int)nDevices;	
 			if ( nDevices > 0 ) {
@@ -642,7 +642,7 @@ sclHard sclGetGPUHardware( int nDevice, int* found ) {
 			}  
 		}
 		if ( nGPUplatforms == 0 ) {
-			printf("\nNo OpenCL enabled GPU found.\n");
+			fprintf( stderr, "\nNo OpenCL enabled GPU found.\n");
 			*found = 0;
 		}
 		else if ( nGPUplatforms == 1 ) {
@@ -652,18 +652,18 @@ sclHard sclGetGPUHardware( int nDevice, int* found ) {
 		else {
 			err = clGetPlatformInfo( GPUplatforms[0], CL_PLATFORM_VENDOR, (size_t)30, (void *)platformName, NULL);
 			if ( err != CL_SUCCESS ) {
-				printf( "\nError clGetPlatformInfo" );
+				fprintf( stderr,  "\nError clGetPlatformInfo" );
 				sclPrintErrorFlags( err ); }
-			/*printf( "\nMore than one OpenCL platform with enabled GPU's.\nUsing: %s\n", platformName );*/
+			/*fprintf( stderr,  "\nMore than one OpenCL platform with enabled GPU's.\nUsing: %s\n", platformName );*/
 			hardware.platform = GPUplatforms[0];
 			hardware.device = devices[nDevice];
 		}
 
 	}
 
-	/*printf("\nNumber of devices found: %d \n",nDevices);*/
+	/*fprintf( stdout, "\nNumber of devices found: %d \n",nDevices);*/
 	for ( i = 0; i < nTotalDevs; ++i ) {
-		/*printf("\nDevice %d id: %d\n",i+1,(int)(devices[i]));*/
+		/*fprintf( stdout, "\nDevice %d id: %d\n",i+1,(int)(devices[i]));*/
 		if ( i == nDevice ) {
 			returned_size = 0;
 
@@ -674,10 +674,10 @@ sclHard sclGetGPUHardware( int nDevice, int* found ) {
 			err |= clGetDeviceInfo( devices[i], CL_DEVICE_NAME, sizeof(device_name), device_name, &returned_size );
 
 			if ( err != CL_SUCCESS ) {
-				printf( "\nError 2" );
+				fprintf( stderr,  "\nError 2" );
 				sclPrintErrorFlags( err ); }
 
-			printf("\nUsing device vendor: %s\nDevice name: %s\n",vendor_name,device_name);
+			fprintf( stdout, "\nUsing device vendor: %s\nDevice name: %s\n",vendor_name,device_name);
 		}
 	}
 	if ( *found ) {
@@ -685,14 +685,14 @@ sclHard sclGetGPUHardware( int nDevice, int* found ) {
 		hardware.device = devices[nDevice];
 		hardware.context = clCreateContext( 0, 1, &hardware.device, NULL, NULL, &err );
 		if ( err != CL_SUCCESS) {
-			printf( "\nError 3" );
+			fprintf( stderr,  "\nError 3" );
 			sclPrintErrorFlags( err ); }
 		/* ########################################################### */
 
 		/* Create command queue ########################################################### */	
 		hardware.queue = clCreateCommandQueue( hardware.context, hardware.device, CL_QUEUE_PROFILING_ENABLE, &err );
 		if ( err != CL_SUCCESS ) {
-			printf( "\nError 3.1" );
+			fprintf( stderr,  "\nError 3.1" );
 			sclPrintErrorFlags( err ); }
 		/* ########################################################### */	
 
@@ -727,22 +727,22 @@ sclHard sclGetCPUHardware( int nDevice, int* found ) {
 	devices = (cl_device_id *)malloc( sizeof(cl_device_id) * 8 );
 	/*Get platform info ###################################################### */
 	err = clGetPlatformIDs( 8, platforms, &nPlatforms );
-	/*printf("\n Number of platforms found: %d \n",nPlatforms);*/
+	/*fprintf( stdout, "\n Number of platforms found: %d \n",nPlatforms);*/
 	/* ###################################################### */
 
 
 	if ( nPlatforms == 0 ) {
-		printf("\nNo OpenCL platforms found.\n");
+		fprintf( stderr, "\nNo OpenCL platforms found.\n");
 		*found = 0;
 	}
 	else if ( nPlatforms == 1 ) {
 		hardware.platform = platforms[0];
 		err = clGetDeviceIDs( hardware.platform, CL_DEVICE_TYPE_CPU, 8, devices, &nDevices );
 		if ( err != CL_SUCCESS ) {
-			printf( "\nError clGetDeviceIDs" );
+			fprintf( stderr,  "\nError clGetDeviceIDs" );
 			sclPrintErrorFlags( err ); }
 		if ( nDevices == 0 ) {
-			printf("\nNo OpenCL enabled CPU found.\n");
+			fprintf( stderr, "\nNo OpenCL enabled CPU found.\n");
 			*found = 0;
 		}
 	}
@@ -750,7 +750,7 @@ sclHard sclGetCPUHardware( int nDevice, int* found ) {
 		for ( i = 0; i < (int)nPlatforms; ++i ) {
 			err = clGetDeviceIDs( platforms[i], CL_DEVICE_TYPE_CPU, 8, devices + nTotalDevs, &nDevices );
 			/*if ( err != CL_SUCCESS ) {
-				printf( "\nError clGetDeviceIDs" );
+				fprintf( stderr,  "\nError clGetDeviceIDs" );
 				sclPrintErrorFlags( err ); }*/
 			nTotalDevs += (int)nDevices;	
 			if ( nDevices > 0 ) {
@@ -759,7 +759,7 @@ sclHard sclGetCPUHardware( int nDevice, int* found ) {
 			}  
 		}
 		if ( nCPUplatforms == 0 ) {
-			printf("\nNo OpenCL enabled CPU found.\n");
+			fprintf( stderr, "\nNo OpenCL enabled CPU found.\n");
 			*found = 0;
 		}
 		else if ( nCPUplatforms == 1 ) {
@@ -769,18 +769,18 @@ sclHard sclGetCPUHardware( int nDevice, int* found ) {
 		else {
 			err = clGetPlatformInfo ( CPUplatforms[0], CL_PLATFORM_VENDOR, (size_t)30, (void *)platformName, NULL);
 			if ( err != CL_SUCCESS ) {
-				printf( "\nError clGetPlatformInfo" );
+				fprintf( stderr,  "\nError clGetPlatformInfo" );
 				sclPrintErrorFlags( err ); }
-			printf( "\nMore than one OpenCL platform with enabled CPU's.\nUsing: %s", platformName );
+			fprintf( stdout, "\nMore than one OpenCL platform with enabled CPU's.\nUsing: %s", platformName );
 			hardware.platform = CPUplatforms[0];
 			hardware.device = devices[nDevice];
 		}
 
 	}
 
-	/*printf("\nNumber of devices found: %d \n",nDevices);*/
+	/*fprintf( stdout, "\nNumber of devices found: %d \n",nDevices);*/
 	for ( i = 0; i < (int)nTotalDevs; ++i ) {
-		/*printf("\nDevice %d id: %d\n",i+1,(int)(devices[i]));*/
+		/*fprintf( stdout, "\nDevice %d id: %d\n",i+1,(int)(devices[i]));*/
 		if ( i == nDevice ) {
 			returned_size = 0;
 
@@ -791,10 +791,10 @@ sclHard sclGetCPUHardware( int nDevice, int* found ) {
 			err |= clGetDeviceInfo( devices[i], CL_DEVICE_NAME, sizeof(device_name), device_name, &returned_size );
 
 			if ( err != CL_SUCCESS ) {
-				printf( "\nError 2" );
+				fprintf( stderr,  "\nError 2" );
 				sclPrintErrorFlags( err ); }
 
-			printf("\nUsing device vendor: %s\nDevice name: %s\n",vendor_name,device_name);
+			fprintf( stdout, "\nUsing device vendor: %s\nDevice name: %s\n",vendor_name,device_name);
 		}
 	}
 	if ( *found ) {
@@ -802,14 +802,14 @@ sclHard sclGetCPUHardware( int nDevice, int* found ) {
 		hardware.device = devices[nDevice];
 		hardware.context = clCreateContext( 0, 1, &hardware.device, NULL, NULL, &err );
 		if ( err != CL_SUCCESS) {
-			printf( "\nError 3" );
+			fprintf( stderr,  "\nError 3" );
 			sclPrintErrorFlags( err ); }
 		/* ########################################################### */
 
 		/* Create command queue ########################################################### */	
 		hardware.queue = clCreateCommandQueue( hardware.context, hardware.device, CL_QUEUE_PROFILING_ENABLE, &err );
 		if ( err != CL_SUCCESS ) {
-			printf( "\nError 3.1" );
+			fprintf( stderr,  "\nError 3.1" );
 			sclPrintErrorFlags( err ); }
 		/* ########################################################### */	
 
@@ -857,7 +857,7 @@ cl_mem sclMalloc( sclHard hardware, cl_int mode, size_t size ){
 	
 	buffer = clCreateBuffer( hardware.context, mode, size, NULL, &err );
 	if ( err != CL_SUCCESS ) {
-		printf( "\nclMalloc Error\n" );
+		fprintf( stderr,  "\nclMalloc Error\n" );
 		sclPrintErrorFlags( err );
 	}
 #else
@@ -874,12 +874,12 @@ cl_mem sclMallocWrite( sclHard hardware, cl_int mode, size_t size, void* hostPoi
 	
 	buffer = clCreateBuffer( hardware.context, mode, size, NULL, &err );
 	if ( err != CL_SUCCESS ) { 
-		printf( "\nclMallocWrite Error on clCreateBuffer\n" );
+		fprintf( stderr,  "\nclMallocWrite Error on clCreateBuffer\n" );
 		sclPrintErrorFlags( err );
 	}
 	err = clEnqueueWriteBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
 	if ( err != CL_SUCCESS ) { 
-		printf( "\nclMallocWrite Error on clEnqueueWriteBuffer\n" );
+		fprintf( stderr,  "\nclMallocWrite Error on clEnqueueWriteBuffer\n" );
 		sclPrintErrorFlags( err );
 	}
 
@@ -896,7 +896,7 @@ void sclWrite( sclHard hardware, size_t size, cl_mem buffer, void* hostPointer )
 
 	err = clEnqueueWriteBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
 	if ( err != CL_SUCCESS ) { 
-		printf( "\nclWrite Error\n" );
+		fprintf( stderr,  "\nclWrite Error\n" );
 		sclPrintErrorFlags( err );
 	}   
 #else
@@ -910,7 +910,7 @@ void sclRead( sclHard hardware, size_t size, cl_mem buffer, void *hostPointer ) 
 
 	err = clEnqueueReadBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
 	if ( err != CL_SUCCESS ) {
-		printf( "\nclRead Error\n" );
+		fprintf( stderr,  "\nclRead Error\n" );
 		sclPrintErrorFlags( err );
        	}
 #else
@@ -924,7 +924,7 @@ cl_int sclFinish( sclHard hardware ){
 
 	err = clFinish( hardware.queue );
 	if ( err != CL_SUCCESS ) {
-		printf( "\nError clFinish\n" );
+		fprintf( stderr,  "\nError clFinish\n" );
 		sclPrintErrorFlags( err );
 	}
 #else
@@ -955,7 +955,7 @@ void sclSetKernelArg( sclSoft software, int argnum, size_t typeSize, void *argum
 
 	err = clSetKernelArg( software.kernel, argnum, typeSize, argument );
 	if ( err != CL_SUCCESS ) {	
-		printf( "\nError clSetKernelArg number %d\n", argnum );
+		fprintf( stderr,  "\nError clSetKernelArg number %d\n", argnum );
 		sclPrintErrorFlags( err );
 	}
 #else
