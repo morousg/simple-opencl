@@ -277,11 +277,15 @@ This function print a list of devices with its "platform id", "platform name", "
 cl_event sclLaunchKernel( sclHard hardware,sclSoft software, size_t *global_work_size, size_t *local_work_size );
 }}}
 
+This function enqueues a command to execute a kernel and wait to finish queued commands. "global_work_size" defines the number of global work items . "local_work_size" defines work group size (number of work items to make a work group).   
+
 === sclEnqueueKernel ===
 
 {{{
 cl_event sclEnqueueKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size );
 }}}
+
+This function enqueues a command to execute a kernel. "global_work_size" defines the number of global work items . "local_work_size" defines work group size (number of work items to make a work group).   
 
 === sclSetArgsLaunchKernel ===
 
