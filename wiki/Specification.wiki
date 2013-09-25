@@ -333,6 +333,8 @@ Wait until all queued commands has been completed. This method could be used as 
 void sclSetKernelArg( sclSoft software, int argnum, size_t typeSize, void *argument );
 }}}
 
+This function is used to assign a value for an specific argument, referred by an index, of a kernel.
+
 === sclSetKernelArgs ===
 
 {{{
