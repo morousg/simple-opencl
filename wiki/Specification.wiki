@@ -250,11 +250,15 @@ This function decrements the command queue and context reference counters. When 
 void sclPrintErrorFlags( cl_int flag );
 }}}
 
+This function prints error flag constant name through stderr.
+
 === sclPrintHardwareStatus ===
 
 {{{
 void sclPrintHardwareStatus( sclHard hardware );
 }}}
+
+This function print for an specific hardware its status. Status of the device could be "alive", "alive and available", "alive but not available" and "not alive".
 
 === sclPrintDeviceNamePlatforms ===
 
@@ -262,6 +266,8 @@ void sclPrintHardwareStatus( sclHard hardware );
 void sclPrintDeviceNamePlatforms( sclHard* hardList, int found );
 }}}
 
+
+This function print a list of devices with its "platform id", "platform name", "vendor" and "device name" based on the devices found at "hardList". "found" argument is used to limit the amount of elements listed.
 
 == Device execution ==
 
