@@ -232,11 +232,15 @@ This function reads the contents of "buffer" and copy them into "hostPointer".
 void sclReleaseClSoft( sclSoft soft );
 }}}
 
+This function deletes kernel and program objects within "soft" structure.
+
 === sclReleaseClHard ===
 
 {{{
 void sclReleaseClHard( sclHard hard );
 }}}
+
+This function decrements the command queue and context reference counters. When counters becomes zero and all commands queued have finished and the objects attached to context are released, then command queue and context are deleted.
 
 == Debug functions ==
 
