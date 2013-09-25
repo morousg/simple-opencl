@@ -315,11 +315,15 @@ cl_event sclSetArgsEnqueueKernel( sclHard hardware,
 cl_ulong sclGetEventTime( sclHard hardware, cl_event event );
 }}}
 
+This function returns the elapsed time passed for executing an event.
+
 == Queue management ==
 
 {{{
 cl_int sclFinish( sclHard hardware );
 }}}
+
+Wait until all queued commands has been completed. This method could be used as a synchronization method.
 
 == Kernel argument setting ==
 
