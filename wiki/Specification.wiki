@@ -244,13 +244,86 @@ This function decrements the command queue and context reference counters. When 
 
 == Debug functions ==
 
+=== sclPrintErrorFlags ===
+
+{{{
+void sclPrintErrorFlags( cl_int flag );
+}}}
+
+=== sclPrintHardwareStatus ===
+
+{{{
+void sclPrintHardwareStatus( sclHard hardware );
+}}}
+
+=== sclPrintDeviceNamePlatforms ===
+
+{{{
+void sclPrintDeviceNamePlatforms( sclHard* hardList, int found );
+}}}
+
+
 == Device execution ==
+
+=== sclLaunchKernel ===
+
+{{{
+cl_event sclLaunchKernel( sclHard hardware,sclSoft software, size_t *global_work_size, size_t *local_work_size );
+}}}
+
+=== sclEnqueueKernel ===
+
+{{{
+cl_event sclEnqueueKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size );
+}}}
+
+=== sclSetArgsLaunchKernel ===
+
+{{{
+cl_event sclSetArgsLaunchKernel( sclHard hardware,
+                                 sclSoft software,
+                                 size_t *global_work_size,
+                                 size_t *local_work_size,
+                                 const char* sizesValues,
+                                 ... );
+}}}
+
+=== sclSetArgsEnqueueKernel ===
+
+{{{
+cl_event sclSetArgsEnqueueKernel( sclHard hardware,
+                                  sclSoft software,
+                                  size_t *global_work_size,
+                                  size_t *local_work_size,
+                                  const char* sizesValues,
+                                  ... );
+}}}
 
 == Event queries ==
 
+{{{
+cl_ulong sclGetEventTime( sclHard hardware, cl_event event );
+}}}
+
 == Queue management ==
 
+{{{
+cl_int sclFinish( sclHard hardware );
+}}}
+
 == Kernel argument setting ==
+
+=== sclSetKernelArg ===
+
+{{{
+void sclSetKernelArg( sclSoft software, int argnum, size_t typeSize, void *argument );
+}}}
+
+=== sclSetKernelArgs ===
+
+{{{
+void sclSetKernelArgs( sclSoft software, const char *sizesValues, ... );
+}}}
 
 = Third level functions =
 
