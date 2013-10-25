@@ -880,7 +880,6 @@ cl_mem sclMallocWrite( sclHard hardware, cl_int mode, size_t size, void* hostPoi
 	
 	if ( buffer == NULL ) { 
 		fprintf( stderr,  "\nclMallocWrite Error on clCreateBuffer\n" );
-		sclPrintErrorFlags( err );
 	}
 	err = clEnqueueWriteBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
 	if ( err != CL_SUCCESS ) { 
