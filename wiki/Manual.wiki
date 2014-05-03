@@ -252,10 +252,15 @@ Execution output for an Apple machine:
 
 {{{
 Group 1 with 1 devices
+Group 2 with 1 devices
  Device 0 
  Platform name: Apple 
  Vendor: Apple 
  Device name: Intel(R) Core(TM) i7-3667U CPU @ 2.00GHz
+ Device 1 
+ Platform name: Apple 
+ Vendor: Apple 
+ Device name: HD Graphics 4000
 Execution successful
 vector[0]=0.000000 vector[10]=30.000000 vector[200]=600.000000
 }}}
