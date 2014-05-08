@@ -980,7 +980,7 @@ void _sclWriteArgOnAFile( int argnum, void* arg, size_t size, const char* diff )
 	fclose(out);
 }
 
-inline void _sclVSetKernelArgs( sclSoft software, const char *sizesValues, va_list argList ) {
+void _sclVSetKernelArgs( sclSoft software, const char *sizesValues, va_list argList ) {
 	const char *p;
 	int argCount = 0;
 	void* argument;

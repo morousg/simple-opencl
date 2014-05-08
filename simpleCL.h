@@ -125,6 +125,7 @@ cl_int			sclFinish( sclHard hardware );
 
 void 			sclSetKernelArg( sclSoft software, int argnum, size_t typeSize, void *argument );
 void			sclSetKernelArgs( sclSoft software, const char *sizesValues, ... );
+void 			_sclVSetKernelArgs( sclSoft software, const char *sizesValues, va_list argList );
 
 /* ######################################################## */
 
