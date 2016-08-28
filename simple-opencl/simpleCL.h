@@ -37,6 +37,9 @@ extern "C" {
 #include <CL/cl.h>
 #endif
 
+#define NB_MAX_PLATFORMS 8
+#define NB_MAX_DEVICES_PER_PLATFORM 16
+
 #define WORKGROUP_X 64
 #define WORKGROUP_Y 2
 #define DEBUG
@@ -49,7 +52,7 @@ typedef struct {
 	cl_command_queue queue;
 	int nComputeUnits;
 	unsigned long int maxPointerSize;
-	int deviceType; /* deviceType 0 = GPU | deviceType 1 = CPU | deviceType 2 = other */
+	int deviceType; /* deviceType 0 = GPU | deviceType 1 = CPU | deviceType 2 = Accelerator | deviceType 3 = other */
 	int devNum;
 }sclHard;
 typedef sclHard* ptsclHard;
@@ -131,8 +134,10 @@ void 			_sclVSetKernelArgs( sclSoft software, const char *sizesValues, va_list a
 
 /* ####### Hardware init and selection #################### */
 
+sclHard 		sclGetHardwareByType( cl_device_type device_type, int iDevice, int* found );
 sclHard 		sclGetGPUHardware( int nDevice, int* found );
 sclHard 		sclGetCPUHardware( int nDevice, int* found );
+sclHard 		sclGetAcceleratorHardware( int iDevice, int* found );
 sclHard*		sclGetAllHardware( int* found );
 sclHard 		sclGetFastestDevice( sclHard* hardList, int found );
 
