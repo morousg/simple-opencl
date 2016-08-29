@@ -76,7 +76,7 @@ void			sclRead( sclHard hardware, size_t size, cl_mem buffer, void *hostPointer 
 
 /* ####### inicialization of sclSoft structs  ############## */
 
-sclSoft 		sclGetCLSoftware( char* path, char* name, sclHard hardware );
+sclSoft 		sclGetCLSoftware( char* kernel_file, char* kernel_name, sclHard hardware );
 
 /* ######################################################## */
 
@@ -101,13 +101,13 @@ void 			sclPrintDeviceNamePlatforms( sclHard* hardList, int found );
 
 /* ####### Device execution ############################### */
 
-cl_event 		sclLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size );
-cl_event		sclEnqueueKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size );
-cl_event		sclSetArgsLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size, 
+cl_event 	sclLaunchKernel( sclHard hardware, sclSoft software, cl_uint dim, size_t *global_work_size, size_t *local_work_size );
+cl_event		sclEnqueueKernel( sclHard hardware, sclSoft software, cl_uint dim, size_t *global_work_size, size_t *local_work_size );
+cl_event		sclSetArgsLaunchKernel( sclHard hardware, sclSoft software, cl_uint dim, size_t *global_work_size, size_t *local_work_size, 
 						const char* sizesValues, ... );
-cl_event		sclSetArgsEnqueueKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size, 
+cl_event		sclSetArgsEnqueueKernel( sclHard hardware, sclSoft software, cl_uint dim, size_t *global_work_size, size_t *local_work_size, 
 						 const char* sizesValues, ... );
-cl_event		sclManageArgsLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size,
+cl_event		sclManageArgsLaunchKernel( sclHard hardware, sclSoft software, cl_uint dim, size_t *global_work_size, size_t *local_work_size,
 						   const char* sizesValues, ... );
 
 /* ######################################################## */

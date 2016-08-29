@@ -24,7 +24,7 @@ int main() {
    global_size[0] = strlen(buf); global_size[1] = 1;
    local_size[0] = global_size[0]; local_size[1] = 1;
     
-   sclManageArgsLaunchKernel( hardware[DEVICE], software, global_size, local_size,
+   sclManageArgsLaunchKernel( hardware[DEVICE], software, 2, global_size, local_size,
                                " %r %w ",
                               worksize, buf, worksize, buf2 );
     
@@ -57,7 +57,7 @@ int main() {
    global_size[0] = strlen(buf); global_size[1] = 1;
    local_size[0] = global_size[0]; local_size[1] = 1;
     
-   sclManageArgsLaunchKernel( hardware, software, global_size, local_size,
+   sclManageArgsLaunchKernel( hardware, software, 2, global_size, local_size,
                                " %r %w ",
                               worksize, buf, worksize, buf2 );
     
