@@ -50,14 +50,15 @@ int main() {
    buf2[worksize]=0;
     
    // Get the hardware
-   hardware = sclGetCPUHardware(DEVICE, &found);
+   //hardware = sclGetCPUHardware(DEVICE, &found);
+   hardware = sclGetAcceleratorHardware(DEVICE, &found);
    // Get the software
    software = sclGetCLSoftware( "example.cl", "example", hardware );
    // Set NDRange dimensions
    global_size[0] = strlen(buf); global_size[1] = 1;
    local_size[0] = global_size[0]; local_size[1] = 1;
     
-   sclManageArgsLaunchKernel( hardware, software, 2, global_size, local_size,
+   sclManageArgsLaunchKernel( hardware, software, global_size, local_size,
                                " %r %w ",
                               worksize, buf, worksize, buf2 );
     

@@ -270,33 +270,33 @@ cl_kernel _sclCreateKernel( sclSoft software ) {
 	return kernel;
 }
 
-cl_event sclLaunchKernel( sclHard hardware, sclSoft software, cl_uint dim, size_t *global_work_size, size_t *local_work_size) {
+cl_event sclLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size) {
 	cl_event myEvent=NULL;	
 #ifdef DEBUG
 	cl_int err;
 
-	err = clEnqueueNDRangeKernel( hardware.queue, software.kernel, dim, NULL, global_work_size, local_work_size, 0, NULL, &myEvent );
+	err = clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, &myEvent );
 	if ( err != CL_SUCCESS ) {
 		fprintf( stderr,  "\nError on launchKernel %s", software.kernelName );
 		sclPrintErrorFlags(err); }
 #else
-	clEnqueueNDRangeKernel( hardware.queue, software.kernel, dim, NULL, global_work_size, local_work_size, 0, NULL, NULL );
+	clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, NULL );
 #endif
 	sclFinish( hardware );
 	return myEvent;
 }
 
-cl_event sclEnqueueKernel( sclHard hardware, sclSoft software, cl_uint dim, size_t *global_work_size, size_t *local_work_size) {
+cl_event sclEnqueueKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size) {
 	cl_event myEvent=NULL;	
 #ifdef DEBUG
 	cl_int err;
 
-	err = clEnqueueNDRangeKernel( hardware.queue, software.kernel, dim, NULL, global_work_size, local_work_size, 0, NULL, &myEvent );
+	err = clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, &myEvent );
 	if ( err != CL_SUCCESS ) {
 		fprintf( stderr,  "\nError on launchKernel %s", software.kernelName );
 		sclPrintErrorFlags(err); }
 #else
-	clEnqueueNDRangeKernel( hardware.queue, software.kernel, dim, NULL, global_work_size, local_work_size, 0, NULL, NULL );
+	clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, NULL );
 #endif
 
 	return myEvent;
@@ -878,7 +878,7 @@ void sclSetKernelArgs( sclSoft software, const char *sizesValues, ... ){
 
 }
 
-cl_event sclSetArgsLaunchKernel( sclHard hardware, sclSoft software, cl_uint dim, size_t *global_work_size, size_t *local_work_size,
+cl_event sclSetArgsLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size,
 				const char *sizesValues, ... ) {
 	va_list argList;
 	cl_event event;
@@ -889,13 +889,13 @@ cl_event sclSetArgsLaunchKernel( sclHard hardware, sclSoft software, cl_uint dim
 	
 	va_end( argList );
 
-	event = sclLaunchKernel( hardware, software, dim, global_work_size, local_work_size );
+	event = sclLaunchKernel( hardware, software, global_work_size, local_work_size );
 
 	return event;
 
 }
 
-cl_event sclSetArgsEnqueueKernel( sclHard hardware, sclSoft software, cl_uint dim, size_t *global_work_size, size_t *local_work_size,
+cl_event sclSetArgsEnqueueKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size,
 				 const char *sizesValues, ... ) {
 	va_list argList;
 	cl_event event;
@@ -906,14 +906,14 @@ cl_event sclSetArgsEnqueueKernel( sclHard hardware, sclSoft software, cl_uint di
 	
 	va_end( argList );
 
-	event = sclEnqueueKernel( hardware, software, dim, global_work_size, local_work_size );
+	event = sclEnqueueKernel( hardware, software, global_work_size, local_work_size );
 
 	return event;
 	
 
 }
 
-cl_event sclManageArgsLaunchKernel( sclHard hardware, sclSoft software, cl_uint dim, size_t *global_work_size, size_t *local_work_size,
+cl_event sclManageArgsLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size,
 				    const char* sizesValues, ... ) {
 	va_list argList;
 	cl_event event;
@@ -993,7 +993,7 @@ cl_event sclManageArgsLaunchKernel( sclHard hardware, sclSoft software, cl_uint 
 	
 	va_end( argList );
 
-	event = sclLaunchKernel( hardware, software, dim, global_work_size, local_work_size );
+	event = sclLaunchKernel( hardware, software, global_work_size, local_work_size );
 	
 	for ( i = 0; i < outArgCount; i++ ) {
 		sclRead( hardware, sizesOut[i], outBuffs[i], outArgs[i] );		
