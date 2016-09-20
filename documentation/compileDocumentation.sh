@@ -11,6 +11,7 @@ function file_compile {
     echo "'$verification_text'"
     echo "'$file_verification_text'"
     echo file verification fail
+    latex "$stem.tex"
     htlatex "$stem.tex" "$BASE/web" -utf8 &
     lualatex "$stem.tex"  &
     pandoc "$stem.tex" --toc -f latex -t markdown_github -s -o "$stem.md" &
@@ -25,4 +26,6 @@ function file_compile {
     echo file verification perfect
   fi
 }
+file_compile roadmap
+file_compile readme
 file_compile simple-opencl
