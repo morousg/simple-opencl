@@ -1,0 +1,356 @@
+Simple-OpenCL Documentation
+                       September 20, 2016
+                                                                                                    
+
+            
+                                                                                                    
+            Contents
+1  Readme                                                                          2
+          1.0.1   Motivation and description   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     2
+    1.1   History   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     2
+    1.2   License .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     3
+    1.3   Contributions  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     3
+    1.4   Example .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     3
+           1.4.1   SimpleOpenCL code version .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     3
+           1.4.2   Now the same code but in plain OpenCL WITHOUT using SimpleOpenCL   4
+           1.4.3   Kernel Code   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     7
+    1.5   Contact   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     7
+2  Roadmap                                                                        8
+    2.1   SimpleOpenCL Version 0.010 27/02/2013   .  .  .  .  .  .  .  .  .  .  .  .  .     8
+    2.2   Actual version 0.08  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     8
+    2.3   Next version .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     9
+3  simpleCl.c API                                                               10
+                                                        1                                                   
+
+            
+                                                                                                                   
+            Chapter 1
+Readme
+1.0.1   Motivation and description
+SimpleOpenCL is a library written in ANSI C and born in the needs of scientific
+research test development.  It has been originated while developing different
+OpenCL codes for Linux and Apple test machines, with single device perfor-
+mance and portability goals in mind.  The main goal of SimpleOpenCL has
+been reducing the code needed to run the experiments on the GPU, but also
+supports managing CPU devices. As this is an open source project, we welcome
+any contribution, from code correction and functionality suggestions/contribu-
+tions to documentation or even contribution system proposals.
+    The main author have created and uses this library for its projects and aims
+to share it with those who want to use OpenCL with C or C++ for experimental
+codes in any sector. Nevertheless we think this can be an interesting library for
+academical purposes.  With SimpleOpenCL the teacher can for instance focus
+on teaching Device code. And if desired later on the teacher could either show
+the library code to teach basic OpenCL Host code or propose student&#8217;s to do
+more technical improvements over it or both.
+    We are not aiming to provide a CUDA-like interface for OpenCL, but there
+will be some similarities.  The main author proposes a CUDA-like library for
+OpenCL as a separate and more production oriented project.
+1.1   History
+SimpleOpenCL is a library written in ANSI C and born in the needs of scientific
+research test development.  It has been originated while developing different
+OpenCL codes for Linux and Apple test machines, with single device perfor-
+mance and portability goals in mind.  The main goal of SimpleOpenCL has
+been reducing the Host code needed to run OpenCL C kernels on the GPU, but
+also supports managing CPU devices.
+    In a sentence:  **The only thing a programmer needs to know in order to
+use SimpleOpenCL is C, two SimpleOpenCL types, and a minimum of three
+                                                               2                                                   
+
+            
+                                                                                                                   
+            functions**. Device code (OpenCL C kernels) is exactly the same as in OpenCL.
+1.2   License
+Copyright 2011 Oscar Amoros Huguet, Cristian Garcia Marin
+   This file is part of SimpleOpenCL.
+   SimpleOpenCL is free software:  you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation, version 3.
+   SimpleOpenCL is distributed in the hope that it will be useful, but WITH-
+OUT ANY WARRANTY; without even the implied warranty of MERCHANTABIL-
+ITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+   You should have received a copy of the GNU General Public License along
+with SimpleOpenCL. If not, see ¡http://www.gnu.org/licenses/¿.
+1.3   Contributions
+As this is an open source project,  we welcome any contribution,  from code
+correction and functionality suggestions/contributions to documentation or even
+contribution system proposals.
+   The Oscar Amoros has created and uses this library for its projects and aims
+to share it with those who want to use OpenCL with C or C++ for experimental
+codes in any sector. Nevertheless we think this can be an interesting library for
+academical purposes.  With SimpleOpenCL the teacher can for instance focus
+on teaching Device code. And if desired later on the teacher could either show
+the library code to teach basic OpenCL Host code or propose student&#8217;s to do
+more technical improvements over it or both.
+1.4   Example
+A comparative example:
+1.4.1   SimpleOpenCL code version
+__________________________
+#include "simpleCL.h"
+int main() {
+  char buf[]="Hello, World!";
+  size_t global_size[2], local_size[2];
+  int found, worksize;
+  sclHard hardware;
+  sclSoft software;
+                                                3                                                   
+
+            
+                                                                                                                   
+            
+                // Target buffer just so we show we got the data from OpenCL
+               worksize = strlen(buf);
+               char buf2[worksize];
+               buf2[0]=&#8217;?&#8217;;
+               buf2[worksize]=0;
+            
+               // Get the hardware
+               hardware = sclGetGPUHardware( 0, &amp;found );
+               // Get the software
+               software = sclGetCLSoftware( "example.cl", "example", hardware );
+               // Set NDRange dimensions
+               global_size[0] = strlen(buf); global_size[1] = 1;
+               local_size[0] = global_size[0]; local_size[1] = 1;
+            
+               sclManageArgsLaunchKernel( hardware, software, global_size,
+                  local_size,
+                                        " %r %w ",
+                                       worksize, buf, worksize, buf2 );
+            
+               // Finally, output out happy message.
+               puts(buf2);
+            
+            }
+            _________________________________________________________________________
+1.4.2   Now the same code but in plain OpenCL WITH-
+        OUT using SimpleOpenCL
+____________________________
+#include &#x003C;stdio.h&#x003E;
+#include &#x003C;string.h&#x003E;
+#include &#x003C;CL/cl.h&#x003E;
+int main() {
+  char buf[]="Hello, World!";
+  char build_c[4096];
+  size_t srcsize, worksize=strlen(buf);
+  cl_int error;
+  cl_platform_id platform;
+  cl_device_id device;
+  cl_uint platforms, devices;
+  /* Fetch the Platforms, we only want one. */
+  error=clGetPlatformIDs(1, &amp;platform, &amp;platforms);
+  if (error != CL_SUCCESS) {
+                                                4                                                   
+
+            
+                                                                                                                   
+                 printf("\n Error number %d", error);
+              }
+                   /* Fetch the Devices for this platform */
+              error=clGetDeviceIDs(platform, CL_DEVICE_TYPE_ALL, 1, &amp;device,
+                 &amp;devices);
+              if (error != CL_SUCCESS) {
+                          printf("\n Error number %d", error);
+              }
+                   /* Create a memory context for the device we want to use */
+              cl_context_properties properties[]={CL_CONTEXT_PLATFORM,
+                 (cl_context_properties)platform,0};
+              /* Note that nVidia&#8217;s OpenCL requires the platform property */
+              cl_context context=clCreateContext(properties, 1, &amp;device, NULL, NULL,
+                 &amp;error);
+              if (error != CL_SUCCESS) {
+                printf("\n Error number %d", error);
+              }
+                   /* Create a command queue to communicate with the device */
+              cl_command_queue cq = clCreateCommandQueue(context, device, 0, &amp;error);
+              if (error != CL_SUCCESS) {
+                printf("\n Error number %d", error);
+              }
+            
+                   /* Read the source kernel code in exmaple.cl as an array of
+                      char&#8217;s */
+              char src[8192];
+              FILE *fil=fopen("example.cl","r");
+              srcsize=fread(src, sizeof src, 1, fil);
+              fclose(fil);
+            
+              const char *srcptr[]={src};
+              /* Submit the source code of the kernel to OpenCL, and create a
+                 program object with it */
+              cl_program prog=clCreateProgramWithSource(context,
+                                                     1, srcptr, &amp;srcsize, &amp;error);
+                   if (error != CL_SUCCESS) {
+                          printf("\n Error number %d", error);
+                   }
+            
+              /* Compile the kernel code (after this we could extract the compiled
+                 version) */
+              error=clBuildProgram(prog, 0, NULL, "", NULL, NULL);
+              if ( error != CL_SUCCESS ) {
+                printf( "Error on buildProgram " );
+                printf("\n Error number %d", error);
+                fprintf( stdout, "\nRequestingInfo\n" );
+                clGetProgramBuildInfo( prog, devices, CL_PROGRAM_BUILD_LOG, 4096,
+                   build_c, NULL );
+                printf( "Build Log for %s_program:\n%s\n", "example", build_c );
+              }
+                                                5                                                   
+
+            
+                                                                                                                   
+            
+               /* Create memory buffers in the Context where the desired Device is.
+                 These will be the pointer
+                   parameters on the kernel. */
+              cl_mem mem1, mem2;
+              mem1=clCreateBuffer(context, CL_MEM_READ_ONLY, worksize, NULL, &amp;error);
+              if (error != CL_SUCCESS) {
+                printf("\n Error number %d", error);
+              }
+              mem2=clCreateBuffer(context, CL_MEM_WRITE_ONLY, worksize, NULL,
+                 &amp;error);
+              if (error != CL_SUCCESS) {
+                printf("\n Error number %d", error);
+              }
+              /* Create a kernel object with the compiled program */
+              cl_kernel k_example=clCreateKernel(prog, "example", &amp;error);
+              if (error != CL_SUCCESS) {
+                printf("\n Error number %d", error);
+              }
+            
+                   /* Set the kernel parameters */
+              error = clSetKernelArg(k_example, 0, sizeof(mem1), &amp;mem1);
+              if (error != CL_SUCCESS) {
+                printf("\n Error number %d", error);
+              }
+              error = clSetKernelArg(k_example, 1, sizeof(mem2), &amp;mem2);
+              if (error != CL_SUCCESS) {
+                printf("\n Error number %d", error);
+              }
+              /* Create a char array in where to store the results of the Kernel */
+              char buf2[sizeof buf];
+              buf2[0]=&#8217;?&#8217;;
+              buf2[worksize]=0;
+            
+              /* Send input data to OpenCL (async, don&#8217;t alter the buffer!) */
+              error=clEnqueueWriteBuffer(cq, mem1, CL_FALSE, 0, worksize, buf, 0,
+                 NULL, NULL);
+              if (error != CL_SUCCESS) {
+                printf("\n Error number %d", error);
+              }
+              /* Tell the Device, through the command queue, to execute que Kernel */
+              error=clEnqueueNDRangeKernel(cq, k_example, 1, NULL, &amp;worksize,
+                 &amp;worksize, 0, NULL, NULL);
+              if (error != CL_SUCCESS) {
+                printf("\n Error number %d", error);
+              }
+              /* Read the result back into buf2 */
+              error=clEnqueueReadBuffer(cq, mem2, CL_FALSE, 0, worksize, buf2, 0,
+                 NULL, NULL);
+              if (error != CL_SUCCESS) {
+                                                6                                                   
+
+            
+                                                                                                                   
+                 printf("\n Error number %d", error);
+              }
+              /* Await completion of all the above */
+              error=clFinish(cq);
+              if (error != CL_SUCCESS) {
+                printf("\n Error number %d", error);
+              }
+              /* Finally, output the result */
+              puts(buf2);
+            }
+            _________________________________________________________________________
+   And this is without printing the names of the error flags, that would add a
+large function.
+1.4.3   Kernel Code
+Kernel code for both cases in OpenCL C (note that SimpleOpenCL doesn&#8217;t alter
+Device code at all)
+__________________________________________________
+__kernel void example( __global char* buf, __global char* buf2 ){
+      int x = get_global_id(0);
+      buf2[x] = buf[x];
+}
+_________________________________________________________________
+1.5   Contact
+ Original Author Oscar Amoros oscaramoros@ub.edu
+                                                               7                                                   
+
+            
+                                                                                                                   
+            Chapter 2
+Roadmap
+2.1   SimpleOpenCL Version 0.010 27/02/2013
+   &#x2219; v1 Incremented with increased functionality up to a certain goal or amount
+       of changes (new functions)
+    &#x2219; vv2 Incremented with bug corrections and functionality additions.
+    &#x2219; date Set at the date of bug correction or any v1 or vv2 level modification.
+2.2   Actual version 0.08
+   &#x2219; Non finished but working version. A first finished version is scheduled for
+       version 1.0
+    &#x2219; It provides two structs to simplify the handling of OpenCL objects. They
+       are conceptually grouped in hardware and software.
+    &#x2219; It provides simplified Device memory allocation and copy functionalities.
+    &#x2219; It also provides a function that creates a list of devices using the &#8221;clHard&#8221;
+       struct for each device, and creates a context for that devices. The context
+       will be the same for same type and same memory capacity devices. If any
+       of those differ, then different contexts will be created for each device.
+    &#x2219; Other functions select the desired devices from the list.
+    &#x2219; In order to get information of OpenCL errors, there is a function that
+       prints the OpenCL error flags returned by the OpenCL functions.
+    &#x2219; Functions to load Device source code, compile it etc are present.
+    &#x2219; Functions to enqueue or execute kernels, etc...
+                                                               8                                                   
+
+            
+                                                                                                                   
+                &#x2219; A main 1.0 version goal is already implemented as &#8221;sclManageArgsLaunchK-
+                 ernel&#8221;.   It  can  with  only  host  pointers,  sclHard  and  sclSoft  variables
+                 NDRange dimensions and a string containing the info of what to do with
+                 the pointers etc, execute the kernel and update the results on the host
+                 pointers. All in a single function call.
+2.3   Next version
+Goals for version 1.0:
+   &#x2219; All hardware selection functions must use the sclGetAllHardware function
+     first if a list of hardware is not passed as an argument and it has NULL
+     value. Then, the functions must return the desired hardware following the
+     function criteria expressed in its own name.
+   &#x2219; The sclManageArgsLaunchKernel can/must be improved in the following
+     ways:
+  1. Optional: a version that hides sclHard and sclSoft so the user only cares
+     about which host pointers will be read and written from the device in
+     OpenCL C code and which to use exclusively on the device.   Nothing
+     else.  Think of when to initialize hardware?  Possibly needing a global
+     variable pointing to the sclHard and sclSoft objects to avoid repeating the
+     software/hardware initialization process on each kernel execution.
+  2. Mandatory:  the function must have the ability to schedule work across
+     all the devices available. So maybe the function will need more info from
+     the user to know which data can be partitioned, and which can not. The
+     possibility of internally using something similar to GMAC would be won-
+     derfull.   Pagination of the pointers in my opinion is the most efficient
+     automatic method to do that work, but repeating a work already done
+     would be frustrating.
+                                                               9                                                   
+
+            
+                                                                                                                   
+            Chapter 3
+simpleCl.c API
+cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
+                                   size_t *global_work_size,
+                                   size_t *local_work_size,
+                                   const char *sizesValues, ...) {
+  for (p = sizesValues; *p != &#8217;\0&#8217;; p++) {
+    if (*p == &#8217;%&#8217;) {
+      switch (*++p) {
+      case &#8217;a&#8217;: /* Single value non pointer argument */
+      case &#8217;v&#8217;: /* Buffer or image object void* argument */
+      case &#8217;N&#8217;: /* Local memory object using NULL argument */
+      case &#8217;w&#8217;: /* */
+      case &#8217;r&#8217;: /* input cl_mem buffer */
+      case &#8217;R&#8217;: /* output cl_mem buffer*/
+      case &#8217;g&#8217;:
+                                            10                                                  
+
+

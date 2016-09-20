@@ -1,3 +1,4 @@
+//\begin{comment}
 /* #######################################################################
     Copyright 2011 Oscar Amoros Huguet, Cristian Garcia Marin
 
@@ -15,9 +16,9 @@
     You should have received a copy of the GNU General Public License
     along with SimpleOpenCL. If not, see <http://www.gnu.org/licenses/>.
 
-   ####################################################################### 
+   #######################################################################
 
-   SimpleOpenCL Version 0.010_27_02_2013 
+   SimpleOpenCL Version 0.010_27_02_2013
 
 */
 
@@ -27,991 +28,1069 @@ extern "C" {
 
 #include "simpleCL.h"
 
-void sclPrintErrorFlags( cl_int flag ){
-    
-	switch (flag){
+void sclPrintErrorFlags(cl_int flag) {
 
-		case CL_DEVICE_NOT_FOUND:
-			fprintf( stderr, "\nCL_DEVICE_NOT_FOUND\n");
-			break;
-		case CL_DEVICE_NOT_AVAILABLE:
-			fprintf( stderr, "\nCL_DEVICE_NOT_AVAILABLE\n");
-			break;
-		case CL_COMPILER_NOT_AVAILABLE:
-			fprintf( stderr, "\nCL_COMPILER_NOT_AVAILABLE\n");
-			break;
-		case CL_PROFILING_INFO_NOT_AVAILABLE:
-			fprintf( stderr, "\nCL_PROFILING_INFO_NOT_AVAILABLE\n");
-			break;
-		case CL_MEM_COPY_OVERLAP:
-			fprintf( stderr, "\nCL_MEM_COPY_OVERLAP\n");
-			break;
-		case CL_IMAGE_FORMAT_MISMATCH:
-			fprintf( stderr, "\nCL_IMAGE_FORMAT_MISMATCH\n");
-			break;
-		case CL_IMAGE_FORMAT_NOT_SUPPORTED:
-			fprintf( stderr, "\nCL_IMAGE_FORMAT_NOT_SUPPORTED\n");
-			break;
-		case CL_INVALID_COMMAND_QUEUE:
-			fprintf( stderr, "\nCL_INVALID_COMMAND_QUEUE\n");
-			break;
-		case CL_INVALID_CONTEXT:
-			fprintf( stderr, "\nCL_INVALID_CONTEXT\n");
-			break;
-		case CL_INVALID_MEM_OBJECT:
-			fprintf( stderr, "\nCL_INVALID_MEM_OBJECT\n");
-			break;
-		case CL_INVALID_VALUE:
-			fprintf( stderr, "\nCL_INVALID_VALUE\n");
-			break;
-		case CL_INVALID_EVENT_WAIT_LIST:
-			fprintf( stderr, "\nCL_INVALID_EVENT_WAIT_LIST\n");
-			break;
-		case CL_MEM_OBJECT_ALLOCATION_FAILURE:
-			fprintf( stderr, "\nCL_MEM_OBJECT_ALLOCATION_FAILURE\n");
-			break;
-		case CL_OUT_OF_HOST_MEMORY:
-			fprintf( stderr, "\nCL_OUT_OF_HOST_MEMORY\n");
-			break;
+  switch (flag) {
 
-		case CL_INVALID_PROGRAM_EXECUTABLE:
-			fprintf( stderr, "\nCL_INVALID_PROGRAM_EXECUTABLE\n");
-			break;
-		case CL_INVALID_KERNEL:
-			fprintf( stderr, "\nCL_INVALID_KERNEL\n");
-			break;
-		case CL_INVALID_KERNEL_ARGS:
-			fprintf( stderr, "\nCL_INVALID_KERNEL_ARGS\n");
-			break;
-		case CL_INVALID_WORK_DIMENSION:
-			fprintf( stderr, "\nCL_INVALID_WORK_DIMENSION\n");
-			break;
-#ifndef __APPLE__ 
-		case CL_INVALID_GLOBAL_WORK_SIZE:
-			fprintf( stderr, "\nCL_INVALID_GLOBAL_WORK_SIZE\n");
-			break;
+  case CL_DEVICE_NOT_FOUND:
+    fprintf(stderr, "\nCL_DEVICE_NOT_FOUND\n");
+    break;
+  case CL_DEVICE_NOT_AVAILABLE:
+    fprintf(stderr, "\nCL_DEVICE_NOT_AVAILABLE\n");
+    break;
+  case CL_COMPILER_NOT_AVAILABLE:
+    fprintf(stderr, "\nCL_COMPILER_NOT_AVAILABLE\n");
+    break;
+  case CL_PROFILING_INFO_NOT_AVAILABLE:
+    fprintf(stderr, "\nCL_PROFILING_INFO_NOT_AVAILABLE\n");
+    break;
+  case CL_MEM_COPY_OVERLAP:
+    fprintf(stderr, "\nCL_MEM_COPY_OVERLAP\n");
+    break;
+  case CL_IMAGE_FORMAT_MISMATCH:
+    fprintf(stderr, "\nCL_IMAGE_FORMAT_MISMATCH\n");
+    break;
+  case CL_IMAGE_FORMAT_NOT_SUPPORTED:
+    fprintf(stderr, "\nCL_IMAGE_FORMAT_NOT_SUPPORTED\n");
+    break;
+  case CL_INVALID_COMMAND_QUEUE:
+    fprintf(stderr, "\nCL_INVALID_COMMAND_QUEUE\n");
+    break;
+  case CL_INVALID_CONTEXT:
+    fprintf(stderr, "\nCL_INVALID_CONTEXT\n");
+    break;
+  case CL_INVALID_MEM_OBJECT:
+    fprintf(stderr, "\nCL_INVALID_MEM_OBJECT\n");
+    break;
+  case CL_INVALID_VALUE:
+    fprintf(stderr, "\nCL_INVALID_VALUE\n");
+    break;
+  case CL_INVALID_EVENT_WAIT_LIST:
+    fprintf(stderr, "\nCL_INVALID_EVENT_WAIT_LIST\n");
+    break;
+  case CL_MEM_OBJECT_ALLOCATION_FAILURE:
+    fprintf(stderr, "\nCL_MEM_OBJECT_ALLOCATION_FAILURE\n");
+    break;
+  case CL_OUT_OF_HOST_MEMORY:
+    fprintf(stderr, "\nCL_OUT_OF_HOST_MEMORY\n");
+    break;
+
+  case CL_INVALID_PROGRAM_EXECUTABLE:
+    fprintf(stderr, "\nCL_INVALID_PROGRAM_EXECUTABLE\n");
+    break;
+  case CL_INVALID_KERNEL:
+    fprintf(stderr, "\nCL_INVALID_KERNEL\n");
+    break;
+  case CL_INVALID_KERNEL_ARGS:
+    fprintf(stderr, "\nCL_INVALID_KERNEL_ARGS\n");
+    break;
+  case CL_INVALID_WORK_DIMENSION:
+    fprintf(stderr, "\nCL_INVALID_WORK_DIMENSION\n");
+    break;
+#ifndef __APPLE__
+  case CL_INVALID_GLOBAL_WORK_SIZE:
+    fprintf(stderr, "\nCL_INVALID_GLOBAL_WORK_SIZE\n");
+    break;
 #endif
-		case CL_INVALID_WORK_GROUP_SIZE:
-			fprintf( stderr, "\nCL_INVALID_WORK_GROUP_SIZE\n");
-			break;
-		case CL_INVALID_WORK_ITEM_SIZE:
-			fprintf( stderr, "\nCL_INVALID_WORK_ITEM_SIZE\n");
-			break;
-		case CL_INVALID_GLOBAL_OFFSET:
-			fprintf( stderr, "\nCL_INVALID_GLOBAL_OFFSET\n");
-			break;
-		case CL_OUT_OF_RESOURCES:
-			fprintf( stderr, "\nCL_OUT_OF_RESOURCES\n");
-			break;
+  case CL_INVALID_WORK_GROUP_SIZE:
+    fprintf(stderr, "\nCL_INVALID_WORK_GROUP_SIZE\n");
+    break;
+  case CL_INVALID_WORK_ITEM_SIZE:
+    fprintf(stderr, "\nCL_INVALID_WORK_ITEM_SIZE\n");
+    break;
+  case CL_INVALID_GLOBAL_OFFSET:
+    fprintf(stderr, "\nCL_INVALID_GLOBAL_OFFSET\n");
+    break;
+  case CL_OUT_OF_RESOURCES:
+    fprintf(stderr, "\nCL_OUT_OF_RESOURCES\n");
+    break;
 
-		case CL_INVALID_PROGRAM:
-			fprintf( stderr, "\nCL_INVALID_PROGRAM\n");
-			break;
-		case CL_INVALID_KERNEL_NAME:
-			fprintf( stderr, "\nCL_INVALID_KERNEL_NAME\n");
-			break;
-		case CL_INVALID_KERNEL_DEFINITION:
-			fprintf( stderr, "\nCL_INVALID_KERNEL_DEFINITION\n");
-			break;
-		case CL_INVALID_BUFFER_SIZE:
-			fprintf( stderr, "\nCL_INVALID_BUFFER_SIZE\n");
-			break;
-		case CL_BUILD_PROGRAM_FAILURE:
-			fprintf( stderr, "\nCL_BUILD_PROGRAM_FAILURE\n");
-			break;
-		case CL_INVALID_ARG_INDEX:
-			fprintf( stderr, "\nCL_INVALID_ARG_INDEX\n");
-			break;
-		case CL_INVALID_ARG_VALUE:
-			fprintf( stderr, "\nCL_INVALID_ARG_VALUE\n");
-			break;
-		case CL_MAP_FAILURE:
-			fprintf( stderr, "\nCL_MAP_FAILURE\n");
-			break;
-		case CL_MISALIGNED_SUB_BUFFER_OFFSET:
-			fprintf( stderr, "\nCL_MISALIGNED_SUB_BUFFER_OFFSET\n");
-			break;
-		case CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST:
-			fprintf( stderr, "\nCL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST\n");
-			break;
-		case CL_INVALID_DEVICE_TYPE:
-			fprintf( stderr, "\nCL_INVALID_DEVICE_TYPE\n");
-			break;
-		case CL_INVALID_PLATFORM:
-			fprintf( stderr, "\nCL_INVALID_PLATFORM\n");
-			break;
-		case CL_INVALID_DEVICE:
-			fprintf( stderr, "\nCL_INVALID_DEVICE\n");
-			break; 
-		case CL_INVALID_QUEUE_PROPERTIES:
-			fprintf( stderr, "\nCL_INVALID_QUEUE_PROPERTIES\n");
-			break; 
-		case CL_INVALID_HOST_PTR:
-			fprintf( stderr, "\nCL_INVALID_HOST_PTR\n");
-			break;
-		case CL_INVALID_IMAGE_FORMAT_DESCRIPTOR:
-			fprintf( stderr, "\nCL_INVALID_IMAGE_FORMAT_DESCRIPTOR\n");
-			break;
-		case CL_INVALID_IMAGE_SIZE:
-			fprintf( stderr, "\nCL_INVALID_IMAGE_SIZE\n");
-			break;
-		case CL_INVALID_SAMPLER:
-			fprintf( stderr, "\nCL_INVALID_SAMPLER\n");
-			break;
-		case CL_INVALID_BINARY:
-			fprintf( stderr, "\nCL_INVALID_BINARY\n");
-			break;
-		case CL_INVALID_BUILD_OPTIONS:
-			fprintf( stderr, "\nCL_INVALID_BUILD_OPTIONS\n");
-			break;
-		case CL_INVALID_ARG_SIZE:
-			fprintf( stderr, "\nCL_INVALID_ARG_SIZE\n");
-			break;
-		case CL_INVALID_EVENT:
-			fprintf( stderr, "\nCL_INVALID_EVENT\n");
-			break;
-		case CL_INVALID_OPERATION:
-			fprintf( stderr, "\nCL_INVALID_OPERATION\n");
-			break;
-		case CL_INVALID_GL_OBJECT:
-			fprintf( stderr, "\nCL_INVALID_GL_OBJECT\n");
-			break;
-		case CL_INVALID_MIP_LEVEL:
-			fprintf( stderr, "\nCL_INVALID_MIP_LEVEL\n");
-			break;
-		case CL_INVALID_PROPERTY:
-			fprintf( stderr, "\nCL_INVALID_PROPERTY\n");
-			break;
-		default:
-			fprintf( stderr, "\nUnknown error code: %d\n",flag);    
-	}
+  case CL_INVALID_PROGRAM:
+    fprintf(stderr, "\nCL_INVALID_PROGRAM\n");
+    break;
+  case CL_INVALID_KERNEL_NAME:
+    fprintf(stderr, "\nCL_INVALID_KERNEL_NAME\n");
+    break;
+  case CL_INVALID_KERNEL_DEFINITION:
+    fprintf(stderr, "\nCL_INVALID_KERNEL_DEFINITION\n");
+    break;
+  case CL_INVALID_BUFFER_SIZE:
+    fprintf(stderr, "\nCL_INVALID_BUFFER_SIZE\n");
+    break;
+  case CL_BUILD_PROGRAM_FAILURE:
+    fprintf(stderr, "\nCL_BUILD_PROGRAM_FAILURE\n");
+    break;
+  case CL_INVALID_ARG_INDEX:
+    fprintf(stderr, "\nCL_INVALID_ARG_INDEX\n");
+    break;
+  case CL_INVALID_ARG_VALUE:
+    fprintf(stderr, "\nCL_INVALID_ARG_VALUE\n");
+    break;
+  case CL_MAP_FAILURE:
+    fprintf(stderr, "\nCL_MAP_FAILURE\n");
+    break;
+  case CL_MISALIGNED_SUB_BUFFER_OFFSET:
+    fprintf(stderr, "\nCL_MISALIGNED_SUB_BUFFER_OFFSET\n");
+    break;
+  case CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST:
+    fprintf(stderr, "\nCL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST\n");
+    break;
+  case CL_INVALID_DEVICE_TYPE:
+    fprintf(stderr, "\nCL_INVALID_DEVICE_TYPE\n");
+    break;
+  case CL_INVALID_PLATFORM:
+    fprintf(stderr, "\nCL_INVALID_PLATFORM\n");
+    break;
+  case CL_INVALID_DEVICE:
+    fprintf(stderr, "\nCL_INVALID_DEVICE\n");
+    break;
+  case CL_INVALID_QUEUE_PROPERTIES:
+    fprintf(stderr, "\nCL_INVALID_QUEUE_PROPERTIES\n");
+    break;
+  case CL_INVALID_HOST_PTR:
+    fprintf(stderr, "\nCL_INVALID_HOST_PTR\n");
+    break;
+  case CL_INVALID_IMAGE_FORMAT_DESCRIPTOR:
+    fprintf(stderr, "\nCL_INVALID_IMAGE_FORMAT_DESCRIPTOR\n");
+    break;
+  case CL_INVALID_IMAGE_SIZE:
+    fprintf(stderr, "\nCL_INVALID_IMAGE_SIZE\n");
+    break;
+  case CL_INVALID_SAMPLER:
+    fprintf(stderr, "\nCL_INVALID_SAMPLER\n");
+    break;
+  case CL_INVALID_BINARY:
+    fprintf(stderr, "\nCL_INVALID_BINARY\n");
+    break;
+  case CL_INVALID_BUILD_OPTIONS:
+    fprintf(stderr, "\nCL_INVALID_BUILD_OPTIONS\n");
+    break;
+  case CL_INVALID_ARG_SIZE:
+    fprintf(stderr, "\nCL_INVALID_ARG_SIZE\n");
+    break;
+  case CL_INVALID_EVENT:
+    fprintf(stderr, "\nCL_INVALID_EVENT\n");
+    break;
+  case CL_INVALID_OPERATION:
+    fprintf(stderr, "\nCL_INVALID_OPERATION\n");
+    break;
+  case CL_INVALID_GL_OBJECT:
+    fprintf(stderr, "\nCL_INVALID_GL_OBJECT\n");
+    break;
+  case CL_INVALID_MIP_LEVEL:
+    fprintf(stderr, "\nCL_INVALID_MIP_LEVEL\n");
+    break;
+  case CL_INVALID_PROPERTY:
+    fprintf(stderr, "\nCL_INVALID_PROPERTY\n");
+    break;
+  default:
+    fprintf(stderr, "\nUnknown error code: %d\n", flag);
+  }
 }
 
-char* _sclLoadProgramSource( const char *filename )
-{ 
-	struct stat statbuf;
-	FILE *fh; 
-	char *source;
-	
-	fh = fopen( filename, "r" );
-	if ( fh == NULL ){
-		fprintf( stderr, "Error on loadProgramSource");
-		sclPrintErrorFlags( CL_INVALID_PROGRAM );
-		return 0;
-	}
-	
-	stat( filename, &statbuf );
-	source = (char *)malloc( statbuf.st_size + 1 );
+char *_sclLoadProgramSource(const char *filename) {
+  struct stat statbuf;
+  FILE *fh;
+  char *source;
 
-	if( fread( source, statbuf.st_size, 1, fh ) != 1 ) {
-		fprintf( stderr, "Error on loadProgramSource");
-		sclPrintErrorFlags( CL_INVALID_PROGRAM );
-	}
+  fh = fopen(filename, "r");
+  if (fh == NULL) {
+    fprintf(stderr, "Error on loadProgramSource");
+    sclPrintErrorFlags(CL_INVALID_PROGRAM);
+    return 0;
+  }
 
-	source[ statbuf.st_size ] = '\0';
-	
-	fclose( fh );
-	
-	return source; 
+  stat(filename, &statbuf);
+  source = (char *)malloc(statbuf.st_size + 1);
+
+  if (fread(source, statbuf.st_size, 1, fh) != 1) {
+    fprintf(stderr, "Error on loadProgramSource");
+    sclPrintErrorFlags(CL_INVALID_PROGRAM);
+  }
+
+  source[statbuf.st_size] = '\0';
+
+  fclose(fh);
+
+  return source;
 }
- 
-cl_program _sclCreateProgram( char* program_source, cl_context context )
-{
-	cl_program program;
+
+cl_program _sclCreateProgram(char *program_source, cl_context context) {
+  cl_program program;
 #ifdef DEBUG
-	cl_int err;
-	
-	program = clCreateProgramWithSource( context, 1, (const char**)&program_source, NULL, &err );
-	if ( err!=CL_SUCCESS ) {
-		fprintf( stderr,  "Error on createProgram" );
-		sclPrintErrorFlags( err );
-	}
+  cl_int err;
+
+  program = clCreateProgramWithSource(
+      context, 1, (const char **)&program_source, NULL, &err);
+  if (err != CL_SUCCESS) {
+    fprintf(stderr, "Error on createProgram");
+    sclPrintErrorFlags(err);
+  }
 #else
-	program = clCreateProgramWithSource( context, 1, (const char**)&program_source, NULL, NULL );
+  program = clCreateProgramWithSource(
+      context, 1, (const char **)&program_source, NULL, NULL);
 #endif
-	
-	return program;
+
+  return program;
 }
 
-void _sclBuildProgram( cl_program program, cl_device_id devices, const char* pName )
-{
+void _sclBuildProgram(cl_program program, cl_device_id devices,
+                      const char *pName) {
 #ifdef DEBUG
-	cl_int err;
-	char build_c[4096];
-	
-	err = clBuildProgram( program, 0, NULL, NULL, NULL, NULL );
-   	if ( err != CL_SUCCESS ) {
-		fprintf( stderr,  "Error on buildProgram " );
-		sclPrintErrorFlags( err ); 
-		fprintf( stderr,  "\nRequestingInfo\n" );
-		clGetProgramBuildInfo( program, devices, CL_PROGRAM_BUILD_LOG, 4096, build_c, NULL );
-		fprintf( stderr,  "Build Log for %s_program:\n%s\n", pName, build_c );
-	}
+  cl_int err;
+  char build_c[4096];
+
+  err = clBuildProgram(program, 0, NULL, NULL, NULL, NULL);
+  if (err != CL_SUCCESS) {
+    fprintf(stderr, "Error on buildProgram ");
+    sclPrintErrorFlags(err);
+    fprintf(stderr, "\nRequestingInfo\n");
+    clGetProgramBuildInfo(program, devices, CL_PROGRAM_BUILD_LOG, 4096, build_c,
+                          NULL);
+    fprintf(stderr, "Build Log for %s_program:\n%s\n", pName, build_c);
+  }
 #else
-	clBuildProgram( program, 0, NULL, NULL, NULL, NULL );
+  clBuildProgram(program, 0, NULL, NULL, NULL, NULL);
 #endif
-
 }
 
-cl_kernel _sclCreateKernel( sclSoft software ) {
-	cl_kernel kernel;
+cl_kernel _sclCreateKernel(sclSoft software) {
+  cl_kernel kernel;
 #ifdef DEBUG
-	cl_int err;
+  cl_int err;
 
-	kernel = clCreateKernel( software.program, software.kernelName, &err );
-	if ( err != CL_SUCCESS ) {
-		fprintf( stderr,  "Error on createKernel %s ", software.kernelName );
-		sclPrintErrorFlags( err );
-	}
+  kernel = clCreateKernel(software.program, software.kernelName, &err);
+  if (err != CL_SUCCESS) {
+    fprintf(stderr, "Error on createKernel %s ", software.kernelName);
+    sclPrintErrorFlags(err);
+  }
 #else
-	kernel = clCreateKernel( software.program, software.kernelName, NULL );
+  kernel = clCreateKernel(software.program, software.kernelName, NULL);
 #endif
 
-	return kernel;
+  return kernel;
 }
 
-cl_event sclLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size) {
-	cl_event myEvent=NULL;	
+cl_event sclLaunchKernel(sclHard hardware, sclSoft software,
+                         size_t *global_work_size, size_t *local_work_size) {
+  cl_event myEvent = NULL;
 #ifdef DEBUG
-	cl_int err;
+  cl_int err;
 
-	err = clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, &myEvent );
-	if ( err != CL_SUCCESS ) {
-		fprintf( stderr,  "\nError on launchKernel %s", software.kernelName );
-		sclPrintErrorFlags(err); }
+  err = clEnqueueNDRangeKernel(hardware.queue, software.kernel, 2, NULL,
+                               global_work_size, local_work_size, 0, NULL,
+                               &myEvent);
+  if (err != CL_SUCCESS) {
+    fprintf(stderr, "\nError on launchKernel %s", software.kernelName);
+    sclPrintErrorFlags(err);
+  }
 #else
-	clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, NULL );
+  clEnqueueNDRangeKernel(hardware.queue, software.kernel, 2, NULL,
+                         global_work_size, local_work_size, 0, NULL, NULL);
 #endif
-	sclFinish( hardware );
-	return myEvent;
+  sclFinish(hardware);
+  return myEvent;
 }
 
-cl_event sclEnqueueKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size) {
-	cl_event myEvent=NULL;	
+cl_event sclEnqueueKernel(sclHard hardware, sclSoft software,
+                          size_t *global_work_size, size_t *local_work_size) {
+  cl_event myEvent = NULL;
 #ifdef DEBUG
-	cl_int err;
+  cl_int err;
 
-	err = clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, &myEvent );
-	if ( err != CL_SUCCESS ) {
-		fprintf( stderr,  "\nError on launchKernel %s", software.kernelName );
-		sclPrintErrorFlags(err); }
+  err = clEnqueueNDRangeKernel(hardware.queue, software.kernel, 2, NULL,
+                               global_work_size, local_work_size, 0, NULL,
+                               &myEvent);
+  if (err != CL_SUCCESS) {
+    fprintf(stderr, "\nError on launchKernel %s", software.kernelName);
+    sclPrintErrorFlags(err);
+  }
 #else
-	clEnqueueNDRangeKernel( hardware.queue, software.kernel, 2, NULL, global_work_size, local_work_size, 0, NULL, NULL );
+  clEnqueueNDRangeKernel(hardware.queue, software.kernel, 2, NULL,
+                         global_work_size, local_work_size, 0, NULL, NULL);
 #endif
 
-	return myEvent;
-		
+  return myEvent;
 }
 
-void sclReleaseClSoft( sclSoft soft ) {
-	clReleaseKernel( soft.kernel );
-	clReleaseProgram( soft.program );
+void sclReleaseClSoft(sclSoft soft) {
+  clReleaseKernel(soft.kernel);
+  clReleaseProgram(soft.program);
 }
 
-void sclReleaseClHard( sclHard hardware ){
-	clReleaseCommandQueue( hardware.queue );
-	clReleaseContext( hardware.context );
+void sclReleaseClHard(sclHard hardware) {
+  clReleaseCommandQueue(hardware.queue);
+  clReleaseContext(hardware.context);
 }
 
-void sclRetainClHard( sclHard hardware ) {
-	clRetainCommandQueue( hardware.queue );
-	clRetainContext( hardware.context );
+void sclRetainClHard(sclHard hardware) {
+  clRetainCommandQueue(hardware.queue);
+  clRetainContext(hardware.context);
 }
 
-void sclReleaseAllHardware ( sclHard* hardList, int found ) {
-	int i;	
+void sclReleaseAllHardware(sclHard *hardList, int found) {
+  int i;
 
-	for ( i = 0; i < found; ++i ) {
-		sclReleaseClHard( hardList[i] );
-	}
-	/* free malloc'ed hardList in GetAllHardware */
-	free(hardList);
+  for (i = 0; i < found; ++i) {
+    sclReleaseClHard(hardList[i]);
+  }
+  /* free malloc'ed hardList in GetAllHardware */
+  free(hardList);
 }
 
-void sclRetainAllHardware ( sclHard* hardList, int found ) {
-	int i;	
+void sclRetainAllHardware(sclHard *hardList, int found) {
+  int i;
 
-	for ( i = 0; i < found; ++i ) {
-		sclRetainClHard( hardList[i] );
-	}
- 
+  for (i = 0; i < found; ++i) {
+    sclRetainClHard(hardList[i]);
+  }
 }
 
-void sclReleaseMemObject( cl_mem object ) {
-	cl_int err;
+void sclReleaseMemObject(cl_mem object) {
+  cl_int err;
 
-	err = clReleaseMemObject( object );
-	if ( err != CL_SUCCESS ) {
-		fprintf( stderr,  "\nError on sclReleaseMemObject" );
-		sclPrintErrorFlags(err); 
-	}	
-
+  err = clReleaseMemObject(object);
+  if (err != CL_SUCCESS) {
+    fprintf(stderr, "\nError on sclReleaseMemObject");
+    sclPrintErrorFlags(err);
+  }
 }
 
-void sclPrintDeviceNamePlatforms( sclHard* hardList, int found ) {
-	int i;
-	cl_char deviceName[1024];
-	cl_char platformVendor[1024];
-	cl_char platformName[1024];
+void sclPrintDeviceNamePlatforms(sclHard *hardList, int found) {
+  int i;
+  cl_char deviceName[1024];
+  cl_char platformVendor[1024];
+  cl_char platformName[1024];
 
-	for ( i = 0; i < found; ++i ) {
-		clGetPlatformInfo( hardList[i].platform, CL_PLATFORM_NAME, sizeof(cl_char)*1024, platformName, NULL );	
-		clGetPlatformInfo( hardList[i].platform, CL_PLATFORM_VENDOR, sizeof(cl_char)*1024, platformVendor, NULL );
-		clGetDeviceInfo( hardList[i].device, CL_DEVICE_NAME, sizeof(cl_char)*1024, deviceName, NULL );
-		fprintf( stdout, "\n Device %d \n Platform name: %s \n Vendor: %s \n Device name: %s", 
-				hardList[i].devNum, platformName, platformVendor, deviceName );	
-	}
-
+  for (i = 0; i < found; ++i) {
+    clGetPlatformInfo(hardList[i].platform, CL_PLATFORM_NAME,
+                      sizeof(cl_char) * 1024, platformName, NULL);
+    clGetPlatformInfo(hardList[i].platform, CL_PLATFORM_VENDOR,
+                      sizeof(cl_char) * 1024, platformVendor, NULL);
+    clGetDeviceInfo(hardList[i].device, CL_DEVICE_NAME, sizeof(cl_char) * 1024,
+                    deviceName, NULL);
+    fprintf(
+        stdout,
+        "\n Device %d \n Platform name: %s \n Vendor: %s \n Device name: %s",
+        hardList[i].devNum, platformName, platformVendor, deviceName);
+  }
 }
 
-void sclPrintHardwareStatus( sclHard hardware ) {
+void sclPrintHardwareStatus(sclHard hardware) {
 
-	cl_int err;
-	char platform[100];
-	cl_bool deviceAV;
+  cl_int err;
+  char platform[100];
+  cl_bool deviceAV;
 
-	err = clGetPlatformInfo( hardware.platform,
-			CL_PLATFORM_NAME,
-			sizeof(char)*100,
-			platform,
-			NULL );
-	if ( err == CL_SUCCESS ) { fprintf( stdout, "\nPlatform object alive" ); }
-	else { sclPrintErrorFlags( err ); }
-	
-	err = clGetDeviceInfo( hardware.device,
-			CL_DEVICE_AVAILABLE,
-			sizeof(cl_bool),
-			(void*)(&deviceAV),
-			NULL );
-	if ( err == CL_SUCCESS && deviceAV ) {
-		fprintf( stdout, "\nDevice object alive and device available." );
-	}
-	else if ( err == CL_SUCCESS ) {
-		fprintf( stdout, "\nDevice object alive and device NOT available.");
-	}
-	else {
-		fprintf( stderr, "\nDevice object not alive.");
-	} 
+  err = clGetPlatformInfo(hardware.platform, CL_PLATFORM_NAME,
+                          sizeof(char) * 100, platform, NULL);
+  if (err == CL_SUCCESS) {
+    fprintf(stdout, "\nPlatform object alive");
+  } else {
+    sclPrintErrorFlags(err);
+  }
 
+  err = clGetDeviceInfo(hardware.device, CL_DEVICE_AVAILABLE, sizeof(cl_bool),
+                        (void *)(&deviceAV), NULL);
+  if (err == CL_SUCCESS && deviceAV) {
+    fprintf(stdout, "\nDevice object alive and device available.");
+  } else if (err == CL_SUCCESS) {
+    fprintf(stdout, "\nDevice object alive and device NOT available.");
+  } else {
+    fprintf(stderr, "\nDevice object not alive.");
+  }
 }
 
-void _sclCreateQueues( sclHard* hardList, int found ) {
+void _sclCreateQueues(sclHard *hardList, int found) {
 
-	int i;
+  int i;
 #ifdef DEBUG
-	cl_int err;
+  cl_int err;
 
-	for ( i = 0; i < found; ++i ) {
-		hardList[i].queue = clCreateCommandQueue( hardList[i].context, hardList[i].device,
-							 CL_QUEUE_PROFILING_ENABLE, &err );
-		if ( err != CL_SUCCESS ) {
-			fprintf( stderr, "\nError creating command queue %d", i );
-		}
-	}
+  for (i = 0; i < found; ++i) {
+    hardList[i].queue =
+        clCreateCommandQueue(hardList[i].context, hardList[i].device,
+                             CL_QUEUE_PROFILING_ENABLE, &err);
+    if (err != CL_SUCCESS) {
+      fprintf(stderr, "\nError creating command queue %d", i);
+    }
+  }
 #else
-	for ( i = 0; i < found; ++i ) {
-		hardList[i].queue = 
-		clCreateCommandQueue( hardList[i].context, hardList[i].device, NULL, NULL );
-	}
+  for (i = 0; i < found; ++i) {
+    hardList[i].queue = clCreateCommandQueue(hardList[i].context,
+                                             hardList[i].device, NULL, NULL);
+  }
 #endif
-
 }
 
-void _sclSmartCreateContexts( sclHard* hardList, int found ) {
+void _sclSmartCreateContexts(sclHard *hardList, int found) {
 
-	cl_device_id deviceList[16];
-	cl_context context;
-	char var_queries1[1024];
-	char var_queries2[1024];
+  cl_device_id deviceList[16];
+  cl_context context;
+  char var_queries1[1024];
+  char var_queries2[1024];
 #ifdef DEBUG
-	cl_int err;
+  cl_int err;
 #endif
-	ptsclHard groups[10][20];
-	int i, j, groupSet = 0;
-	int groupSizes[10];
-	int nGroups = 0;
+  ptsclHard groups[10][20];
+  int i, j, groupSet = 0;
+  int groupSizes[10];
+  int nGroups = 0;
 
+  for (i = 0; i < found; ++i) { /* Group generation */
 
-	for ( i = 0; i < found; ++i ) { /* Group generation */
-	
-		clGetPlatformInfo( hardList[i].platform, CL_PLATFORM_NAME, 1024, var_queries1, NULL );
+    clGetPlatformInfo(hardList[i].platform, CL_PLATFORM_NAME, 1024,
+                      var_queries1, NULL);
 
-		if (  nGroups == 0 ) {
-			groups[0][0] = &(hardList[0]);
-			nGroups++;
-			groupSizes[0] = 1;
-		}
-		else {
-			groupSet=0;
-			for ( j = 0; j < nGroups; ++j ){
-				clGetPlatformInfo( groups[j][0]->platform, CL_PLATFORM_NAME, 1024, var_queries2, NULL );
-				if ( strcmp( var_queries1, var_queries2 ) == 0 &&
-						hardList[i].deviceType == groups[j][0]->deviceType &&
-						hardList[i].maxPointerSize == groups[j][0]->maxPointerSize ) {
-					groups[j][ groupSizes[j] ] = &(hardList[i]);
-					groupSizes[j]++;
-					groupSet = 1;	
-				}
-			}
-			if ( !groupSet ) {
-				groups[nGroups][0] = &(hardList[i]);
-				groupSizes[nGroups] = 1;
-				nGroups++;
-			}
-		}
-	}
+    if (nGroups == 0) {
+      groups[0][0] = &(hardList[0]);
+      nGroups++;
+      groupSizes[0] = 1;
+    } else {
+      groupSet = 0;
+      for (j = 0; j < nGroups; ++j) {
+        clGetPlatformInfo(groups[j][0]->platform, CL_PLATFORM_NAME, 1024,
+                          var_queries2, NULL);
+        if (strcmp(var_queries1, var_queries2) == 0 &&
+            hardList[i].deviceType == groups[j][0]->deviceType &&
+            hardList[i].maxPointerSize == groups[j][0]->maxPointerSize) {
+          groups[j][groupSizes[j]] = &(hardList[i]);
+          groupSizes[j]++;
+          groupSet = 1;
+        }
+      }
+      if (!groupSet) {
+        groups[nGroups][0] = &(hardList[i]);
+        groupSizes[nGroups] = 1;
+        nGroups++;
+      }
+    }
+  }
 
-	for ( i = 0; i < nGroups; ++i ) { /* Context generation */
-	
-		fprintf( stdout, "\nGroup %d with %d devices", i+1, groupSizes[i] );	
-		for ( j = 0; j < groupSizes[i]; ++j ) {
-			deviceList[j] = groups[i][j]->device;	
-		}
+  for (i = 0; i < nGroups; ++i) { /* Context generation */
+
+    fprintf(stdout, "\nGroup %d with %d devices", i + 1, groupSizes[i]);
+    for (j = 0; j < groupSizes[i]; ++j) {
+      deviceList[j] = groups[i][j]->device;
+    }
 #ifdef DEBUG
-		context = clCreateContext( 0, groupSizes[i], deviceList, NULL, NULL, &err );
-		if ( err != CL_SUCCESS ) {
-			fprintf( stderr, "\nError creating context on device %d", i );
-		}
+    context = clCreateContext(0, groupSizes[i], deviceList, NULL, NULL, &err);
+    if (err != CL_SUCCESS) {
+      fprintf(stderr, "\nError creating context on device %d", i);
+    }
 #else
-		context = clCreateContext( 0, groupSizes[i], deviceList, NULL, NULL, NULL );
+    context = clCreateContext(0, groupSizes[i], deviceList, NULL, NULL, NULL);
 #endif
-		for ( j = 0; j < groupSizes[i]; ++j ) {
-			groups[i][j]->context = context;
-		}
-	}
+    for (j = 0; j < groupSizes[i]; ++j) {
+      groups[i][j]->context = context;
+    }
+  }
 }
 
-int _sclGetMaxComputeUnits( cl_device_id device ) {
-	
-	cl_uint nCompU;
+int _sclGetMaxComputeUnits(cl_device_id device) {
 
-	clGetDeviceInfo( device, CL_DEVICE_MAX_COMPUTE_UNITS, 4, (void *)&nCompU, NULL );
+  cl_uint nCompU;
 
-	return (int)nCompU;	
+  clGetDeviceInfo(device, CL_DEVICE_MAX_COMPUTE_UNITS, 4, (void *)&nCompU,
+                  NULL);
 
+  return (int)nCompU;
 }
 
-unsigned long int _sclGetMaxMemAllocSize( cl_device_id device ){
+unsigned long int _sclGetMaxMemAllocSize(cl_device_id device) {
 
-	cl_ulong mem;
+  cl_ulong mem;
 
- 	clGetDeviceInfo( device, CL_DEVICE_MAX_MEM_ALLOC_SIZE, 8, (void *)&mem, NULL );
+  clGetDeviceInfo(device, CL_DEVICE_MAX_MEM_ALLOC_SIZE, 8, (void *)&mem, NULL);
 
-	return (unsigned long int)mem;	
-
+  return (unsigned long int)mem;
 }
 
-int _sclGetDeviceType( cl_device_id device ) {
-	
-	int out=3;
-	char var_queries[1024];
+int _sclGetDeviceType(cl_device_id device) {
 
- 	clGetDeviceInfo( device, CL_DEVICE_TYPE, 1024, var_queries, NULL );
-	
-	if ( strcmp( var_queries, "CL_DEVICE_TYPE_GPU" ) == 0 ) {
-		out = 0;
-	}
-	else if ( strcmp( var_queries, "CL_DEVICE_TYPE_CPU" ) == 0 ) {
-		out = 1;
-	}
-	else if ( strcmp( var_queries, "CL_DEVICE_TYPE_ACCELERATOR" ) == 0 ) {
-		out = 2;
-	}
+  int out = 3;
+  char var_queries[1024];
 
-	return out;
+  clGetDeviceInfo(device, CL_DEVICE_TYPE, 1024, var_queries, NULL);
+
+  if (strcmp(var_queries, "CL_DEVICE_TYPE_GPU") == 0) {
+    out = 0;
+  } else if (strcmp(var_queries, "CL_DEVICE_TYPE_CPU") == 0) {
+    out = 1;
+  } else if (strcmp(var_queries, "CL_DEVICE_TYPE_ACCELERATOR") == 0) {
+    out = 2;
+  }
+
+  return out;
 }
 
-sclHard sclGetFastestDevice( sclHard* hardList, int found ) {
-	int i, maxCpUnits = 0, device = 0;
+sclHard sclGetFastestDevice(sclHard *hardList, int found) {
+  int i, maxCpUnits = 0, device = 0;
 
-	for ( i = 0; i < found ; ++i ) {
-		fprintf( stdout, "\nDevice %d Compute Units %d", i, hardList[i].nComputeUnits );
-		if ( maxCpUnits < hardList[i].nComputeUnits ) {
-			device = i;
-			maxCpUnits = hardList[i].nComputeUnits;
-		}
-	}
+  for (i = 0; i < found; ++i) {
+    fprintf(stdout, "\nDevice %d Compute Units %d", i,
+            hardList[i].nComputeUnits);
+    if (maxCpUnits < hardList[i].nComputeUnits) {
+      device = i;
+      maxCpUnits = hardList[i].nComputeUnits;
+    }
+  }
 
-	return hardList[ device ];
+  return hardList[device];
 }
 
-sclHard* sclGetAllHardware( int* found ) {
+sclHard *sclGetAllHardware(int *found) {
 
-	int i, j; 
-	cl_uint nPlatforms=0, nDevices=0;
-	sclHard* hardList = NULL;
-	cl_int err;
-	int i_found=0, n_found=0;
+  int i, j;
+  cl_uint nPlatforms = 0, nDevices = 0;
+  sclHard *hardList = NULL;
+  cl_int err;
+  int i_found = 0, n_found = 0;
 
-	cl_platform_id platforms[NB_MAX_PLATFORMS];
-	cl_device_id devices[NB_MAX_PLATFORMS][NB_MAX_DEVICES_PER_PLATFORM];
+  cl_platform_id platforms[NB_MAX_PLATFORMS];
+  cl_device_id devices[NB_MAX_PLATFORMS][NB_MAX_DEVICES_PER_PLATFORM];
 
-	err = clGetPlatformIDs( NB_MAX_PLATFORMS, platforms, &nPlatforms );
-	if ( nPlatforms == 0 ) {
-		fprintf( stderr, "\nNo OpenCL platforms found.\n");
-	}
-	else {
-		/* for each platform, count for devices */
-		for ( i = 0; i < (int)nPlatforms; ++i ) {
-			err = clGetDeviceIDs( platforms[i], CL_DEVICE_TYPE_ALL, NB_MAX_DEVICES_PER_PLATFORM, &devices[i][0], &nDevices );
-			if ( err != CL_SUCCESS ) {
-				fprintf( stderr,  "\nError clGetDeviceIDs" );
-				sclPrintErrorFlags( err );
-			} else{
-				n_found += nDevices;
-			}
-		}
+  err = clGetPlatformIDs(NB_MAX_PLATFORMS, platforms, &nPlatforms);
+  if (nPlatforms == 0) {
+    fprintf(stderr, "\nNo OpenCL platforms found.\n");
+  } else {
+    /* for each platform, count for devices */
+    for (i = 0; i < (int)nPlatforms; ++i) {
+      err = clGetDeviceIDs(platforms[i], CL_DEVICE_TYPE_ALL,
+                           NB_MAX_DEVICES_PER_PLATFORM, &devices[i][0],
+                           &nDevices);
+      if (err != CL_SUCCESS) {
+        fprintf(stderr, "\nError clGetDeviceIDs");
+        sclPrintErrorFlags(err);
+      } else {
+        n_found += nDevices;
+      }
+    }
 
-		// Number of found devices is 'n_found'
-		hardList = (sclHard*)malloc( n_found*sizeof(sclHard) );
+    // Number of found devices is 'n_found'
+    hardList = (sclHard *)malloc(n_found * sizeof(sclHard));
 
-		/* re-scan all platforms to setup devices */
-		for ( i = 0; i < (int)nPlatforms; ++i ) {
-			err = clGetDeviceIDs( platforms[i], CL_DEVICE_TYPE_ALL, NB_MAX_DEVICES_PER_PLATFORM, &devices[i][0], &nDevices );
-			if ( err != CL_SUCCESS ) {
-				fprintf( stderr,  "\nError clGetDeviceIDs" );
-				sclPrintErrorFlags( err );
-			} else{
-				/* save every available devices on each platform */
-				for ( j = 0; j < (int)nDevices; ++j ) {
-					hardList[ i_found ].platform       = platforms[ i ];
-					hardList[ i_found ].device         = devices[ i ][ j ];
-					hardList[ i_found ].nComputeUnits  = _sclGetMaxComputeUnits( hardList[ i_found ].device );
-					hardList[ i_found ].maxPointerSize = _sclGetMaxMemAllocSize( hardList[ i_found ].device );				
-					hardList[ i_found ].deviceType     = _sclGetDeviceType( hardList[ i_found ].device );
-					hardList[ i_found ].devNum         = i_found;
-					(i_found)++;
-				}
-			}
-		}
-		_sclSmartCreateContexts( hardList, n_found );
-		_sclCreateQueues( hardList, n_found );
+    /* re-scan all platforms to setup devices */
+    for (i = 0; i < (int)nPlatforms; ++i) {
+      err = clGetDeviceIDs(platforms[i], CL_DEVICE_TYPE_ALL,
+                           NB_MAX_DEVICES_PER_PLATFORM, &devices[i][0],
+                           &nDevices);
+      if (err != CL_SUCCESS) {
+        fprintf(stderr, "\nError clGetDeviceIDs");
+        sclPrintErrorFlags(err);
+      } else {
+        /* save every available devices on each platform */
+        for (j = 0; j < (int)nDevices; ++j) {
+          hardList[i_found].platform = platforms[i];
+          hardList[i_found].device = devices[i][j];
+          hardList[i_found].nComputeUnits =
+              _sclGetMaxComputeUnits(hardList[i_found].device);
+          hardList[i_found].maxPointerSize =
+              _sclGetMaxMemAllocSize(hardList[i_found].device);
+          hardList[i_found].deviceType =
+              _sclGetDeviceType(hardList[i_found].device);
+          hardList[i_found].devNum = i_found;
+          (i_found)++;
+        }
+      }
+    }
+    _sclSmartCreateContexts(hardList, n_found);
+    _sclCreateQueues(hardList, n_found);
 #ifdef DEBUG
-		sclPrintDeviceNamePlatforms( hardList, n_found );
+    sclPrintDeviceNamePlatforms(hardList, n_found);
 #endif
-		sclRetainAllHardware( hardList, n_found );
-	}
-	
-	*found = n_found;
-	return hardList;
+    sclRetainAllHardware(hardList, n_found);
+  }
+
+  *found = n_found;
+  return hardList;
 }
 
-sclHard sclGetHardwareByType( cl_device_type device_type, int iDevice, int* found ) 
-{
-	cl_uint i;
-	sclHard hardware;
-	cl_int err;
-	cl_uint nPlatforms, nDevices=0;
-	cl_char vendor_name[1024];
-	cl_char device_name[1024];
-	char platformName[256];
+sclHard sclGetHardwareByType(cl_device_type device_type, int iDevice,
+                             int *found) {
+  cl_uint i;
+  sclHard hardware;
+  cl_int err;
+  cl_uint nPlatforms, nDevices = 0;
+  cl_char vendor_name[1024];
+  cl_char device_name[1024];
+  char platformName[256];
 
-	*found = 0;
-	cl_platform_id platforms[NB_MAX_PLATFORMS];
-	cl_device_id devices[NB_MAX_PLATFORMS][NB_MAX_DEVICES_PER_PLATFORM];
+  *found = 0;
+  cl_platform_id platforms[NB_MAX_PLATFORMS];
+  cl_device_id devices[NB_MAX_PLATFORMS][NB_MAX_DEVICES_PER_PLATFORM];
 
-	/*Get platform info ###################################################### */
-	err = clGetPlatformIDs( NB_MAX_PLATFORMS, platforms, &nPlatforms );
-	/*fprintf( stdout, "\n Number of platforms found: %d \n",nPlatforms);*/
-	/* ###################################################### */
+  /*Get platform info ###################################################### */
+  err = clGetPlatformIDs(NB_MAX_PLATFORMS, platforms, &nPlatforms);
+  /*fprintf( stdout, "\n Number of platforms found: %d \n",nPlatforms);*/
+  /* ###################################################### */
 
-	if ( nPlatforms == 0 ) {
-		fprintf( stderr, "\nNo OpenCL platforms found.\n");
-		*found = 0;
-	}else{
-		for (i = 0; i < nPlatforms; ++i)
-		{
-			err = clGetDeviceIDs( platforms[i], device_type, NB_MAX_DEVICES_PER_PLATFORM, &devices[i][0], &nDevices );
-			if ( err != CL_SUCCESS ) {
-				fprintf( stderr,  "\nError clGetDeviceIDs" );
-				sclPrintErrorFlags( err ); 
-			}
-			
-			if ( nDevices >  0) {
-				// device_type found, return it
-				hardware.platform = platforms[i];
-				hardware.device = devices[i][(iDevice < (int)nDevices ? iDevice : 0)];
-				hardware.context = clCreateContext( 0, 1, &hardware.device, NULL, NULL, &err );
-				if ( err != CL_SUCCESS) { fprintf( stderr,  "\nError 3" ); sclPrintErrorFlags( err ); };
-				hardware.queue = clCreateCommandQueue( hardware.context, hardware.device, CL_QUEUE_PROFILING_ENABLE, &err );
-				if ( err != CL_SUCCESS ) { fprintf( stderr,  "\nError 3.1" ); sclPrintErrorFlags( err ); };
-				/* deviceType 0 = GPU | deviceType 1 = CPU | deviceType 2 = Accelerator | deviceType 3 = other */
-				hardware.deviceType = 
-					(device_type == CL_DEVICE_TYPE_GPU ? 0 : 
-					(device_type == CL_DEVICE_TYPE_CPU ? 1 : 
-					(device_type == CL_DEVICE_TYPE_ACCELERATOR ? 2 : 3)));
-				
-				// some info
-				platformName[0] = '\0';
-				vendor_name[0] = '\0';
-				device_name[0] = '\0';
+  if (nPlatforms == 0) {
+    fprintf(stderr, "\nNo OpenCL platforms found.\n");
+    *found = 0;
+  } else {
+    for (i = 0; i < nPlatforms; ++i) {
+      err =
+          clGetDeviceIDs(platforms[i], device_type, NB_MAX_DEVICES_PER_PLATFORM,
+                         &devices[i][0], &nDevices);
+      if (err != CL_SUCCESS) {
+        fprintf(stderr, "\nError clGetDeviceIDs");
+        sclPrintErrorFlags(err);
+      }
 
-				err = clGetPlatformInfo ( hardware.platform, CL_PLATFORM_VENDOR, (size_t)256, (void *)platformName, NULL);
-				err |= clGetDeviceInfo( hardware.device, CL_DEVICE_VENDOR, sizeof(vendor_name), vendor_name, NULL );
-				err |= clGetDeviceInfo( hardware.device, CL_DEVICE_NAME, sizeof(device_name), device_name, NULL );
-				if ( err != CL_SUCCESS ) {
-					fprintf( stderr,  "\nError getting platform + vendor + device name" );
-					sclPrintErrorFlags( err ); }
-				fprintf( stdout, "\nUsing platform: %s - Vendor: %s\nDevice name: %s\n", platformName,vendor_name,device_name);
-				
-				*found = 1;
-			}
-		}
-	}
+      if (nDevices > 0) {
+        // device_type found, return it
+        hardware.platform = platforms[i];
+        hardware.device = devices[i][(iDevice < (int)nDevices ? iDevice : 0)];
+        hardware.context =
+            clCreateContext(0, 1, &hardware.device, NULL, NULL, &err);
+        if (err != CL_SUCCESS) {
+          fprintf(stderr, "\nError 3");
+          sclPrintErrorFlags(err);
+        };
+        hardware.queue = clCreateCommandQueue(hardware.context, hardware.device,
+                                              CL_QUEUE_PROFILING_ENABLE, &err);
+        if (err != CL_SUCCESS) {
+          fprintf(stderr, "\nError 3.1");
+          sclPrintErrorFlags(err);
+        };
+        /* deviceType 0 = GPU | deviceType 1 = CPU | deviceType 2 = Accelerator
+         * | deviceType 3 = other */
+        hardware.deviceType =
+            (device_type == CL_DEVICE_TYPE_GPU
+                 ? 0
+                 : (device_type == CL_DEVICE_TYPE_CPU
+                        ? 1
+                        : (device_type == CL_DEVICE_TYPE_ACCELERATOR ? 2 : 3)));
 
-	return hardware;
+        // some info
+        platformName[0] = '\0';
+        vendor_name[0] = '\0';
+        device_name[0] = '\0';
+
+        err = clGetPlatformInfo(hardware.platform, CL_PLATFORM_VENDOR,
+                                (size_t)256, (void *)platformName, NULL);
+        err |= clGetDeviceInfo(hardware.device, CL_DEVICE_VENDOR,
+                               sizeof(vendor_name), vendor_name, NULL);
+        err |= clGetDeviceInfo(hardware.device, CL_DEVICE_NAME,
+                               sizeof(device_name), device_name, NULL);
+        if (err != CL_SUCCESS) {
+          fprintf(stderr, "\nError getting platform + vendor + device name");
+          sclPrintErrorFlags(err);
+        }
+        fprintf(stdout, "\nUsing platform: %s - Vendor: %s\nDevice name: %s\n",
+                platformName, vendor_name, device_name);
+
+        *found = 1;
+      }
+    }
+  }
+
+  return hardware;
 }
 
-sclHard sclGetGPUHardware( int iDevice, int* found ) {
-	return sclGetHardwareByType(CL_DEVICE_TYPE_GPU, iDevice, found);
+sclHard sclGetGPUHardware(int iDevice, int *found) {
+  return sclGetHardwareByType(CL_DEVICE_TYPE_GPU, iDevice, found);
 }
 
-sclHard sclGetCPUHardware( int iDevice, int* found ) {
-	return sclGetHardwareByType(CL_DEVICE_TYPE_CPU, iDevice, found);
+sclHard sclGetCPUHardware(int iDevice, int *found) {
+  return sclGetHardwareByType(CL_DEVICE_TYPE_CPU, iDevice, found);
 }
 
-sclHard sclGetAcceleratorHardware( int iDevice, int* found ) {
-	return sclGetHardwareByType(CL_DEVICE_TYPE_ACCELERATOR, iDevice, found);
+sclHard sclGetAcceleratorHardware(int iDevice, int *found) {
+  return sclGetHardwareByType(CL_DEVICE_TYPE_ACCELERATOR, iDevice, found);
 }
 
-sclSoft sclGetCLSoftware( char* kernel_file, char* kernel_name, sclHard hardware ){
-	sclSoft software;
-	/* Load program source
-	 ########################################################### */
-	char *source = _sclLoadProgramSource( kernel_file );
-	/* ########################################################### */
-	
-	sprintf( software.kernelName, "%s", kernel_name);
-	
-	/* Create program objects from source
-	 ########################################################### */
-	software.program = _sclCreateProgram( source, hardware.context );
-	/* ########################################################### */
-	
-	/* Build the program (compile it)
-   	 ############################################ */
-   	_sclBuildProgram( software.program, hardware.device, kernel_name );
-   	/* ############################################ */
-   	
-   	/* Create the kernel object
-	 ########################################################################## */
-	software.kernel = _sclCreateKernel( software );
-	/* ########################################################################## */
+sclSoft sclGetCLSoftware(char *kernel_file, char *kernel_name,
+                         sclHard hardware) {
+  sclSoft software;
+  /* Load program source
+   ########################################################### */
+  char *source = _sclLoadProgramSource(kernel_file);
+  /* ########################################################### */
 
-	/* free source malloc'ed in _sclLoadProgramSource */
-	free(source);
+  sprintf(software.kernelName, "%s", kernel_name);
 
-	return software;
-	
+  /* Create program objects from source
+   ########################################################### */
+  software.program = _sclCreateProgram(source, hardware.context);
+  /* ########################################################### */
+
+  /* Build the program (compile it)
+   ############################################ */
+  _sclBuildProgram(software.program, hardware.device, kernel_name);
+  /* ############################################ */
+
+  /* Create the kernel object
+   ########################################################################## */
+  software.kernel = _sclCreateKernel(software);
+  /* ##########################################################################
+   */
+
+  /* free source malloc'ed in _sclLoadProgramSource */
+  free(source);
+
+  return software;
 }
 
-cl_mem sclMalloc( sclHard hardware, cl_int mode, size_t size ){
-	cl_mem buffer;
+cl_mem sclMalloc(sclHard hardware, cl_int mode, size_t size) {
+  cl_mem buffer;
 #ifdef DEBUG
-	cl_int err;
-	
-	buffer = clCreateBuffer( hardware.context, mode, size, NULL, &err );
-	if ( err != CL_SUCCESS ) {
-		fprintf( stderr,  "\nclMalloc Error\n" );
-		sclPrintErrorFlags( err );
-	}
+  cl_int err;
+
+  buffer = clCreateBuffer(hardware.context, mode, size, NULL, &err);
+  if (err != CL_SUCCESS) {
+    fprintf(stderr, "\nclMalloc Error\n");
+    sclPrintErrorFlags(err);
+  }
 #else
-	buffer = clCreateBuffer( hardware.context, mode, size, NULL, NULL );
+  buffer = clCreateBuffer(hardware.context, mode, size, NULL, NULL);
 #endif
-		
-	return buffer;
-}	
 
-cl_mem sclMallocWrite( sclHard hardware, cl_int mode, size_t size, void* hostPointer ){
-	cl_mem buffer;
+  return buffer;
+}
 
-	buffer = sclMalloc( hardware, mode, size );
+cl_mem sclMallocWrite(sclHard hardware, cl_int mode, size_t size,
+                      void *hostPointer) {
+  cl_mem buffer;
+
+  buffer = sclMalloc(hardware, mode, size);
 
 #ifdef DEBUG
-	cl_int err;
-	
-	if ( buffer == NULL ) { 
-		fprintf( stderr,  "\nclMallocWrite Error on clCreateBuffer\n" );
-	}
-	err = clEnqueueWriteBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
-	if ( err != CL_SUCCESS ) { 
-		fprintf( stderr,  "\nclMallocWrite Error on clEnqueueWriteBuffer\n" );
-		sclPrintErrorFlags( err );
-	}
+  cl_int err;
+
+  if (buffer == NULL) {
+    fprintf(stderr, "\nclMallocWrite Error on clCreateBuffer\n");
+  }
+  err = clEnqueueWriteBuffer(hardware.queue, buffer, CL_TRUE, 0, size,
+                             hostPointer, 0, NULL, NULL);
+  if (err != CL_SUCCESS) {
+    fprintf(stderr, "\nclMallocWrite Error on clEnqueueWriteBuffer\n");
+    sclPrintErrorFlags(err);
+  }
 
 #else
-	clEnqueueWriteBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
+  clEnqueueWriteBuffer(hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0,
+                       NULL, NULL);
 #endif
-	return buffer;
+  return buffer;
 }
 
-void sclWrite( sclHard hardware, size_t size, cl_mem buffer, void* hostPointer ) {
+void sclWrite(sclHard hardware, size_t size, cl_mem buffer, void *hostPointer) {
 #ifdef DEBUG
-	cl_int err;
+  cl_int err;
 
-	err = clEnqueueWriteBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
-	if ( err != CL_SUCCESS ) { 
-		fprintf( stderr,  "\nclWrite Error\n" );
-		sclPrintErrorFlags( err );
-	}   
+  err = clEnqueueWriteBuffer(hardware.queue, buffer, CL_TRUE, 0, size,
+                             hostPointer, 0, NULL, NULL);
+  if (err != CL_SUCCESS) {
+    fprintf(stderr, "\nclWrite Error\n");
+    sclPrintErrorFlags(err);
+  }
 #else
-	clEnqueueWriteBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
+  clEnqueueWriteBuffer(hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0,
+                       NULL, NULL);
 #endif
 }
 
-void sclRead( sclHard hardware, size_t size, cl_mem buffer, void *hostPointer ) {
+void sclRead(sclHard hardware, size_t size, cl_mem buffer, void *hostPointer) {
 #ifdef DEBUG
-	cl_int err;
+  cl_int err;
 
-	err = clEnqueueReadBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
-	if ( err != CL_SUCCESS ) {
-		fprintf( stderr,  "\nclRead Error\n" );
-		sclPrintErrorFlags( err );
-       	}
+  err = clEnqueueReadBuffer(hardware.queue, buffer, CL_TRUE, 0, size,
+                            hostPointer, 0, NULL, NULL);
+  if (err != CL_SUCCESS) {
+    fprintf(stderr, "\nclRead Error\n");
+    sclPrintErrorFlags(err);
+  }
 #else
-	clEnqueueReadBuffer( hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0, NULL, NULL );
+  clEnqueueReadBuffer(hardware.queue, buffer, CL_TRUE, 0, size, hostPointer, 0,
+                      NULL, NULL);
 #endif
 }
 
-cl_int sclFinish( sclHard hardware ){
+cl_int sclFinish(sclHard hardware) {
 #ifdef DEBUG
-	cl_int err;
+  cl_int err;
 
-	err = clFinish( hardware.queue );
-	if ( err != CL_SUCCESS ) {
-		fprintf( stderr,  "\nError clFinish\n" );
-		sclPrintErrorFlags( err );
-	}
+  err = clFinish(hardware.queue);
+  if (err != CL_SUCCESS) {
+    fprintf(stderr, "\nError clFinish\n");
+    sclPrintErrorFlags(err);
+  }
 #else
-	clFinish( hardware.queue );
+  clFinish(hardware.queue);
 #endif
 
-	return err;
-
+  return err;
 }
 
-cl_ulong sclGetEventTime( sclHard hardware, cl_event event ){
+cl_ulong sclGetEventTime(sclHard hardware, cl_event event) {
 
-	cl_ulong elapsedTime, startTime, endTime;
+  cl_ulong elapsedTime, startTime, endTime;
 
-	sclFinish( hardware );
+  sclFinish(hardware);
 
-	clGetEventProfilingInfo( event, CL_PROFILING_COMMAND_START, sizeof(cl_ulong), &startTime, NULL);
-	clGetEventProfilingInfo( event, CL_PROFILING_COMMAND_END, sizeof(cl_ulong), &endTime, NULL);
+  clGetEventProfilingInfo(event, CL_PROFILING_COMMAND_START, sizeof(cl_ulong),
+                          &startTime, NULL);
+  clGetEventProfilingInfo(event, CL_PROFILING_COMMAND_END, sizeof(cl_ulong),
+                          &endTime, NULL);
 
-	elapsedTime = endTime-startTime;
+  elapsedTime = endTime - startTime;
 
-	return elapsedTime;
+  return elapsedTime;
 }
 
-void sclSetKernelArg( sclSoft software, int argnum, size_t typeSize, void *argument ){
+void sclSetKernelArg(sclSoft software, int argnum, size_t typeSize,
+                     void *argument) {
 #ifdef DEBUG
-	cl_int err;
+  cl_int err;
 
-	err = clSetKernelArg( software.kernel, argnum, typeSize, argument );
-	if ( err != CL_SUCCESS ) {	
-		fprintf( stderr,  "\nError clSetKernelArg number %d\n", argnum );
-		sclPrintErrorFlags( err );
-	}
+  err = clSetKernelArg(software.kernel, argnum, typeSize, argument);
+  if (err != CL_SUCCESS) {
+    fprintf(stderr, "\nError clSetKernelArg number %d\n", argnum);
+    sclPrintErrorFlags(err);
+  }
 #else
-	clSetKernelArg( software.kernel, argnum, typeSize, argument );
+  clSetKernelArg(software.kernel, argnum, typeSize, argument);
 #endif
-
 }
 
-void _sclWriteArgOnAFile( int argnum, void* arg, size_t size, const char* diff ) {
-	FILE *out;
-	char filename[150];
+void _sclWriteArgOnAFile(int argnum, void *arg, size_t size, const char *diff) {
+  FILE *out;
+  char filename[150];
 
-	sprintf( filename, "../data/arg%d%s", argnum, diff );
+  sprintf(filename, "../data/arg%d%s", argnum, diff);
 
-	out = fopen( filename, "w+");
+  out = fopen(filename, "w+");
 
-	fwrite( arg, 1, size, out );
+  fwrite(arg, 1, size, out);
 
-	fclose(out);
+  fclose(out);
 }
 
-void _sclVSetKernelArgs( sclSoft software, const char *sizesValues, va_list argList ) {
-	const char *p;
-	int argCount = 0;
-	void* argument;
-	size_t actual_size;
-	
-	for( p = sizesValues; *p != '\0'; p++ ) {
-		if ( *p == '%' ) {
-			switch( *++p ) {
-				case 'a':
-					actual_size = va_arg( argList, size_t );
-					argument = va_arg( argList, void* );
-					sclSetKernelArg( software, argCount, actual_size, argument );
-					argCount++;			
-					break;
+void _sclVSetKernelArgs(sclSoft software, const char *sizesValues,
+                        va_list argList) {
+  const char *p;
+  int argCount = 0;
+  void *argument;
+  size_t actual_size;
 
-				case 'v':
-					argument = va_arg( argList, void* );
-					sclSetKernelArg( software, argCount, sizeof(cl_mem) , argument );
-					argCount++;			
-					break;
+  for (p = sizesValues; *p != '\0'; p++) {
+    if (*p == '%') {
+      switch (*++p) {
+      case 'a':
+        actual_size = va_arg(argList, size_t);
+        argument = va_arg(argList, void *);
+        sclSetKernelArg(software, argCount, actual_size, argument);
+        argCount++;
+        break;
 
-				case 'N':
-					actual_size = va_arg( argList, size_t );
-					sclSetKernelArg( software, argCount, actual_size, NULL );
-					argCount++;			
-					break;
-				default:
-					break;
+      case 'v':
+        argument = va_arg(argList, void *);
+        sclSetKernelArg(software, argCount, sizeof(cl_mem), argument);
+        argCount++;
+        break;
 
-			}
-		}
-	}
+      case 'N':
+        actual_size = va_arg(argList, size_t);
+        sclSetKernelArg(software, argCount, actual_size, NULL);
+        argCount++;
+        break;
+      default:
+        break;
+      }
+    }
+  }
 }
 
-void sclSetKernelArgs( sclSoft software, const char *sizesValues, ... ){
-	va_list argList;
+void sclSetKernelArgs(sclSoft software, const char *sizesValues, ...) {
+  va_list argList;
 
-	va_start( argList, sizesValues );
+  va_start(argList, sizesValues);
 
-	_sclVSetKernelArgs( software, sizesValues, argList );	
+  _sclVSetKernelArgs(software, sizesValues, argList);
 
-	va_end( argList );
-
+  va_end(argList);
 }
 
-cl_event sclSetArgsLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size,
-				const char *sizesValues, ... ) {
-	va_list argList;
-	cl_event event;
+cl_event sclSetArgsLaunchKernel(sclHard hardware, sclSoft software,
+                                size_t *global_work_size,
+                                size_t *local_work_size,
+                                const char *sizesValues, ...) {
+  va_list argList;
+  cl_event event;
 
-	va_start( argList, sizesValues );
-	
-	_sclVSetKernelArgs( software, sizesValues, argList );	
-	
-	va_end( argList );
+  va_start(argList, sizesValues);
 
-	event = sclLaunchKernel( hardware, software, global_work_size, local_work_size );
+  _sclVSetKernelArgs(software, sizesValues, argList);
 
-	return event;
+  va_end(argList);
 
+  event =
+      sclLaunchKernel(hardware, software, global_work_size, local_work_size);
+
+  return event;
 }
 
-cl_event sclSetArgsEnqueueKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size,
-				 const char *sizesValues, ... ) {
-	va_list argList;
-	cl_event event;
+cl_event sclSetArgsEnqueueKernel(sclHard hardware, sclSoft software,
+                                 size_t *global_work_size,
+                                 size_t *local_work_size,
+                                 const char *sizesValues, ...) {
+  va_list argList;
+  cl_event event;
 
-	va_start( argList, sizesValues );
-	
-	_sclVSetKernelArgs( software, sizesValues, argList );	
-	
-	va_end( argList );
+  va_start(argList, sizesValues);
 
-	event = sclEnqueueKernel( hardware, software, global_work_size, local_work_size );
+  _sclVSetKernelArgs(software, sizesValues, argList);
 
-	return event;
-	
+  va_end(argList);
 
+  event =
+      sclEnqueueKernel(hardware, software, global_work_size, local_work_size);
+
+  return event;
 }
 
-cl_event sclManageArgsLaunchKernel( sclHard hardware, sclSoft software, size_t *global_work_size, size_t *local_work_size,
-				    const char* sizesValues, ... ) {
-	va_list argList;
-	cl_event event;
-	const char *p;
-	int argCount = 0, outArgCount = 0, inArgCount = 0, i;
-	void* argument;
-	size_t actual_size;
-	cl_mem outBuffs[30];
-	cl_mem inBuffs[30];
-	size_t sizesOut[30];
-	typedef unsigned char* puchar;
-	puchar outArgs[30];
+//\end{comment}
+//\begin{sourcecode}
+cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
+                                   size_t *global_work_size,
+                                   size_t *local_work_size,
+                                   const char *sizesValues, ...) {
+  //\end{sourcecode}
+  //\begin{comment}
+  va_list argList;
+  cl_event event;
+  const char *p;
+  int argCount = 0, outArgCount = 0, inArgCount = 0, i;
+  void *argument;
+  size_t actual_size;
+  cl_mem outBuffs[30];
+  cl_mem inBuffs[30];
+  size_t sizesOut[30];
+  typedef unsigned char *puchar;
+  puchar outArgs[30];
 
-	va_start( argList, sizesValues );
+  va_start(argList, sizesValues);
 
-	for( p = sizesValues; *p != '\0'; p++ ) {
-		if ( *p == '%' ) {
-			switch( *++p ) {
-				case 'a': /* Single value non pointer argument */
-					actual_size = va_arg( argList, size_t );
-					argument = va_arg( argList, void* );
-					sclSetKernelArg( software, argCount, actual_size, argument );
-					argCount++;			
-					break;
+  //\end{comment}
+  //\begin{sourcecode}
+  for (p = sizesValues; *p != '\0'; p++) {
+    if (*p == '%') {
+      switch (*++p) {
+      case 'a': /* Single value non pointer argument */
+                //\end{sourcecode}
+                //\begin{comment}
+        actual_size = va_arg(argList, size_t);
+        argument = va_arg(argList, void *);
+        sclSetKernelArg(software, argCount, actual_size, argument);
+        argCount++;
+        break;
 
-				case 'v': /* Buffer or image object void* argument */
-					argument = va_arg( argList, void* );
-					sclSetKernelArg( software, argCount, sizeof(cl_mem) , argument );
-					argCount++;			
-					break;
+      //\end{comment}
+      //\begin{sourcecode}
+      case 'v': /* Buffer or image object void* argument */
+                //\end{sourcecode}
+                //\begin{comment}
+        argument = va_arg(argList, void *);
+        sclSetKernelArg(software, argCount, sizeof(cl_mem), argument);
+        argCount++;
+        break;
 
-				case 'N': /* Local memory object using NULL argument */
-					actual_size = va_arg( argList, size_t );
-					sclSetKernelArg( software, argCount, actual_size, NULL );
-					argCount++;
-					break;
-				case 'w': /* */
-					sizesOut[ outArgCount ] = va_arg( argList, size_t );
-					outArgs[ outArgCount ] = (unsigned char*)va_arg( argList, void* );
-					outBuffs[ outArgCount ] = sclMalloc( hardware, CL_MEM_WRITE_ONLY,
-									     sizesOut[ outArgCount ] );
-					sclSetKernelArg( software, argCount, sizeof(cl_mem), &outBuffs[ outArgCount ] );
-					argCount++;
-					outArgCount++;
-					break;
-				case 'r': /* */
-					actual_size = va_arg( argList, size_t );
-					argument = va_arg( argList, void* );
-					inBuffs[ inArgCount ] = sclMallocWrite( hardware, CL_MEM_READ_ONLY, actual_size,
-										  argument );
-					sclSetKernelArg( software, argCount, sizeof(cl_mem), &inBuffs[ inArgCount ] );
-					inArgCount++;
-					argCount++;
-					break;
-				case 'R': /* */
-					sizesOut[ outArgCount ] = va_arg( argList, size_t );
-					outArgs[ outArgCount ] = (unsigned char*)va_arg( argList, void* );
-					outBuffs[ outArgCount ] = sclMallocWrite( hardware, CL_MEM_READ_WRITE, 
-										  sizesOut[ outArgCount ],
-										  outArgs[ outArgCount ] );
-					sclSetKernelArg( software, argCount, sizeof(cl_mem), &outBuffs[ outArgCount ] );
-					argCount++;
-					outArgCount++;
-					break;
-				case 'g':
-					actual_size = va_arg( argList, size_t );
-					inBuffs[ inArgCount ] = sclMalloc( hardware, CL_MEM_READ_WRITE, actual_size );
-					sclSetKernelArg( software, argCount, sizeof(cl_mem), &inBuffs[ inArgCount ] );
-					inArgCount++;
-					argCount++;
-					break;
-				default:
-					break;
-			}
-		}
-	}
-	
-	va_end( argList );
+      //\end{comment}
+      //\begin{sourcecode}
+      case 'N': /* Local memory object using NULL argument */
+                //\end{sourcecode}
+                //\begin{comment}
+        actual_size = va_arg(argList, size_t);
+        sclSetKernelArg(software, argCount, actual_size, NULL);
+        argCount++;
+        break;
+      //\end{comment}
+      //\begin{sourcecode}
+      case 'w': /* */
+                //\end{sourcecode}
+                //\begin{comment}
+        sizesOut[outArgCount] = va_arg(argList, size_t);
+        outArgs[outArgCount] = (unsigned char *)va_arg(argList, void *);
+        outBuffs[outArgCount] =
+            sclMalloc(hardware, CL_MEM_WRITE_ONLY, sizesOut[outArgCount]);
+        sclSetKernelArg(software, argCount, sizeof(cl_mem),
+                        &outBuffs[outArgCount]);
+        argCount++;
+        outArgCount++;
+        break;
+      //\end{comment}
+      //\begin{sourcecode}
+      case 'r': /* input cl_mem buffer */
+                //\end{sourcecode}
+                //\begin{comment}
+        actual_size = va_arg(argList, size_t);
+        argument = va_arg(argList, void *);
+        inBuffs[inArgCount] =
+            sclMallocWrite(hardware, CL_MEM_READ_ONLY, actual_size, argument);
+        sclSetKernelArg(software, argCount, sizeof(cl_mem),
+                        &inBuffs[inArgCount]);
+        inArgCount++;
+        argCount++;
+        break;
+      //\end{comment}
+      //\begin{sourcecode}
+      case 'R': /* output cl_mem buffer*/
+                //\end{sourcecode}
+                //\begin{comment}
+        sizesOut[outArgCount] = va_arg(argList, size_t);
+        outArgs[outArgCount] = (unsigned char *)va_arg(argList, void *);
+        outBuffs[outArgCount] =
+            sclMallocWrite(hardware, CL_MEM_READ_WRITE, sizesOut[outArgCount],
+                           outArgs[outArgCount]);
+        sclSetKernelArg(software, argCount, sizeof(cl_mem),
+                        &outBuffs[outArgCount]);
+        argCount++;
+        outArgCount++;
+        break;
+      //\end{comment}
+      //\begin{sourcecode}
+      case 'g':
+        //\end{sourcecode}
+        //\begin{comment}
+        actual_size = va_arg(argList, size_t);
+        inBuffs[inArgCount] =
+            sclMalloc(hardware, CL_MEM_READ_WRITE, actual_size);
+        sclSetKernelArg(software, argCount, sizeof(cl_mem),
+                        &inBuffs[inArgCount]);
+        inArgCount++;
+        argCount++;
+        break;
+      default:
+        break;
+      }
+    }
+  }
 
-	event = sclLaunchKernel( hardware, software, global_work_size, local_work_size );
-	
-	for ( i = 0; i < outArgCount; i++ ) {
-		sclRead( hardware, sizesOut[i], outBuffs[i], outArgs[i] );		
-	}
+  va_end(argList);
 
-	sclFinish( hardware );
-	
-	for ( i = 0; i < outArgCount; i++ ) {
-		sclReleaseMemObject( outBuffs[i] );		
-	}
+  event =
+      sclLaunchKernel(hardware, software, global_work_size, local_work_size);
 
-	for ( i = 0; i < inArgCount; i++ ) {
-		sclReleaseMemObject( inBuffs[i] );
-	}
+  for (i = 0; i < outArgCount; i++) {
+    sclRead(hardware, sizesOut[i], outBuffs[i], outArgs[i]);
+  }
 
-	return event;
+  sclFinish(hardware);
+
+  for (i = 0; i < outArgCount; i++) {
+    sclReleaseMemObject(outBuffs[i]);
+  }
+
+  for (i = 0; i < inArgCount; i++) {
+    sclReleaseMemObject(inBuffs[i]);
+  }
+
+  return event;
 }
 
 #ifdef __cplusplus
 }
 #endif
+//\end{comment}

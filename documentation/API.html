@@ -1,0 +1,19 @@
+Chapter 1
+simpleCl.c API
+cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
+                                   size_t *global_work_size,
+                                   size_t *local_work_size,
+                                   const char *sizesValues, ...) {
+  for (p = sizesValues; *p != &#8217;\0&#8217;; p++) {
+    if (*p == &#8217;%&#8217;) {
+      switch (*++p) {
+      case &#8217;a&#8217;: /* Single value non pointer argument */
+      case &#8217;v&#8217;: /* Buffer or image object void* argument */
+      case &#8217;N&#8217;: /* Local memory object using NULL argument */
+      case &#8217;w&#8217;: /* */
+      case &#8217;r&#8217;: /* input cl_mem buffer */
+      case &#8217;R&#8217;: /* output cl_mem buffer*/
+      case &#8217;g&#8217;:
+                                            1                                                   
+
+

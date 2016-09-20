@@ -28,4 +28,5 @@ function file_compile {
 }
 file_compile roadmap
 file_compile readme
+file_compile API
 file_compile simple-opencl
