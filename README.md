@@ -1,1 +1,1 @@
-documentation/simple-opencl.md
+documentation/readme.md
