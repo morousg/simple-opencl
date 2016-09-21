@@ -328,7 +328,11 @@ void sclRetainClHard(sclHard hardware) {
   clRetainContext(hardware.context);
 }
 
+//\end{comment}
+//\begin{lstlisting}[language=C]
 void sclReleaseAllHardware(sclHard *hardList, int found) {
+//\end{lstlisting}
+//\begin{comment}
   int i;
 
   for (i = 0; i < found; ++i) {
@@ -539,7 +543,11 @@ sclHard sclGetFastestDevice(sclHard *hardList, int found) {
   return hardList[device];
 }
 
+//\end{comment}
+//\begin{lstlisting}[language=C]
 sclHard *sclGetAllHardware(int *found) {
+//\end{lstlisting}
+//\begin{comment}
 
   int i, j;
   cl_uint nPlatforms = 0, nDevices = 0;
@@ -701,8 +709,12 @@ sclHard sclGetAcceleratorHardware(int iDevice, int *found) {
   return sclGetHardwareByType(CL_DEVICE_TYPE_ACCELERATOR, iDevice, found);
 }
 
+//\end{comment}
+//\begin{lstlisting}[language=C]
 sclSoft sclGetCLSoftware(char *kernel_file, char *kernel_name,
                          sclHard hardware) {
+//\end{lstlisting}
+//\begin{comment}
   sclSoft software;
   /* Load program source
    ########################################################### */
@@ -878,20 +890,20 @@ void _sclVSetKernelArgs(sclSoft software, const char *sizesValues,
   for (p = sizesValues; *p != '\0'; p++) {
     if (*p == '%') {
       switch (*++p) {
-      case 'a':
+      case 'a': /* literal */
         actual_size = va_arg(argList, size_t);
         argument = va_arg(argList, void *);
         sclSetKernelArg(software, argCount, actual_size, argument);
         argCount++;
         break;
 
-      case 'v':
+      case 'v': /* cl_mem argument */
         argument = va_arg(argList, void *);
         sclSetKernelArg(software, argCount, sizeof(cl_mem), argument);
         argCount++;
         break;
 
-      case 'N':
+      case 'N': /* local variable */
         actual_size = va_arg(argList, size_t);
         sclSetKernelArg(software, argCount, actual_size, NULL);
         argCount++;
@@ -952,12 +964,12 @@ cl_event sclSetArgsEnqueueKernel(sclHard hardware, sclSoft software,
 }
 
 //\end{comment}
-//\begin{sourcecode}
+//\begin{lstlisting}[language=C]
 cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
                                    size_t *global_work_size,
                                    size_t *local_work_size,
                                    const char *sizesValues, ...) {
-  //\end{sourcecode}
+  //\end{lstlisting}
   //\begin{comment}
   va_list argList;
   cl_event event;
@@ -974,12 +986,13 @@ cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
   va_start(argList, sizesValues);
 
   //\end{comment}
-  //\begin{sourcecode}
+  //\subsection{kernel argument assignement sizeTypes string's letter meanings}
+  //\begin{lstlisting}[language=C]
   for (p = sizesValues; *p != '\0'; p++) {
     if (*p == '%') {
       switch (*++p) {
-      case 'a': /* Single value non pointer argument */
-                //\end{sourcecode}
+      case 'a': /* Single value non pointer argument: byte length, array pointer */
+                //\end{lstlisting}
                 //\begin{comment}
         actual_size = va_arg(argList, size_t);
         argument = va_arg(argList, void *);
@@ -988,9 +1001,9 @@ cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
         break;
 
       //\end{comment}
-      //\begin{sourcecode}
-      case 'v': /* Buffer or image object void* argument */
-                //\end{sourcecode}
+      //\begin{lstlisting}[language=C]
+      case 'v': /* Buffer or image object void* argument: array pointer */
+                //\end{lstlisting}
                 //\begin{comment}
         argument = va_arg(argList, void *);
         sclSetKernelArg(software, argCount, sizeof(cl_mem), argument);
@@ -998,18 +1011,18 @@ cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
         break;
 
       //\end{comment}
-      //\begin{sourcecode}
-      case 'N': /* Local memory object using NULL argument */
-                //\end{sourcecode}
+      //\begin{lstlisting}[language=C]
+      case 'N': /* Local memory object using NULL argument: byte length */
+                //\end{lstlisting}
                 //\begin{comment}
         actual_size = va_arg(argList, size_t);
         sclSetKernelArg(software, argCount, actual_size, NULL);
         argCount++;
         break;
       //\end{comment}
-      //\begin{sourcecode}
-      case 'w': /* */
-                //\end{sourcecode}
+      //\begin{lstlisting}[language=C]
+      case 'w': /* output write_only cl_mem buffer: byte length, array pointer*/
+                //\end{lstlisting}
                 //\begin{comment}
         sizesOut[outArgCount] = va_arg(argList, size_t);
         outArgs[outArgCount] = (unsigned char *)va_arg(argList, void *);
@@ -1021,9 +1034,9 @@ cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
         outArgCount++;
         break;
       //\end{comment}
-      //\begin{sourcecode}
-      case 'r': /* input cl_mem buffer */
-                //\end{sourcecode}
+      //\begin{lstlisting}[language=C]
+      case 'r': /* input read_only cl_mem buffer: byte size, array pointer */
+                //\end{lstlisting}
                 //\begin{comment}
         actual_size = va_arg(argList, size_t);
         argument = va_arg(argList, void *);
@@ -1035,9 +1048,9 @@ cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
         argCount++;
         break;
       //\end{comment}
-      //\begin{sourcecode}
-      case 'R': /* output cl_mem buffer*/
-                //\end{sourcecode}
+      //\begin{lstlisting}[language=C]
+      case 'R': /* output read_write buffer: byte length, array pointer*/
+                //\end{lstlisting}
                 //\begin{comment}
         sizesOut[outArgCount] = va_arg(argList, size_t);
         outArgs[outArgCount] = (unsigned char *)va_arg(argList, void *);
@@ -1050,9 +1063,9 @@ cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
         outArgCount++;
         break;
       //\end{comment}
-      //\begin{sourcecode}
-      case 'g':
-        //\end{sourcecode}
+      //\begin{lstlisting}[language=C]
+      case 'g': /* output read_write variable: bytesize */
+        //\end{lstlisting}
         //\begin{comment}
         actual_size = va_arg(argList, size_t);
         inBuffs[inArgCount] =

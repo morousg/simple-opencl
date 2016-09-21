@@ -1,3 +1,4 @@
+//\begin{comment}
 /* #######################################################################
     Copyright 2011 Oscar Amoros Huguet, Cristian Garcia Marin
 
@@ -45,6 +46,11 @@ extern "C" {
 #define DEBUG
 
 #ifndef _OCLUTILS_STRUCTS
+//\end{comment}
+//\section{data types}
+/*
+\begin{lstlisting}[language=C]
+*/
 typedef struct {
   cl_platform_id platform;
   cl_context context;
@@ -62,11 +68,17 @@ typedef struct {
   cl_kernel kernel;
   char kernelName[98];
 } sclSoft;
+//\end{lstlisting}
+//\begin{comment}
 #define _OCLUTILS_STRUCTS
 #endif
 
-/* USER FUNCTIONS */
-/* ####### Device memory allocation read and write  ####### */
+
+/*\end{comment} 
+\section{USER FUNCTIONS}
+\subsection{Device memory allocation read and write}
+\begin{lstlisting}[language=C]
+*/
 
 cl_mem sclMalloc(sclHard hardware, cl_int mode, size_t size);
 cl_mem sclMallocWrite(sclHard hardware, cl_int mode, size_t size,
@@ -74,16 +86,17 @@ cl_mem sclMallocWrite(sclHard hardware, cl_int mode, size_t size,
 void sclWrite(sclHard hardware, size_t size, cl_mem buffer, void *hostPointer);
 void sclRead(sclHard hardware, size_t size, cl_mem buffer, void *hostPointer);
 
-/* ######################################################## */
-
-/* ####### inicialization of sclSoft structs  ############## */
+/*\end{lstlisting}
+\subsection{initialization of sclSoft structs}
+\begin{lstlisting}[language=C]
+*/
 
 sclSoft sclGetCLSoftware(char *kernel_file, char *kernel_name,
                          sclHard hardware);
 
-/* ######################################################## */
-
-/* ####### Release and retain OpenCL objects ############## */
+/*\end{lstlisting}
+\subsection{Release and retain OpenCL objects}
+\begin{lstlisting}[language=C]*/
 
 void sclReleaseClSoft(sclSoft soft);
 void sclReleaseClHard(sclHard hard);
@@ -92,17 +105,17 @@ void sclReleaseAllHardware(sclHard *hardList, int found);
 void sclRetainAllHardware(sclHard *hardList, int found);
 void sclReleaseMemObject(cl_mem object);
 
-/* ######################################################## */
-
-/* ####### Debug functions ################################ */
+/*\end{lstlisting}
+\subsection{Debug functions}
+\begin{lstlisting}[language=C]*/
 
 void sclPrintErrorFlags(cl_int flag);
 void sclPrintHardwareStatus(sclHard hardware);
 void sclPrintDeviceNamePlatforms(sclHard *hardList, int found);
 
-/* ######################################################## */
-
-/* ####### Device execution ############################### */
+/*\end{lstlisting}
+\subsection{Device execution}
+\begin{lstlisting}[language=C]*/
 
 cl_event sclLaunchKernel(sclHard hardware, sclSoft software,
                          size_t *global_work_size, size_t *local_work_size);
@@ -120,22 +133,27 @@ cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
                                    size_t *global_work_size,
                                    size_t *local_work_size,
                                    const char *sizesValues, ...);
-
-/* ######################################################## */
-
-/* ####### Event queries ################################## */
+/*
+\end{lstlisting}
+\subsection{Event queries}
+\begin{lstlisting}[language=C]
+*/
 
 cl_ulong sclGetEventTime(sclHard hardware, cl_event event);
 
-/* ######################################################## */
-
-/* ####### Queue management ############################### */
+/*
+\end{lstlisting}
+\subsection{Queue management}
+\begin{lstlisting}[language=C]
+*/
 
 cl_int sclFinish(sclHard hardware);
 
-/* ######################################################## */
-
-/* ####### Kernel argument setting ######################## */
+/*
+\end{lstlisting}
+\subsection{Kernel argument setting}
+\begin{lstlisting}[language=C]
+*/
 
 void sclSetKernelArg(sclSoft software, int argnum, size_t typeSize,
                      void *argument);
@@ -143,9 +161,11 @@ void sclSetKernelArgs(sclSoft software, const char *sizesValues, ...);
 void _sclVSetKernelArgs(sclSoft software, const char *sizesValues,
                         va_list argList);
 
-/* ######################################################## */
-
-/* ####### Hardware init and selection #################### */
+/*
+\end{comment}
+\subsection{Hardware init and selection}
+\begin{comment}
+*/
 
 sclHard sclGetHardwareByType(cl_device_type device_type, int iDevice,
                              int *found);
@@ -155,17 +175,21 @@ sclHard sclGetAcceleratorHardware(int iDevice, int *found);
 sclHard *sclGetAllHardware(int *found);
 sclHard sclGetFastestDevice(sclHard *hardList, int found);
 
-/* ######################################################## */
-
-/* INTERNAL FUNCITONS */
-
-/* ####### debug ########################################## */
+/*
+\end{lstlisting}
+\section{INTERNAL FUNCITONS}
+\subsection{debug}
+\begin{lstlisting}[language=C]
+*/
 
 void _sclWriteArgOnAFile(int argnum, void *arg, size_t size, const char *diff);
 
-/* ######################################################## */
 
-/* ####### cl software management ######################### */
+/*
+\end{lstlisting}
+\subsection{cl software management}
+\begin{lstlisting}[language=C]
+*/
 
 void _sclBuildProgram(cl_program program, cl_device_id devices,
                       const char *pName);
@@ -173,9 +197,11 @@ cl_kernel _sclCreateKernel(sclSoft software);
 cl_program _sclCreateProgram(char *program_source, cl_context context);
 char *_sclLoadProgramSource(const char *filename);
 
-/* ######################################################## */
-
-/* ####### hardware management ############################ */
+/*
+\end{lstlisting}
+\subsection{hardware management}
+\begin{lstlisting}[language=C]
+*/
 
 int _sclGetMaxComputeUnits(cl_device_id device);
 unsigned long int _sclGetMaxMemAllocSize(cl_device_id device);
@@ -183,8 +209,12 @@ int _sclGetDeviceType(cl_device_id device);
 void _sclSmartCreateContexts(sclHard *hardList, int found);
 void _sclCreateQueues(sclHard *hardList, int found);
 
+/*\end{lstlisting}
+\begin{comment}
+*/
 /* ######################################################## */
 
 #ifdef __cplusplus
 }
 #endif
+//\end{comment}

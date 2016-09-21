@@ -1,5 +1,5 @@
 Simple-OpenCL Documentation
-                       September 20, 2016
+                       September 21, 2016
                                                                                                     
 
             
@@ -336,21 +336,216 @@ Goals for version 1.0:
             
                                                                                                                    
             Chapter 3
-simpleCl.c API
+simpleCl.h API
+3.1   data types___________________________________________
+*/
+typedef struct {
+  cl_platform_id platform;
+  cl_context context;
+  cl_device_id device;
+  cl_command_queue queue;
+  int nComputeUnits;
+  unsigned long int maxPointerSize;
+  int deviceType; /* deviceType 0 = GPU | deviceType 1 = CPU |
+      deviceType 2 =
+                   Accelerator | deviceType 3 = other */
+  int devNum;
+} sclHard;
+typedef sclHard *ptsclHard;
+typedef struct {
+  cl_program program;
+  cl_kernel kernel;
+  char kernelName[98];
+} sclSoft;
+//_______________________________________________________________________
+3.2   USER FUNCTIONS
+3.2.1   Device memory allocation read and write_____________
+*/
+cl_mem sclMalloc(sclHard hardware, cl_int mode, size_t size);
+                                               10                                                  
+
+            
+                                                                                                                   
+            cl_mem sclMallocWrite(sclHard hardware, cl_int mode, size_t size,
+                                void *hostPointer);
+            void sclWrite(sclHard hardware, size_t size, cl_mem buffer, void
+                *hostPointer);
+            void sclRead(sclHard hardware, size_t size, cl_mem buffer, void
+                *hostPointer);
+            
+            /*
+            _________________________________________________________________________
+3.2.2   initialization of sclSoft structs
+________________________
+*/
+sclSoft sclGetCLSoftware(char *kernel_file, char *kernel_name,
+                    sclHard hardware);
+/*
+________________________________________________________________
+3.2.3   Release and retain OpenCL objects
+__________________
+void sclReleaseClSoft(sclSoft soft);
+void sclReleaseClHard(sclHard hard);
+void sclRetainClHard(sclHard hardware);
+void sclReleaseAllHardware(sclHard *hardList, int found);
+void sclRetainAllHardware(sclHard *hardList, int found);
+void sclReleaseMemObject(cl_mem object);
+/*
+________________________________________________________________
+3.2.4   Debug functions
+_______________________________________
+void sclPrintErrorFlags(cl_int flag);
+void sclPrintHardwareStatus(sclHard hardware);
+void sclPrintDeviceNamePlatforms(sclHard *hardList, int found);
+/*
+________________________________________________________________
+3.2.5   Device execution
+                                                 11                                                  
+
+            
+                                                                                                                   
+            _______________________________________________________________________________________________________cl_event sclLaunchKernel ( sclHard hardware , sclSoft software ,
+                      size_t *global_work_size, size_t
+                           *local_work_size);
+cl_event sclEnqueueKernel(sclHard hardware, sclSoft software,
+                       size_t *global_work_size, size_t
+                            *local_work_size);
+cl_event sclSetArgsLaunchKernel(sclHard hardware, sclSoft software,
+                             size_t *global_work_size,
+                             size_t *local_work_size,
+                             const char *sizesValues, ...);
+cl_event sclSetArgsEnqueueKernel(sclHard hardware, sclSoft software,
+                              size_t *global_work_size,
+                              size_t *local_work_size,
+                              const char *sizesValues, ...);
 cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
-                                   size_t *global_work_size,
-                                   size_t *local_work_size,
-                                   const char *sizesValues, ...) {
+                               size_t *global_work_size,
+                               size_t *local_work_size,
+                               const char *sizesValues, ...);
+/*_______________________________________________________________________
+3.2.6   Event queries__________________________________________________
+*/
+cl_ulong sclGetEventTime(sclHard hardware, cl_event event);
+/*_______________________________________________________________________
+3.2.7   Queue management__________________________________________
+*/
+cl_int sclFinish(sclHard hardware);
+/*_______________________________________________________________________
+3.2.8   Kernel argument setting___________________________________
+*/
+void sclSetKernelArg(sclSoft software, int argnum, size_t typeSize,
+                   void *argument);
+                                               12                                                  
+
+            
+                                                                                                                   
+            void sclSetKernelArgs(sclSoft software, const char *sizesValues, ...);
+            void _sclVSetKernelArgs(sclSoft software, const char *sizesValues,
+                                  va_list argList);
+            
+            /*
+            \end{comment}
+            \subsection{Hardware init and selection}
+            \begin{comment}
+            */
+            
+            sclHard sclGetHardwareByType(cl_device_type device_type, int iDevice,
+                                      int *found);
+            sclHard sclGetGPUHardware(int nDevice, int *found);
+            sclHard sclGetCPUHardware(int nDevice, int *found);
+            sclHard sclGetAcceleratorHardware(int iDevice, int *found);
+            sclHard *sclGetAllHardware(int *found);
+            sclHard sclGetFastestDevice(sclHard *hardList, int found);
+            
+            /*
+            _________________________________________________________________________
+3.3   INTERNAL FUNCITONS
+3.3.1   debug
+___________________________________________________
+*/
+void _sclWriteArgOnAFile(int argnum, void *arg, size_t size, const char
+    *diff);
+/*
+________________________________________________________________
+3.3.2   cl software management
+_______________________________
+*/
+void _sclBuildProgram(cl_program program, cl_device_id devices,
+                  const char *pName);
+cl_kernel _sclCreateKernel(sclSoft software);
+cl_program _sclCreateProgram(char *program_source, cl_context context);
+char *_sclLoadProgramSource(const char *filename);
+/*
+________________________________________________________________
+                                               13                                                  
+
+            
+                                                                                                                   
+            3.3.3   hardware management______________________________________
+*/
+int _sclGetMaxComputeUnits(cl_device_id device);
+unsigned long int _sclGetMaxMemAllocSize(cl_device_id device);
+int _sclGetDeviceType(cl_device_id device);
+void _sclSmartCreateContexts(sclHard *hardList, int found);
+void _sclCreateQueues(sclHard *hardList, int found);
+/*_______________________________________________________________________
+                                               14                                                  
+
+            
+                                                                                                                   
+            Chapter 4
+simpleCl.c API_________________
+void sclReleaseAllHardware(sclHard *hardList, int found) {
+//_______________________________________________________________________
+sclHard *sclGetAllHardware(int *found) {
+//_______________________________________________________________________
+sclSoft sclGetCLSoftware(char *kernel_file, char *kernel_name,
+                      sclHard hardware) {
+//_______________________________________________________________________
+cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
+                               size_t *global_work_size,
+                               size_t *local_work_size,
+                               const char *sizesValues, ...) {
+  //_____________________________________________________________________
+4.0.1   kernel argument assignement sizeTypes string&#8217;s let-
+         ter meanings___________________________________________________
   for (p = sizesValues; *p != &#8217;\0&#8217;; p++) {
     if (*p == &#8217;%&#8217;) {
-      switch (*++p) {
-      case &#8217;a&#8217;: /* Single value non pointer argument */
-      case &#8217;v&#8217;: /* Buffer or image object void* argument */
-      case &#8217;N&#8217;: /* Local memory object using NULL argument */
-      case &#8217;w&#8217;: /* */
-      case &#8217;r&#8217;: /* input cl_mem buffer */
-      case &#8217;R&#8217;: /* output cl_mem buffer*/
-      case &#8217;g&#8217;:
-                                            10                                                  
+     switch (*++p) {
+     case &#8217;a&#8217;: /* Single value non pointer argument: byte length, array
+          pointer */
+              //_________________________________________________________
+                                               15                                                  
+
+            
+                                                                                                                   
+                    case &#8217;v&#8217;: /* Buffer or image object void* argument: array pointer
+                    */
+                          //
+            _________________________________________________________________________
+__________________________________________________________________
+     case &#8217;N&#8217;: /* Local memory object using NULL argument: byte length
+         */
+             //
+___________________________________________________
+__________________________________________________________________
+     case &#8217;w&#8217;: /* output write_only cl_mem buffer: byte length, array
+         pointer*/
+             //
+___________________________________________________
+__________________________________________________________________
+     case &#8217;r&#8217;: /* input read_only cl_mem buffer: byte size, array
+         pointer */
+             //
+___________________________________________________
+__________________________________________________________________
+     case &#8217;R&#8217;: /* output read_write buffer: byte length, array pointer*/
+             //
+___________________________________________________
+__________________________________________________________________
+     case &#8217;g&#8217;: /* output read_write variable: bytesize */
+      //
+_________________________________________________________
+                                               16                                                  
 
 
