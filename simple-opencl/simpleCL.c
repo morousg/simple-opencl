@@ -21,6 +21,7 @@
    SimpleOpenCL Version 0.010_27_02_2013
 
 */
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
 #ifdef __cplusplus
 extern "C" {
@@ -188,6 +189,20 @@ void sclPrintErrorFlags(cl_int flag) {
   }
 }
 
+float diagnoseOpenCLnumber(cl_platform_id platform) {
+#define VERSION_LENGTH 64
+  char complete_version[VERSION_LENGTH];
+  size_t realSize = 0;
+  clGetPlatformInfo(platform, CL_PLATFORM_VERSION, VERSION_LENGTH,
+                    &complete_version, &realSize);
+  char version[4];
+  version[3] = 0;
+  memcpy(version, &complete_version[7], 3);
+  // printf("V %s %f\n", version, version_float);
+  float version_float = (float)atof(version);
+  return version_float;
+}
+
 char *_sclLoadProgramSource(const char *filename) {
   struct stat statbuf;
   FILE *fh;
@@ -331,8 +346,8 @@ void sclRetainClHard(sclHard hardware) {
 //\end{comment}
 //\begin{lstlisting}[language=C]
 void sclReleaseAllHardware(sclHard *hardList, int found) {
-//\end{lstlisting}
-//\begin{comment}
+  //\end{lstlisting}
+  //\begin{comment}
   int i;
 
   for (i = 0; i < found; ++i) {
@@ -411,10 +426,18 @@ void _sclCreateQueues(sclHard *hardList, int found) {
 #ifdef DEBUG
   cl_int err;
 
+  float version_float;
+  cl_queue_properties properties[] = {CL_QUEUE_PROFILING_ENABLE};
   for (i = 0; i < found; ++i) {
+  version_float = diagnoseOpenCLnumber(hardList[i].platform);
+  if (version_float >= 2.0f) {
+    hardList[i].queue = clCreateCommandQueueWithProperties(
+        hardList[i].context, hardList[i].device, properties, &err);
+  } else {
     hardList[i].queue =
         clCreateCommandQueue(hardList[i].context, hardList[i].device,
-                             CL_QUEUE_PROFILING_ENABLE, &err);
+        *properties, &err);
+  }
     if (err != CL_SUCCESS) {
       fprintf(stderr, "\nError creating command queue %d", i);
     }
@@ -546,8 +569,8 @@ sclHard sclGetFastestDevice(sclHard *hardList, int found) {
 //\end{comment}
 //\begin{lstlisting}[language=C]
 sclHard *sclGetAllHardware(int *found) {
-//\end{lstlisting}
-//\begin{comment}
+  //\end{lstlisting}
+  //\begin{comment}
 
   int i, j;
   cl_uint nPlatforms = 0, nDevices = 0;
@@ -713,8 +736,8 @@ sclHard sclGetAcceleratorHardware(int iDevice, int *found) {
 //\begin{lstlisting}[language=C]
 sclSoft sclGetCLSoftware(char *kernel_file, char *kernel_name,
                          sclHard hardware) {
-//\end{lstlisting}
-//\begin{comment}
+  //\end{lstlisting}
+  //\begin{comment}
   sclSoft software;
   /* Load program source
    ########################################################### */
@@ -991,9 +1014,10 @@ cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
   for (p = sizesValues; *p != '\0'; p++) {
     if (*p == '%') {
       switch (*++p) {
-      case 'a': /* Single value non pointer argument: byte length, array pointer */
-                //\end{lstlisting}
-                //\begin{comment}
+      case 'a': /* Single value non pointer argument: byte length, array pointer
+                   */
+        //\end{lstlisting}
+        //\begin{comment}
         actual_size = va_arg(argList, size_t);
         argument = va_arg(argList, void *);
         sclSetKernelArg(software, argCount, actual_size, argument);

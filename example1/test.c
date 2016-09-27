@@ -2,7 +2,6 @@
 
 #define DEVICE 0
 
-//#if 0 // why is this here?
 int main() {
    char buf[]="Hello, World!";
    size_t global_size[2], local_size[2];
@@ -35,38 +34,3 @@ int main() {
    sclReleaseAllHardware(hardware, found);
    return 0;
 }
-//#else // this broke test
-//int main() {
-//   char buf[]="Hello, World!";
-//   size_t global_size[2], local_size[2];
-//   int found, worksize;
-//   sclHard hardware;
-//   sclSoft software;
-//
-//   // Target buffer just so we show we got the data from OpenCL
-//   worksize = strlen(buf);
-//   char buf2[worksize];
-//   buf2[0]='?';
-//   buf2[worksize]=0;
-//    
-//   // Get the hardware
-//   //hardware = sclGetCPUHardware(DEVICE, &found);
-//   hardware = sclGetAcceleratorHardware(DEVICE, &found);
-//   // Get the software
-//   software = sclGetCLSoftware( "example.cl", "example", hardware );
-//   // Set NDRange dimensions
-//   global_size[0] = strlen(buf); global_size[1] = 1;
-//   local_size[0] = global_size[0]; local_size[1] = 1;
-//    
-//   sclManageArgsLaunchKernel( hardware, software, global_size, local_size,
-//                               " %r %w ",
-//                              worksize, buf, worksize, buf2 );
-//    
-//   // Finally, output out happy message.
-//   printf("\n");
-//   puts(buf2);
-//
-//   sclReleaseClHard(hardware);
-//   return 0;
-//}
-//#endif

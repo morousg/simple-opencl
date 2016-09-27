@@ -73,8 +73,7 @@ typedef struct {
 #define _OCLUTILS_STRUCTS
 #endif
 
-
-/*\end{comment} 
+/*\end{comment}
 \section{USER FUNCTIONS}
 \subsection{Device memory allocation read and write}
 \begin{lstlisting}[language=C]
@@ -183,7 +182,6 @@ sclHard sclGetFastestDevice(sclHard *hardList, int found);
 */
 
 void _sclWriteArgOnAFile(int argnum, void *arg, size_t size, const char *diff);
-
 
 /*
 \end{lstlisting}
