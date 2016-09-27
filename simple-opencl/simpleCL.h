@@ -90,8 +90,8 @@ void sclRead(sclHard hardware, size_t size, cl_mem buffer, void *hostPointer);
 \begin{lstlisting}[language=C]
 */
 
-sclSoft sclGetCLSoftware(char *kernel_file, char *kernel_name,
-                         sclHard hardware);
+void sclGetCLSoftware(const char *kernel_file, const char *kernel_name,
+                         const sclHard hardware, sclSoft *Software);
 
 /*\end{lstlisting}
 \subsection{Release and retain OpenCL objects}
@@ -100,8 +100,8 @@ sclSoft sclGetCLSoftware(char *kernel_file, char *kernel_name,
 void sclReleaseClSoft(sclSoft soft);
 void sclReleaseClHard(sclHard hard);
 void sclRetainClHard(sclHard hardware);
-void sclReleaseAllHardware(sclHard *hardList, int found);
-void sclRetainAllHardware(sclHard *hardList, int found);
+void sclReleaseAllHardware(sclHard *hardList, cl_int found);
+void sclRetainAllHardware(sclHard *hardList, cl_int found);
 void sclReleaseMemObject(cl_mem object);
 
 /*\end{lstlisting}
@@ -110,7 +110,7 @@ void sclReleaseMemObject(cl_mem object);
 
 void sclPrintErrorFlags(cl_int flag);
 void sclPrintHardwareStatus(sclHard hardware);
-void sclPrintDeviceNamePlatforms(sclHard *hardList, int found);
+void sclPrintDeviceNamePlatforms(sclHard *hardList, cl_int found);
 
 /*\end{lstlisting}
 \subsection{Device execution}
@@ -166,13 +166,15 @@ void _sclVSetKernelArgs(sclSoft software, const char *sizesValues,
 \begin{comment}
 */
 
-sclHard sclGetHardwareByType(cl_device_type device_type, int iDevice,
-                             int *found);
-sclHard sclGetGPUHardware(int nDevice, int *found);
-sclHard sclGetCPUHardware(int nDevice, int *found);
-sclHard sclGetAcceleratorHardware(int iDevice, int *found);
-sclHard *sclGetAllHardware(int *found);
-sclHard sclGetFastestDevice(sclHard *hardList, int found);
+void sclGetHardwareByType(const cl_device_type device_type, const int iDevice,
+                             int *found, sclHard *hardware);
+void sclGetGPUHardware(const int nDevice, int *found, sclHard *GPUHardware);
+void sclGetCPUHardware(const int nDevice, int *found, sclHard *CPUHardware);
+void sclGetAcceleratorHardware(const int iDevice, int *found, sclHard
+*AcceleratorHardware);
+//void sclGetAllHardware(int *found, sclHard *hardwareList);
+void sclGetFastestDevice(const sclHard *hardList, const cl_int found, sclHard
+*fastest);
 
 /*
 \end{lstlisting}
@@ -204,8 +206,8 @@ char *_sclLoadProgramSource(const char *filename);
 int _sclGetMaxComputeUnits(cl_device_id device);
 unsigned long int _sclGetMaxMemAllocSize(cl_device_id device);
 int _sclGetDeviceType(cl_device_id device);
-void _sclSmartCreateContexts(sclHard *hardList, int found);
-void _sclCreateQueues(sclHard *hardList, int found);
+void _sclSmartCreateContexts(sclHard *hardList, cl_int found);
+void _sclCreateQueues(sclHard *hardList, cl_int found);
 
 /*\end{lstlisting}
 \begin{comment}

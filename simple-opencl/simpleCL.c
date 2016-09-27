@@ -21,7 +21,6 @@
    SimpleOpenCL Version 0.010_27_02_2013
 
 */
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
 #ifdef __cplusplus
 extern "C" {
@@ -216,9 +215,9 @@ char *_sclLoadProgramSource(const char *filename) {
   }
 
   stat(filename, &statbuf);
-  source = (char *)malloc(statbuf.st_size + 1);
+  source = (char *)malloc((size_t)statbuf.st_size + 1);
 
-  if (fread(source, statbuf.st_size, 1, fh) != 1) {
+  if (fread(source, (size_t) statbuf.st_size, 1, fh) != 1) {
     fprintf(stderr, "Error on loadProgramSource");
     sclPrintErrorFlags(CL_INVALID_PROGRAM);
   }
@@ -345,21 +344,20 @@ void sclRetainClHard(sclHard hardware) {
 
 //\end{comment}
 //\begin{lstlisting}[language=C]
-void sclReleaseAllHardware(sclHard *hardList, int found) {
-  //\end{lstlisting}
-  //\begin{comment}
+//void sclReleaseAllHardware(sclHard *hardList, cl_int found) {
+//  //\end{lstlisting}
+//  //\begin{comment}
+//  int i;
+//
+//  for (i = 0; i < found; ++i) {
+//    sclReleaseClHard(hardList[i]);
+//  }
+//  /* free malloc'ed hardList in GetAllHardware */
+//  free(hardList);
+//}
+
+void sclRetainAllHardware(sclHard *hardList, cl_int found) {
   int i;
-
-  for (i = 0; i < found; ++i) {
-    sclReleaseClHard(hardList[i]);
-  }
-  /* free malloc'ed hardList in GetAllHardware */
-  free(hardList);
-}
-
-void sclRetainAllHardware(sclHard *hardList, int found) {
-  int i;
-
   for (i = 0; i < found; ++i) {
     sclRetainClHard(hardList[i]);
   }
@@ -375,7 +373,7 @@ void sclReleaseMemObject(cl_mem object) {
   }
 }
 
-void sclPrintDeviceNamePlatforms(sclHard *hardList, int found) {
+void sclPrintDeviceNamePlatforms(sclHard *hardList, cl_int found) {
   int i;
   cl_char deviceName[1024];
   cl_char platformVendor[1024];
@@ -420,7 +418,7 @@ void sclPrintHardwareStatus(sclHard hardware) {
   }
 }
 
-void _sclCreateQueues(sclHard *hardList, int found) {
+void _sclCreateQueues(sclHard *hardList, cl_int found) {
 
   int i;
 #ifdef DEBUG
@@ -429,15 +427,17 @@ void _sclCreateQueues(sclHard *hardList, int found) {
   float version_float;
   cl_queue_properties properties[] = {CL_QUEUE_PROFILING_ENABLE};
   for (i = 0; i < found; ++i) {
-  version_float = diagnoseOpenCLnumber(hardList[i].platform);
-  if (version_float >= 2.0f) {
-    hardList[i].queue = clCreateCommandQueueWithProperties(
-        hardList[i].context, hardList[i].device, properties, &err);
-  } else {
-    hardList[i].queue =
-        clCreateCommandQueue(hardList[i].context, hardList[i].device,
-        *properties, &err);
-  }
+    version_float = diagnoseOpenCLnumber(hardList[i].platform);
+    if (version_float >= 2.0f) {
+      hardList[i].queue = clCreateCommandQueueWithProperties(
+          hardList[i].context, hardList[i].device, properties, &err);
+    } else {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+      hardList[i].queue = clCreateCommandQueue(
+          hardList[i].context, hardList[i].device, *properties, &err);
+#pragma GCC diagnostic pop
+    }
     if (err != CL_SUCCESS) {
       fprintf(stderr, "\nError creating command queue %d", i);
     }
@@ -450,7 +450,7 @@ void _sclCreateQueues(sclHard *hardList, int found) {
 #endif
 }
 
-void _sclSmartCreateContexts(sclHard *hardList, int found) {
+void _sclSmartCreateContexts(sclHard *hardList, cl_int found) {
 
   cl_device_id deviceList[16];
   cl_context context;
@@ -501,7 +501,7 @@ void _sclSmartCreateContexts(sclHard *hardList, int found) {
       deviceList[j] = groups[i][j]->device;
     }
 #ifdef DEBUG
-    context = clCreateContext(0, groupSizes[i], deviceList, NULL, NULL, &err);
+    context = clCreateContext(0, (cl_uint) groupSizes[i], deviceList, NULL, NULL, &err);
     if (err != CL_SUCCESS) {
       fprintf(stderr, "\nError creating context on device %d", i);
     }
@@ -551,7 +551,8 @@ int _sclGetDeviceType(cl_device_id device) {
   return out;
 }
 
-sclHard sclGetFastestDevice(sclHard *hardList, int found) {
+void sclGetFastestDevice(const sclHard *hardList, const cl_int found, sclHard
+*fastest) {
   int i, maxCpUnits = 0, device = 0;
 
   for (i = 0; i < found; ++i) {
@@ -563,82 +564,80 @@ sclHard sclGetFastestDevice(sclHard *hardList, int found) {
     }
   }
 
-  return hardList[device];
+  *fastest = hardList[device];
 }
 
 //\end{comment}
 //\begin{lstlisting}[language=C]
-sclHard *sclGetAllHardware(int *found) {
-  //\end{lstlisting}
-  //\begin{comment}
+//void sclGetAllHardware(int *found, sclHard *hardwareList) {
+//  //\end{lstlisting}
+//  //\begin{comment}
+//
+//  int i, j;
+//  cl_uint nPlatforms = 0, nDevices = 0;
+//  cl_int err;
+//  int i_found = 0, n_found = 0;
+//
+//  cl_platform_id platforms[NB_MAX_PLATFORMS];
+//  cl_device_id devices[NB_MAX_PLATFORMS][NB_MAX_DEVICES_PER_PLATFORM];
+//
+//  err = clGetPlatformIDs(NB_MAX_PLATFORMS, platforms, &nPlatforms);
+//  if (nPlatforms == 0) {
+//    fprintf(stderr, "\nNo OpenCL platforms found.\n");
+//  } else {
+//    /* for each platform, count for devices */
+//    for (i = 0; i < (int)nPlatforms; ++i) {
+//      err = clGetDeviceIDs(platforms[i], CL_DEVICE_TYPE_ALL,
+//                           NB_MAX_DEVICES_PER_PLATFORM, &devices[i][0],
+//                           &nDevices);
+//      if (err != CL_SUCCESS) {
+//        fprintf(stderr, "\nError clGetDeviceIDs");
+//        sclPrintErrorFlags(err);
+//      } else {
+//        n_found = (n_found + (int) nDevices);
+//      }
+//    }
+//
+//    // Number of found devices is 'n_found'
+//    *hardwareList = (sclHard *)malloc((size_t) n_found * sizeof(sclHard));
+//
+//    /* re-scan all platforms to setup devices */
+//    for (i = 0; i < (int)nPlatforms; ++i) {
+//      err = clGetDeviceIDs(platforms[i], CL_DEVICE_TYPE_ALL,
+//                           NB_MAX_DEVICES_PER_PLATFORM, &devices[i][0],
+//                           &nDevices);
+//      if (err != CL_SUCCESS) {
+//        fprintf(stderr, "\nError clGetDeviceIDs");
+//        sclPrintErrorFlags(err);
+//      } else {
+//        /* save every available devices on each platform */
+//        for (j = 0; j < (int)nDevices; ++j) {
+//          hardwareList[i_found].platform = platforms[i];
+//          hardwareList[i_found].device = devices[i][j];
+//          hardwareList[i_found].nComputeUnits =
+//              _sclGetMaxComputeUnits(*hardwareList[i_found].device);
+//          hardwareList[i_found].maxPointerSize =
+//              _sclGetMaxMemAllocSize(*hardwareList[i_found].device);
+//          hardwareList[i_found].deviceType =
+//              _sclGetDeviceType(*hardwareList[i_found].device);
+//          hardwareList[i_found].devNum = i_found;
+//          (i_found)++;
+//        }
+//      }
+//    }
+//    _sclSmartCreateContexts(*hardwareList, n_found);
+//    _sclCreateQueues(*hardwareList, n_found);
+//#ifdef DEBUG
+//    sclPrintDeviceNamePlatforms(*hardwareList, n_found);
+//#endif
+//    sclRetainAllHardware(*hardwareList, n_found);
+//  }
+//
+//  *found = n_found;
+//}
 
-  int i, j;
-  cl_uint nPlatforms = 0, nDevices = 0;
-  sclHard *hardList = NULL;
-  cl_int err;
-  int i_found = 0, n_found = 0;
-
-  cl_platform_id platforms[NB_MAX_PLATFORMS];
-  cl_device_id devices[NB_MAX_PLATFORMS][NB_MAX_DEVICES_PER_PLATFORM];
-
-  err = clGetPlatformIDs(NB_MAX_PLATFORMS, platforms, &nPlatforms);
-  if (nPlatforms == 0) {
-    fprintf(stderr, "\nNo OpenCL platforms found.\n");
-  } else {
-    /* for each platform, count for devices */
-    for (i = 0; i < (int)nPlatforms; ++i) {
-      err = clGetDeviceIDs(platforms[i], CL_DEVICE_TYPE_ALL,
-                           NB_MAX_DEVICES_PER_PLATFORM, &devices[i][0],
-                           &nDevices);
-      if (err != CL_SUCCESS) {
-        fprintf(stderr, "\nError clGetDeviceIDs");
-        sclPrintErrorFlags(err);
-      } else {
-        n_found += nDevices;
-      }
-    }
-
-    // Number of found devices is 'n_found'
-    hardList = (sclHard *)malloc(n_found * sizeof(sclHard));
-
-    /* re-scan all platforms to setup devices */
-    for (i = 0; i < (int)nPlatforms; ++i) {
-      err = clGetDeviceIDs(platforms[i], CL_DEVICE_TYPE_ALL,
-                           NB_MAX_DEVICES_PER_PLATFORM, &devices[i][0],
-                           &nDevices);
-      if (err != CL_SUCCESS) {
-        fprintf(stderr, "\nError clGetDeviceIDs");
-        sclPrintErrorFlags(err);
-      } else {
-        /* save every available devices on each platform */
-        for (j = 0; j < (int)nDevices; ++j) {
-          hardList[i_found].platform = platforms[i];
-          hardList[i_found].device = devices[i][j];
-          hardList[i_found].nComputeUnits =
-              _sclGetMaxComputeUnits(hardList[i_found].device);
-          hardList[i_found].maxPointerSize =
-              _sclGetMaxMemAllocSize(hardList[i_found].device);
-          hardList[i_found].deviceType =
-              _sclGetDeviceType(hardList[i_found].device);
-          hardList[i_found].devNum = i_found;
-          (i_found)++;
-        }
-      }
-    }
-    _sclSmartCreateContexts(hardList, n_found);
-    _sclCreateQueues(hardList, n_found);
-#ifdef DEBUG
-    sclPrintDeviceNamePlatforms(hardList, n_found);
-#endif
-    sclRetainAllHardware(hardList, n_found);
-  }
-
-  *found = n_found;
-  return hardList;
-}
-
-sclHard sclGetHardwareByType(cl_device_type device_type, int iDevice,
-                             int *found) {
+void sclGetHardwareByType(const cl_device_type device_type, const int iDevice,
+                             int *found, sclHard *Hardware) {
   cl_uint i;
   sclHard hardware;
   cl_int err;
@@ -671,7 +670,9 @@ sclHard sclGetHardwareByType(cl_device_type device_type, int iDevice,
 
       if (nDevices > 0) {
         // device_type found, return it
+        cl_queue_properties properties[] = {CL_QUEUE_PROFILING_ENABLE};
         hardware.platform = platforms[i];
+        float version_float = diagnoseOpenCLnumber(hardware.platform);
         hardware.device = devices[i][(iDevice < (int)nDevices ? iDevice : 0)];
         hardware.context =
             clCreateContext(0, 1, &hardware.device, NULL, NULL, &err);
@@ -679,8 +680,16 @@ sclHard sclGetHardwareByType(cl_device_type device_type, int iDevice,
           fprintf(stderr, "\nError 3");
           sclPrintErrorFlags(err);
         };
-        hardware.queue = clCreateCommandQueue(hardware.context, hardware.device,
-                                              CL_QUEUE_PROFILING_ENABLE, &err);
+        if (version_float >= 2.0f) {
+          hardware.queue = clCreateCommandQueueWithProperties(
+              hardware.context, hardware.device, properties, &err);
+        } else {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+          hardware.queue = clCreateCommandQueue(
+              hardware.context, hardware.device, *properties, &err);
+#pragma GCC diagnostic pop
+        }
         if (err != CL_SUCCESS) {
           fprintf(stderr, "\nError 3.1");
           sclPrintErrorFlags(err);
@@ -717,25 +726,27 @@ sclHard sclGetHardwareByType(cl_device_type device_type, int iDevice,
     }
   }
 
-  return hardware;
+  *Hardware = hardware;
 }
 
-sclHard sclGetGPUHardware(int iDevice, int *found) {
-  return sclGetHardwareByType(CL_DEVICE_TYPE_GPU, iDevice, found);
+void sclGetGPUHardware(const int iDevice, int *found, sclHard *GPUHardware) {
+  sclGetHardwareByType(CL_DEVICE_TYPE_GPU, iDevice, found, GPUHardware);
 }
 
-sclHard sclGetCPUHardware(int iDevice, int *found) {
-  return sclGetHardwareByType(CL_DEVICE_TYPE_CPU, iDevice, found);
+void sclGetCPUHardware(const int iDevice, int *found, sclHard *CPUHardware) {
+  sclGetHardwareByType(CL_DEVICE_TYPE_CPU, iDevice, found, CPUHardware);
 }
 
-sclHard sclGetAcceleratorHardware(int iDevice, int *found) {
-  return sclGetHardwareByType(CL_DEVICE_TYPE_ACCELERATOR, iDevice, found);
+void sclGetAcceleratorHardware(const int iDevice, int *found, sclHard
+*AcceleratorHardware) {
+  sclGetHardwareByType(CL_DEVICE_TYPE_ACCELERATOR, iDevice, found,
+AcceleratorHardware);
 }
 
 //\end{comment}
 //\begin{lstlisting}[language=C]
-sclSoft sclGetCLSoftware(char *kernel_file, char *kernel_name,
-                         sclHard hardware) {
+void sclGetCLSoftware(const char *kernel_file, const char *kernel_name,
+                         const sclHard hardware, sclSoft *Software) {
   //\end{lstlisting}
   //\begin{comment}
   sclSoft software;
@@ -765,7 +776,7 @@ sclSoft sclGetCLSoftware(char *kernel_file, char *kernel_name,
   /* free source malloc'ed in _sclLoadProgramSource */
   free(source);
 
-  return software;
+  *Software = software;
 }
 
 cl_mem sclMalloc(sclHard hardware, cl_int mode, size_t size) {
@@ -773,7 +784,7 @@ cl_mem sclMalloc(sclHard hardware, cl_int mode, size_t size) {
 #ifdef DEBUG
   cl_int err;
 
-  buffer = clCreateBuffer(hardware.context, mode, size, NULL, &err);
+  buffer = clCreateBuffer(hardware.context, (cl_mem_flags) mode, size, NULL, &err);
   if (err != CL_SUCCESS) {
     fprintf(stderr, "\nclMalloc Error\n");
     sclPrintErrorFlags(err);
@@ -880,7 +891,7 @@ void sclSetKernelArg(sclSoft software, int argnum, size_t typeSize,
 #ifdef DEBUG
   cl_int err;
 
-  err = clSetKernelArg(software.kernel, argnum, typeSize, argument);
+  err = clSetKernelArg(software.kernel, (cl_uint) argnum, typeSize, argument);
   if (err != CL_SUCCESS) {
     fprintf(stderr, "\nError clSetKernelArg number %d\n", argnum);
     sclPrintErrorFlags(err);
