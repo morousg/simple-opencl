@@ -1,26 +1,42 @@
 Simple-OpenCL Documentation
-                       September 21, 2016
+                       September 28, 2016
                                                                                                     
 
             
                                                                                                     
             Contents
-1  Readme                                                                          2
-          1.0.1   Motivation and description   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     2
-    1.1   History   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     2
-    1.2   License .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     3
-    1.3   Contributions  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     3
-    1.4   Example .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     3
-           1.4.1   SimpleOpenCL code version .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     3
-           1.4.2   Now the same code but in plain OpenCL WITHOUT using SimpleOpenCL   4
-           1.4.3   Kernel Code   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     7
-    1.5   Contact   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     7
-2  Roadmap                                                                        8
-    2.1   SimpleOpenCL Version 0.010 27/02/2013   .  .  .  .  .  .  .  .  .  .  .  .  .     8
-    2.2   Actual version 0.08  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     8
-    2.3   Next version .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     9
-3  simpleCl.c API                                                               10
-                                                        1                                                   
+1  Readme                                                                          3
+          1.0.1   Motivation and description   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     3
+    1.1   History   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     3
+    1.2   License .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     4
+    1.3   Contributions  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     4
+    1.4   Example .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     4
+           1.4.1   SimpleOpenCL code version .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     4
+           1.4.2   Now the same code but in plain OpenCL WITHOUT using SimpleOpenCL   5
+           1.4.3   Kernel Code   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     8
+    1.5   Contact   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     8
+2  Roadmap                                                                        9
+    2.1   SimpleOpenCL Version 0.010 27/02/2013   .  .  .  .  .  .  .  .  .  .  .  .  .     9
+    2.2   Actual version 0.08  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     9
+    2.3   Next version .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   10
+3  simpleCl.h API                                                               11
+    3.1   data types .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   11
+    3.2   USER FUNCTIONS  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   11
+           3.2.1   Device memory allocation read and write   .  .  .  .  .  .  .  .  .   11
+           3.2.2   initialization of sclSoft structs .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   12
+           3.2.3   Release and retain OpenCL objects .  .  .  .  .  .  .  .  .  .  .  .  .   12
+           3.2.4   Debug functions   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   12
+           3.2.5   Device execution  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   12
+           3.2.6   Event queries  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   13
+           3.2.7   Queue management   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   13
+           3.2.8   Kernel argument setting  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   13
+    3.3   INTERNAL FUNCITONS .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   14
+           3.3.1   debug  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   14
+           3.3.2   cl software management  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   14
+           3.3.3   hardware management  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   15
+4  simpleCl.c API                                                               16
+          4.0.1   kernel argument assignement sizeTypes string&#8217;s letter meanings  16
+                                                               1                                                   
 
             
                                                                                                                    
@@ -378,8 +394,8 @@ cl_mem sclMalloc(sclHard hardware, cl_int mode, size_t size);
 3.2.2   initialization of sclSoft structs
 ________________________
 */
-sclSoft sclGetCLSoftware(char *kernel_file, char *kernel_name,
-                    sclHard hardware);
+void sclGetCLSoftware(const char *kernel_file, const char *kernel_name,
+                    const sclHard hardware, sclSoft *Software);
 /*
 ________________________________________________________________
 3.2.3   Release and retain OpenCL objects
@@ -387,8 +403,8 @@ __________________
 void sclReleaseClSoft(sclSoft soft);
 void sclReleaseClHard(sclHard hard);
 void sclRetainClHard(sclHard hardware);
-void sclReleaseAllHardware(sclHard *hardList, int found);
-void sclRetainAllHardware(sclHard *hardList, int found);
+void sclReleaseAllHardware(sclHard *hardList, cl_int found);
+void sclRetainAllHardware(sclHard *hardList, cl_int found);
 void sclReleaseMemObject(cl_mem object);
 /*
 ________________________________________________________________
@@ -396,7 +412,7 @@ ________________________________________________________________
 _______________________________________
 void sclPrintErrorFlags(cl_int flag);
 void sclPrintHardwareStatus(sclHard hardware);
-void sclPrintDeviceNamePlatforms(sclHard *hardList, int found);
+void sclPrintDeviceNamePlatforms(sclHard *hardList, cl_int found);
 /*
 ________________________________________________________________
 3.2.5   Device execution
@@ -444,21 +460,25 @@ void sclSetKernelArg(sclSoft software, int argnum, size_t typeSize,
                                   va_list argList);
             
             /*
-            \end{comment}
-            \subsection{Hardware init and selection}
-            \begin{comment}
-            */
-            
-            sclHard sclGetHardwareByType(cl_device_type device_type, int iDevice,
-                                      int *found);
-            sclHard sclGetGPUHardware(int nDevice, int *found);
-            sclHard sclGetCPUHardware(int nDevice, int *found);
-            sclHard sclGetAcceleratorHardware(int iDevice, int *found);
-            sclHard *sclGetAllHardware(int *found);
-            sclHard sclGetFastestDevice(sclHard *hardList, int found);
-            
-            /*
             _________________________________________________________________________
+3.2.9   Hardware init and selection
+___________________________
+*/
+void sclGetHardwareByType(const cl_device_type device_type, const int
+    iDevice,
+                       int *found, sclHard *hardware);
+void sclGetGPUHardware(const int nDevice, int *found, sclHard
+    *GPUHardware);
+void sclGetCPUHardware(const int nDevice, int *found, sclHard
+    *CPUHardware);
+void sclGetAcceleratorHardware(const int iDevice, int *found, sclHard
+*AcceleratorHardware);
+//void sclGetAllHardware(int *found, sclHard *hardwareList);
+void sclGetFastestDevice(const sclHard *hardList, const cl_int found,
+    sclHard
+*fastest);
+/*
+________________________________________________________________
 3.3   INTERNAL FUNCITONS
 3.3.1   debug
 ___________________________________________________
@@ -472,36 +492,39 @@ _______________________________
 */
 void _sclBuildProgram(cl_program program, cl_device_id devices,
                   const char *pName);
-cl_kernel _sclCreateKernel(sclSoft software);
-cl_program _sclCreateProgram(char *program_source, cl_context context);
-char *_sclLoadProgramSource(const char *filename);
-/*
-________________________________________________________________
                                                13                                                  
 
             
                                                                                                                    
-            3.3.3   hardware management______________________________________
+            cl_kernel _sclCreateKernel(sclSoft software);
+            cl_program _sclCreateProgram(char *program_source, cl_context context);
+            char *_sclLoadProgramSource(const char *filename);
+            
+            /*
+            _________________________________________________________________________
+3.3.3   hardware management
+________________________________
 */
 int _sclGetMaxComputeUnits(cl_device_id device);
 unsigned long int _sclGetMaxMemAllocSize(cl_device_id device);
 int _sclGetDeviceType(cl_device_id device);
-void _sclSmartCreateContexts(sclHard *hardList, int found);
-void _sclCreateQueues(sclHard *hardList, int found);
-/*_______________________________________________________________________
+void _sclSmartCreateContexts(sclHard *hardList, cl_int found);
+void _sclCreateQueues(sclHard *hardList, cl_int found);
+/*
+________________________________________________________________
                                                14                                                  
 
             
                                                                                                                    
             Chapter 4
 simpleCl.c API_________________
-void sclReleaseAllHardware(sclHard *hardList, int found) {
-//_______________________________________________________________________
-sclHard *sclGetAllHardware(int *found) {
-//_______________________________________________________________________
-sclSoft sclGetCLSoftware(char *kernel_file, char *kernel_name,
-                      sclHard hardware) {
-//_______________________________________________________________________
+//void sclReleaseAllHardware(sclHard *hardList, cl_int found) {
+//  //___________________________________________________________________
+//void sclGetAllHardware(int *found, sclHard *hardwareList) {
+//  //___________________________________________________________________
+void sclGetCLSoftware(const char *kernel_file, const char *kernel_name,
+                      const sclHard hardware, sclSoft *Software) {
+  //_____________________________________________________________________
 cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
                                size_t *global_work_size,
                                size_t *local_work_size,
@@ -513,39 +536,29 @@ cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
     if (*p == &#8217;%&#8217;) {
      switch (*++p) {
      case &#8217;a&#8217;: /* Single value non pointer argument: byte length, array
-          pointer */
-              //_________________________________________________________
+          pointer
+                 */
+       //________________________________________________________________
                                                15                                                  
 
             
                                                                                                                    
-                    case &#8217;v&#8217;: /* Buffer or image object void* argument: array pointer
-                    */
-                          //
-            _________________________________________________________________________
-__________________________________________________________________
+            _______________________________________________________________________________________________________ case  &#8217; v &#8217; : /*  Buffer  or  image  object  void *  argument :  array  pointer 
+          */
+              //_________________________________________________________
      case &#8217;N&#8217;: /* Local memory object using NULL argument: byte length
-         */
-             //
-___________________________________________________
-__________________________________________________________________
+          */
+              //_________________________________________________________
      case &#8217;w&#8217;: /* output write_only cl_mem buffer: byte length, array
-         pointer*/
-             //
-___________________________________________________
-__________________________________________________________________
+          pointer*/
+              //_________________________________________________________
      case &#8217;r&#8217;: /* input read_only cl_mem buffer: byte size, array
-         pointer */
-             //
-___________________________________________________
-__________________________________________________________________
+          pointer */
+              //_________________________________________________________
      case &#8217;R&#8217;: /* output read_write buffer: byte length, array pointer*/
-             //
-___________________________________________________
-__________________________________________________________________
+              //_________________________________________________________
      case &#8217;g&#8217;: /* output read_write variable: bytesize */
-      //
-_________________________________________________________
+       //________________________________________________________________
                                                16                                                  
 
 

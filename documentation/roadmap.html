@@ -1,0 +1,55 @@
+Chapter 1
+Roadmap
+1.1   SimpleOpenCL Version 0.010 27/02/2013
+   &#x2219; v1 Incremented with increased functionality up to a certain goal or amount
+       of changes (new functions)
+    &#x2219; vv2 Incremented with bug corrections and functionality additions.
+    &#x2219; date Set at the date of bug correction or any v1 or vv2 level modification.
+1.2   Actual version 0.08
+   &#x2219; Non finished but working version. A first finished version is scheduled for
+       version 1.0
+    &#x2219; It provides two structs to simplify the handling of OpenCL objects. They
+       are conceptually grouped in hardware and software.
+    &#x2219; It provides simplified Device memory allocation and copy functionalities.
+    &#x2219; It also provides a function that creates a list of devices using the &#8221;clHard&#8221;
+       struct for each device, and creates a context for that devices. The context
+       will be the same for same type and same memory capacity devices. If any
+       of those differ, then different contexts will be created for each device.
+    &#x2219; Other functions select the desired devices from the list.
+    &#x2219; In order to get information of OpenCL errors, there is a function that
+       prints the OpenCL error flags returned by the OpenCL functions.
+    &#x2219; Functions to load Device source code, compile it etc are present.
+    &#x2219; Functions to enqueue or execute kernels, etc...
+                                                               1                                                   
+
+            
+                                                                                                                   
+                &#x2219; A main 1.0 version goal is already implemented as &#8221;sclManageArgsLaunchK-
+                 ernel&#8221;.   It  can  with  only  host  pointers,  sclHard  and  sclSoft  variables
+                 NDRange dimensions and a string containing the info of what to do with
+                 the pointers etc, execute the kernel and update the results on the host
+                 pointers. All in a single function call.
+1.3   Next version
+Goals for version 1.0:
+   &#x2219; All hardware selection functions must use the sclGetAllHardware function
+     first if a list of hardware is not passed as an argument and it has NULL
+     value. Then, the functions must return the desired hardware following the
+     function criteria expressed in its own name.
+   &#x2219; The sclManageArgsLaunchKernel can/must be improved in the following
+     ways:
+  1. Optional: a version that hides sclHard and sclSoft so the user only cares
+     about which host pointers will be read and written from the device in
+     OpenCL C code and which to use exclusively on the device.   Nothing
+     else.  Think of when to initialize hardware?  Possibly needing a global
+     variable pointing to the sclHard and sclSoft objects to avoid repeating the
+     software/hardware initialization process on each kernel execution.
+  2. Mandatory:  the function must have the ability to schedule work across
+     all the devices available. So maybe the function will need more info from
+     the user to know which data can be partitioned, and which can not. The
+     possibility of internally using something similar to GMAC would be won-
+     derfull.   Pagination of the pointers in my opinion is the most efficient
+     automatic method to do that work, but repeating a work already done
+     would be frustrating.
+                                                               2                                                   
+
+

@@ -161,9 +161,9 @@ void _sclVSetKernelArgs(sclSoft software, const char *sizesValues,
                         va_list argList);
 
 /*
-\end{comment}
+\end{lstlisting}
 \subsection{Hardware init and selection}
-\begin{comment}
+\begin{lstlisting}[language=C]
 */
 
 void sclGetHardwareByType(const cl_device_type device_type, const int iDevice,
