@@ -666,6 +666,7 @@ void sclGetHardwareByType(const cl_device_type device_type, const int iDevice,
                           int *found, sclHard *Hardware) {
   cl_uint i;
   sclHard hardware;
+  hardware.platform = NULL;
   cl_int err;
   cl_uint nPlatforms, nDevices = 0;
   cl_char vendor_name[1024];
@@ -686,6 +687,10 @@ void sclGetHardwareByType(const cl_device_type device_type, const int iDevice,
     *found = 0;
   } else {
     for (i = 0; i < nPlatforms; ++i) {
+      if(hardware.platform != NULL) {
+        i = nPlatforms;
+        break;
+      }
       err =
           clGetDeviceIDs(platforms[i], device_type, NB_MAX_DEVICES_PER_PLATFORM,
                          &devices[i][0], &nDevices);
@@ -693,6 +698,7 @@ void sclGetHardwareByType(const cl_device_type device_type, const int iDevice,
         fprintf(stderr, "\nError clGetDeviceIDs");
         fprintf(stderr, " %s:%d \n", __FILE__, __LINE__);
         sclPrintErrorFlags(err);
+          break;
         exit(-1);
       }
 
