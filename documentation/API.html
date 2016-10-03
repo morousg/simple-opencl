@@ -42,7 +42,7 @@ cl_mem sclMalloc(sclHard hardware, cl_int mode, size_t size);
 ________________________
 */
 void sclGetCLSoftware(const char *kernel_file, const char *kernel_name,
-                    const sclHard hardware, sclSoft *Software);
+                  const sclHard hardware, sclSoft *Software);
 /*
 ________________________________________________________________
 1.2.3   Release and retain OpenCL objects
@@ -113,17 +113,17 @@ ___________________________
 */
 void sclGetHardwareByType(const cl_device_type device_type, const int
     iDevice,
-                       int *found, sclHard *hardware);
+                     int *found, sclHard *hardware);
+void sclGetHardware(const int nDevice, int *found, sclHard *GPUHardware);
 void sclGetGPUHardware(const int nDevice, int *found, sclHard
     *GPUHardware);
 void sclGetCPUHardware(const int nDevice, int *found, sclHard
     *CPUHardware);
-void sclGetAcceleratorHardware(const int iDevice, int *found, sclHard
-*AcceleratorHardware);
-//void sclGetAllHardware(int *found, sclHard *hardwareList);
+void sclGetAcceleratorHardware(const int iDevice, int *found,
+                         sclHard *AcceleratorHardware);
+// void sclGetAllHardware(int *found, sclHard *hardwareList);
 void sclGetFastestDevice(const sclHard *hardList, const cl_int found,
-    sclHard
-*fastest);
+                    sclHard *fastest);
 /*
 ________________________________________________________________
 1.3   INTERNAL FUNCITONS
@@ -165,12 +165,12 @@ ________________________________________________________________
                                                                                                                    
             Chapter 2
 simpleCl.c API_________________
-//void sclReleaseAllHardware(sclHard *hardList, cl_int found) {
+// void sclReleaseAllHardware(sclHard *hardList, cl_int found) {
 //  //___________________________________________________________________
-//void sclGetAllHardware(int *found, sclHard *hardwareList) {
+// void sclGetAllHardware(int *found, sclHard *hardwareList) {
 //  //___________________________________________________________________
 void sclGetCLSoftware(const char *kernel_file, const char *kernel_name,
-                      const sclHard hardware, sclSoft *Software) {
+                    const sclHard hardware, sclSoft *Software) {
   //_____________________________________________________________________
 cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
                                size_t *global_work_size,

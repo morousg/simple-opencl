@@ -91,7 +91,7 @@ void sclRead(sclHard hardware, size_t size, cl_mem buffer, void *hostPointer);
 */
 
 void sclGetCLSoftware(const char *kernel_file, const char *kernel_name,
-                         const sclHard hardware, sclSoft *Software);
+                      const sclHard hardware, sclSoft *Software);
 
 /*\end{lstlisting}
 \subsection{Release and retain OpenCL objects}
@@ -167,14 +167,15 @@ void _sclVSetKernelArgs(sclSoft software, const char *sizesValues,
 */
 
 void sclGetHardwareByType(const cl_device_type device_type, const int iDevice,
-                             int *found, sclHard *hardware);
+                          int *found, sclHard *hardware);
+void sclGetHardware(const int nDevice, int *found, sclHard *GPUHardware);
 void sclGetGPUHardware(const int nDevice, int *found, sclHard *GPUHardware);
 void sclGetCPUHardware(const int nDevice, int *found, sclHard *CPUHardware);
-void sclGetAcceleratorHardware(const int iDevice, int *found, sclHard
-*AcceleratorHardware);
-//void sclGetAllHardware(int *found, sclHard *hardwareList);
-void sclGetFastestDevice(const sclHard *hardList, const cl_int found, sclHard
-*fastest);
+void sclGetAcceleratorHardware(const int iDevice, int *found,
+                               sclHard *AcceleratorHardware);
+// void sclGetAllHardware(int *found, sclHard *hardwareList);
+void sclGetFastestDevice(const sclHard *hardList, const cl_int found,
+                         sclHard *fastest);
 
 /*
 \end{lstlisting}

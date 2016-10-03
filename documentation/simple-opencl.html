@@ -1,5 +1,5 @@
 Simple-OpenCL Documentation
-                       September 28, 2016
+                         October 3, 2016
                                                                                                     
 
             
@@ -30,13 +30,18 @@ Simple-OpenCL Documentation
            3.2.6   Event queries  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   13
            3.2.7   Queue management   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   13
            3.2.8   Kernel argument setting  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   13
+           3.2.9   Hardware init and selection  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   14
     3.3   INTERNAL FUNCITONS .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   14
            3.3.1   debug  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   14
            3.3.2   cl software management  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   14
            3.3.3   hardware management  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   15
-4  simpleCl.c API                                                               16
-          4.0.1   kernel argument assignement sizeTypes string&#8217;s letter meanings  16
                                                                1                                                   
+
+            
+                                                                                                                   
+            4  simpleCl.c API                                              16
+                   4.0.1   kernel argument assignement sizeTypes string&#8217;s letter meanings 16
+                                                               2                                                   
 
             
                                                                                                                    
@@ -70,7 +75,7 @@ been reducing the Host code needed to run OpenCL C kernels on the GPU, but
 also supports managing CPU devices.
     In a sentence:  **The only thing a programmer needs to know in order to
 use SimpleOpenCL is C, two SimpleOpenCL types, and a minimum of three
-                                                               2                                                   
+                                                               3                                                   
 
             
                                                                                                                    
@@ -109,7 +114,7 @@ int main() {
   int found, worksize;
   sclHard hardware;
   sclSoft software;
-                                                3                                                   
+                                                4                                                   
 
             
                                                                                                                    
@@ -155,7 +160,7 @@ int main() {
   /* Fetch the Platforms, we only want one. */
   error=clGetPlatformIDs(1, &amp;platform, &amp;platforms);
   if (error != CL_SUCCESS) {
-                                                4                                                   
+                                                5                                                   
 
             
                                                                                                                    
@@ -209,7 +214,7 @@ int main() {
                    build_c, NULL );
                 printf( "Build Log for %s_program:\n%s\n", "example", build_c );
               }
-                                                5                                                   
+                                                6                                                   
 
             
                                                                                                                    
@@ -263,7 +268,7 @@ int main() {
               error=clEnqueueReadBuffer(cq, mem2, CL_FALSE, 0, worksize, buf2, 0,
                  NULL, NULL);
               if (error != CL_SUCCESS) {
-                                                6                                                   
+                                                7                                                   
 
             
                                                                                                                    
@@ -291,7 +296,7 @@ __kernel void example( __global char* buf, __global char* buf2 ){
 _________________________________________________________________
 1.5   Contact
  Original Author Oscar Amoros oscaramoros@ub.edu
-                                                               7                                                   
+                                                               8                                                   
 
             
                                                                                                                    
@@ -317,7 +322,7 @@ Roadmap
        prints the OpenCL error flags returned by the OpenCL functions.
     &#x2219; Functions to load Device source code, compile it etc are present.
     &#x2219; Functions to enqueue or execute kernels, etc...
-                                                               8                                                   
+                                                               9                                                   
 
             
                                                                                                                    
@@ -347,7 +352,7 @@ Goals for version 1.0:
      derfull.   Pagination of the pointers in my opinion is the most efficient
      automatic method to do that work, but repeating a work already done
      would be frustrating.
-                                                               9                                                   
+                                                              10                                                  
 
             
                                                                                                                    
@@ -378,7 +383,7 @@ typedef struct {
 3.2.1   Device memory allocation read and write_____________
 */
 cl_mem sclMalloc(sclHard hardware, cl_int mode, size_t size);
-                                               10                                                  
+                                               11                                                  
 
             
                                                                                                                    
@@ -395,7 +400,7 @@ cl_mem sclMalloc(sclHard hardware, cl_int mode, size_t size);
 ________________________
 */
 void sclGetCLSoftware(const char *kernel_file, const char *kernel_name,
-                    const sclHard hardware, sclSoft *Software);
+                  const sclHard hardware, sclSoft *Software);
 /*
 ________________________________________________________________
 3.2.3   Release and retain OpenCL objects
@@ -416,7 +421,7 @@ void sclPrintDeviceNamePlatforms(sclHard *hardList, cl_int found);
 /*
 ________________________________________________________________
 3.2.5   Device execution
-                                                 11                                                  
+                                                 12                                                  
 
             
                                                                                                                    
@@ -451,7 +456,7 @@ cl_int sclFinish(sclHard hardware);
 */
 void sclSetKernelArg(sclSoft software, int argnum, size_t typeSize,
                    void *argument);
-                                               12                                                  
+                                               13                                                  
 
             
                                                                                                                    
@@ -466,17 +471,17 @@ ___________________________
 */
 void sclGetHardwareByType(const cl_device_type device_type, const int
     iDevice,
-                       int *found, sclHard *hardware);
+                     int *found, sclHard *hardware);
+void sclGetHardware(const int nDevice, int *found, sclHard *GPUHardware);
 void sclGetGPUHardware(const int nDevice, int *found, sclHard
     *GPUHardware);
 void sclGetCPUHardware(const int nDevice, int *found, sclHard
     *CPUHardware);
-void sclGetAcceleratorHardware(const int iDevice, int *found, sclHard
-*AcceleratorHardware);
-//void sclGetAllHardware(int *found, sclHard *hardwareList);
+void sclGetAcceleratorHardware(const int iDevice, int *found,
+                         sclHard *AcceleratorHardware);
+// void sclGetAllHardware(int *found, sclHard *hardwareList);
 void sclGetFastestDevice(const sclHard *hardList, const cl_int found,
-    sclHard
-*fastest);
+                    sclHard *fastest);
 /*
 ________________________________________________________________
 3.3   INTERNAL FUNCITONS
@@ -492,7 +497,7 @@ _______________________________
 */
 void _sclBuildProgram(cl_program program, cl_device_id devices,
                   const char *pName);
-                                               13                                                  
+                                               14                                                  
 
             
                                                                                                                    
@@ -512,18 +517,18 @@ void _sclSmartCreateContexts(sclHard *hardList, cl_int found);
 void _sclCreateQueues(sclHard *hardList, cl_int found);
 /*
 ________________________________________________________________
-                                               14                                                  
+                                               15                                                  
 
             
                                                                                                                    
             Chapter 4
 simpleCl.c API_________________
-//void sclReleaseAllHardware(sclHard *hardList, cl_int found) {
+// void sclReleaseAllHardware(sclHard *hardList, cl_int found) {
 //  //___________________________________________________________________
-//void sclGetAllHardware(int *found, sclHard *hardwareList) {
+// void sclGetAllHardware(int *found, sclHard *hardwareList) {
 //  //___________________________________________________________________
 void sclGetCLSoftware(const char *kernel_file, const char *kernel_name,
-                      const sclHard hardware, sclSoft *Software) {
+                    const sclHard hardware, sclSoft *Software) {
   //_____________________________________________________________________
 cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
                                size_t *global_work_size,
@@ -539,7 +544,7 @@ cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
           pointer
                  */
        //________________________________________________________________
-                                               15                                                  
+                                               16                                                  
 
             
                                                                                                                    
@@ -559,6 +564,6 @@ cl_event sclManageArgsLaunchKernel(sclHard hardware, sclSoft software,
               //_________________________________________________________
      case &#8217;g&#8217;: /* output read_write variable: bytesize */
        //________________________________________________________________
-                                               16                                                  
+                                               17                                                  
 
 
