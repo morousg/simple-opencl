@@ -168,7 +168,7 @@ void _sclVSetKernelArgs(sclSoft software, const char *sizesValues,
 
 void sclGetHardwareByType(const cl_device_type device_type, const int iDevice,
                           int *found, sclHard *hardware);
-void sclGetHardware(const int nDevice, int *found, sclHard *GPUHardware);
+void sclGetHardware(const int nDevice, sclHard *Hardware);
 void sclGetGPUHardware(const int nDevice, int *found, sclHard *GPUHardware);
 void sclGetCPUHardware(const int nDevice, int *found, sclHard *CPUHardware);
 void sclGetAcceleratorHardware(const int iDevice, int *found,

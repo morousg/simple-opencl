@@ -188,7 +188,7 @@ void sclPrintErrorFlags(cl_int flag) {
   }
 }
 
-float diagnoseOpenCLnumber(cl_platform_id platform) {
+float sclDiagnoseOpenCLnumber(cl_platform_id platform) {
 #define VERSION_LENGTH 64
   char complete_version[VERSION_LENGTH];
   size_t realSize = 0;
@@ -442,7 +442,7 @@ void _sclCreateQueues(sclHard *hardList, cl_int found) {
 #ifdef CL_VERSION_2_0
   float version_float;
   cl_queue_properties properties[] = {CL_QUEUE_PROFILING_ENABLE};
-  version_float = diagnoseOpenCLnumber(hardList[i].platform);
+  version_float = sclDiagnoseOpenCLnumber(hardList[i].platform);
 #endif
   for (i = 0; i < found; ++i) {
 #ifdef CL_VERSION_2_0
@@ -715,7 +715,7 @@ void sclGetHardwareByType(const cl_device_type device_type, const int iDevice,
           exit(-1);
         };
 #ifdef CL_VERSION_2_0
-        float version_float = diagnoseOpenCLnumber(hardware.platform);
+        float version_float = sclDiagnoseOpenCLnumber(hardware.platform);
         if (version_float >= 2.0f) {
           // const cl_queue_properties properties[] =
           // {CL_QUEUE_PROFILING_ENABLE};
@@ -779,8 +779,9 @@ void sclGetHardwareByType(const cl_device_type device_type, const int iDevice,
   *Hardware = hardware;
 }
 
-void sclGetHardware(const int iDevice, int *found, sclHard *CPUHardware) {
-  sclGetHardwareByType(CL_DEVICE_TYPE_ALL, iDevice, found, CPUHardware);
+void sclGetHardware(const int iDevice, sclHard *CPUHardware) {
+  int found = 0;
+  sclGetHardwareByType(CL_DEVICE_TYPE_ALL, iDevice, &found, CPUHardware);
 }
 
 void sclGetCPUHardware(const int iDevice, int *found, sclHard *CPUHardware) {

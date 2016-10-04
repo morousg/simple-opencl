@@ -5,7 +5,7 @@
 int main() {
    char buf[]="Hello, World!";
    size_t global_size[2], local_size[2];
-   int found, worksize;
+   int /*found,*/ worksize;
    sclHard hardware;
    sclSoft software;
 
@@ -16,7 +16,7 @@ int main() {
    buf2[worksize]=0;
     
    // Get the hardware
-   sclGetHardware(0, &found, &hardware);
+   sclGetHardware(0, &hardware);
    // Get the software
    sclGetCLSoftware( "example.cl", "example", hardware, &software);
    // Set NDRange dimensions
