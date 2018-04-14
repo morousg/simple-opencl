@@ -37,9 +37,6 @@ extern "C" {
 #include <CL/cl.h>
 #endif
 
-#define WORKGROUP_X 64
-#define WORKGROUP_Y 2
-
 #ifndef _OCLUTILS_STRUCTS
 typedef struct {
 	cl_platform_id platform;
