@@ -3,7 +3,7 @@ EXEC    = $(HOME)/test
 SRC_SCL = $(HOME)/../simple-opencl
 CC      = gcc
 SRC = test.c $(SRC_SCL)/simpleCL.c 
-CFLAGS  = -Wall -Wextra -pedantic -O3
+CFLAGS  = -Wall -Wextra -pedantic -O3 -DDEBUG
 
 UNAME := $(shell uname)
 

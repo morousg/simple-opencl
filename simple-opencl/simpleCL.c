@@ -922,8 +922,8 @@ void sclRead( sclHard hardware, size_t size, cl_mem buffer, void *hostPointer ) 
 }
 
 cl_int sclFinish( sclHard hardware ){
+	cl_int err = CL_SUCCESS;;
 #ifdef DEBUG
-	cl_int err;
 
 	err = clFinish( hardware.queue );
 	if ( err != CL_SUCCESS ) {
