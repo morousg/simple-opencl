@@ -39,7 +39,6 @@ extern "C" {
 
 #define WORKGROUP_X 64
 #define WORKGROUP_Y 2
-#define DEBUG
 
 #ifndef _OCLUTILS_STRUCTS
 typedef struct {
