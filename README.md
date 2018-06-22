@@ -1,6 +1,11 @@
-**NOTE: Apple will discontinue support for OpenCL, and some people at Khronos said that OpenCL and Vulkan will eventually become the same framework. Also, I've (Oscar Amoros) been working on CUDA projects the last 2 years, and learned a lot of cool stuf that is only abailable on CUDA. Additionally, CUDA 9.x includes very interesting new features.**
+**NOTE: Several things made me decide to stop thinking on future SimpleOpenCL developments.**
 
-**As a result I'm completelly stopping further SimpleOpenCL development, which I was slowly restarting recently, and will abandone this project. I will probably start other OpenSource projects related to CUDA and my current professional projects.**
+1. Apple will discontinue support for OpenCL in favor of it's proprietary Metal framework. 
+2. NVIDIA has poor OpenCL support.
+3. Some people at Khronos said that OpenCL and Vulkan will eventually become the same framework. So I prefer to wait and see how the creature looks like, before continuing SimpleOpenCL development. Maybe the new framework does not need something like SimpleOpenCL.**
+4. I've (Oscar Amoros) been working on CUDA projects the last 2 years, and learned a lot of cool stuf that is only abailable on CUDA. Additionally, CUDA 9.x includes very interesting new features. I wish OpenCL 2.2 where available and NVIDIA had created OpenCL extensions for their features, but it is not happening (that I have seen).
+
+**As a result I will stop further SimpleOpenCL development (don't know when, maybe just now). In the mean time, while the OpenCL-Vulkan merge is clear, I will probably start other OpenSource contributions related to CUDA and my current professional projects.**
 
 SimpleOpenCL is a library written in ANSI C and born in the needs of scientific research test development. It has been originated while developing different OpenCL codes for Linux and Apple test machines, with single device performance and portability goals in mind. The main goal of SimpleOpenCL has been reducing the Host code needed to run OpenCL C kernels on the GPU, but also supports managing CPU devices. In a sentence: **The only thing a programmer needs to know in order to use SimpleOpenCL is C, two SimpleOpenCL types, and a minimum of three functions**. Device code (OpenCL C kernels) is exactly the same as in OpenCL.
 
