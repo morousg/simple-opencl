@@ -8,7 +8,7 @@ A comparative example:
 
 **SimpleOpenCL code version**
 
-```
+```C
 
 #include "simpleCL.h"
 
@@ -45,7 +45,7 @@ int main() {
 
 **Now the same code but in plain OpenCL WITHOUT using SimpleOpenCL**
 
-```
+```C
 
 #include <stdio.h>
 #include <string.h>
@@ -169,7 +169,7 @@ And this is without printing the names of the error flags, that would add a larg
 
 **Kernel code for both cases in OpenCL C (note that SimpleOpenCL doesn't alter Device code at all)**
 
-```
+```C
 __kernel void example( __global char* buf, __global char* buf2 ){
        int x = get_global_id(0);
 
