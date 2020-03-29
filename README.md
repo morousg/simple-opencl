@@ -4,8 +4,6 @@ As this is an open source project, we welcome any contribution, from code correc
 
 The main author has created and uses this library for its projects and aims to share it with those who want to use OpenCL with C or C++ for experimental codes in any sector. Nevertheless we think this can be an interesting library for academical purposes. With SimpleOpenCL the teacher can for instance focus on teaching Device code. And if desired later on the teacher could either show the library code to teach basic OpenCL Host code or propose student's to do more technical improvements over it or both.
 
-**WARNING**: Don't download Featured version, it contains a bug for Apple machines and GoogleCode does not allow to change the link. Please **download "Download SimpleOpenCL WITH EXAMPLES"** on the External links section.
-
 A comparative example:
 
 **SimpleOpenCL code version**
