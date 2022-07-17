@@ -178,4 +178,4 @@ __kernel void example( __global char* buf, __global char* buf2 ){
 }
 ```
 
-**Contact:** oscaramoros@ub.edu
+**Contact:** morousg@gmail.com
