@@ -1,5 +1,7 @@
 SimpleOpenCL is a library written in ANSI C and born in the needs of scientific research test development. It has been originated while developing different OpenCL codes for Linux and Apple test machines, with single device performance and portability goals in mind. The main goal of SimpleOpenCL has been reducing the Host code needed to run OpenCL C kernels on the GPU, but also supports managing CPU devices. In a sentence: **The only thing a programmer needs to know in order to use SimpleOpenCL is C, two SimpleOpenCL types, and a minimum of three functions**. Device code (OpenCL C kernels) is exactly the same as in OpenCL.
 
+SimpleOpenCL is not intended for production codes or real-time processing codes, where advanced control of CPU-GPU interaction is required. It is simply an easy way to execute OpenCL Kernels.
+
 As this is an open source project, we welcome any contribution, from code correction and functionality suggestions/contributions to documentation or even contribution system proposals.
 
 The main author has created and uses this library for its projects and aims to share it with those who want to use OpenCL with C or C++ for experimental codes in any sector. Nevertheless we think this can be an interesting library for academical purposes. With SimpleOpenCL the teacher can for instance focus on teaching Device code. And if desired later on the teacher could either show the library code to teach basic OpenCL Host code or propose student's to do more technical improvements over it or both.
